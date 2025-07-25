@@ -49,7 +49,6 @@ interface Comment {
   } | null;
   anonymousName?: string;
   anonymousEmail?: string;
-  replies: Comment[];
 }
 
 export default function BlogPostPage({ params }: { params: { slug: string } }) {
@@ -424,48 +423,6 @@ export default function BlogPostPage({ params }: { params: { slug: string } }) {
                       {comment.content}
                     </p>
                   </div>
-
-                  {/* Replies */}
-                  {comment.replies.length > 0 && (
-                    <div className="ml-13 pl-4 border-l-2 border-gray-200 dark:border-gray-700 space-y-4">
-                      {comment.replies.map((reply) => (
-                        <div key={reply.id} className="bg-white dark:bg-gray-800 rounded-lg p-4">
-                          <div className="flex items-center gap-3 mb-3">
-                            <div className="w-8 h-8 bg-gradient-to-r from-red-500 to-red-600 rounded-full flex items-center justify-center text-white font-medium text-sm">
-                              {reply.author?.image ? (
-                                <Image
-                                  src={reply.author.image}
-                                  alt={reply.author.name}
-                                  width={32}
-                                  height={32}
-                                  className="w-8 h-8 rounded-full object-cover"
-                                />
-                              ) : (
-                                (reply.author?.name || reply.anonymousName || 'Anonymous').charAt(0).toUpperCase()
-                              )}
-                            </div>
-                            <div>
-                              <p className="font-medium text-gray-900 dark:text-gray-100 text-sm">
-                                {reply.author?.name || reply.anonymousName || 'Anonymous'}
-                              </p>
-                              <p className="text-xs text-gray-500 dark:text-gray-400">
-                                {new Date(reply.createdAt).toLocaleDateString('en-US', {
-                                  year: 'numeric',
-                                  month: 'long',
-                                  day: 'numeric',
-                                  hour: '2-digit',
-                                  minute: '2-digit'
-                                })}
-                              </p>
-                            </div>
-                          </div>
-                          <p className="text-gray-700 dark:text-gray-300 text-sm leading-relaxed">
-                            {reply.content}
-                          </p>
-                        </div>
-                      ))}
-                    </div>
-                  )}
                 </div>
               ))}
             </div>

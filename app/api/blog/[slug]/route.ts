@@ -36,7 +36,6 @@ export async function GET(
         comments: {
           where: {
             approved: true,
-            parentId: null, // Only top-level comments
           },
           include: {
             author: {
@@ -44,23 +43,6 @@ export async function GET(
                 id: true,
                 name: true,
                 image: true,
-              }
-            },
-            replies: {
-              where: {
-                approved: true,
-              },
-              include: {
-                author: {
-                  select: {
-                    id: true,
-                    name: true,
-                    image: true,
-                  }
-                }
-              },
-              orderBy: {
-                createdAt: 'asc'
               }
             }
           },
