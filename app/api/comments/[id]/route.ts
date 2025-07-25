@@ -6,7 +6,7 @@ import { authOptions } from '@/lib/auth'
 // PATCH /api/comments/[id] - Update comment status
 export async function PATCH(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
     const session = await getServerSession(authOptions)
@@ -18,7 +18,7 @@ export async function PATCH(
       )
     }
 
-    const { id } = params
+    const { id } = await params
     const { approved } = await request.json()
 
     const comment = await prisma.comment.update({

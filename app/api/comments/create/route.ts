@@ -35,18 +35,26 @@ export async function POST(request: NextRequest) {
     
     if (session?.user) {
       // Authenticated user comment
-      comment = await prisma.comment.create({
-        data: {
-          content,
-          post: {
-            connect: { id: postId }
-          },
-          author: {
-            connect: { id: (session.user as any).id }
-          },
-          parentId,
-          approved: true, // Auto-approve comments from authenticated users
+      const commentData: any = {
+        content,
+        post: {
+          connect: { id: postId }
         },
+        author: {
+          connect: { id: (session.user as any).id }
+        },
+        approved: true, // Auto-approve comments from authenticated users
+      };
+
+      // Add parent relation if this is a reply
+      if (parentId) {
+        commentData.parent = {
+          connect: { id: parentId }
+        };
+      }
+
+      comment = await prisma.comment.create({
+        data: commentData,
         include: {
           author: {
             select: {
@@ -67,17 +75,25 @@ export async function POST(request: NextRequest) {
       }
 
       // Create anonymous comment (requires approval)
+      const commentData: any = {
+        content,
+        post: {
+          connect: { id: postId }
+        },
+        anonymousName: authorName,
+        anonymousEmail: authorEmail,
+        approved: false, // Anonymous comments require approval
+      };
+
+      // Add parent relation if this is a reply
+      if (parentId) {
+        commentData.parent = {
+          connect: { id: parentId }
+        };
+      }
+
       comment = await prisma.comment.create({
-        data: {
-          content,
-          post: {
-            connect: { id: postId }
-          },
-          anonymousName: authorName,
-          anonymousEmail: authorEmail,
-          parentId,
-          approved: false, // Anonymous comments require approval
-        }
+        data: commentData
       })
     }
 

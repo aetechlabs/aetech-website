@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import Image from 'next/image';
 import Link from 'next/link';
+import LikeButton from '@/components/LikeButton';
 
 interface Post {
   id: string;
@@ -14,6 +15,7 @@ interface Post {
   publishedAt: string;
   readingTime?: number;
   views: number;
+  likes: number;
   author: {
     id: string;
     name: string;
@@ -253,6 +255,16 @@ export default function BlogPage() {
                       </div>
                     </div>
                   </Link>
+                  
+                  {/* Like Button */}
+                  <div className="px-6 pb-4">
+                    <LikeButton 
+                      slug={post.slug} 
+                      initialLikes={post.likes}
+                      size="sm"
+                      className="w-full justify-center"
+                    />
+                  </div>
                 </motion.article>
               ))}
             </motion.div>

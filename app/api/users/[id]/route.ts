@@ -6,7 +6,7 @@ import { authOptions } from '@/lib/auth'
 // PATCH /api/users/[id] - Update user role (admin only)
 export async function PATCH(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
     const session = await getServerSession(authOptions)
@@ -19,7 +19,7 @@ export async function PATCH(
     }
 
     const { role } = await request.json()
-    const { id } = params
+    const { id } = await params
 
     if (!['USER', 'ADMIN'].includes(role)) {
       return NextResponse.json(

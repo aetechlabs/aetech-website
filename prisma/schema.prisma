@@ -49,6 +49,7 @@ model User {
   sessions      Session[]
   posts         Post[]
   comments      Comment[]
+  postLikes     PostLike[]
   createdAt     DateTime  @default(now())
   updatedAt     DateTime  @updatedAt
 }
@@ -83,6 +84,7 @@ model Post {
   published   Boolean     @default(false)
   featured    Boolean     @default(false)
   views       Int         @default(0)
+  likes       Int         @default(0)
   readingTime Int?
   seoTitle    String?
   seoDescription String?
@@ -92,6 +94,7 @@ model Post {
   author      User        @relation(fields: [authorId], references: [id])
   category    Category    @relation(fields: [categoryId], references: [id])
   comments    Comment[]
+  postLikes   PostLike[]
   createdAt   DateTime    @default(now())
   updatedAt   DateTime    @updatedAt
   publishedAt DateTime?
@@ -112,6 +115,20 @@ model Comment {
   replies        Comment[]   @relation("CommentReplies")
   createdAt      DateTime    @default(now())
   updatedAt      DateTime    @updatedAt
+}
+
+model PostLike {
+  id          String   @id @default(auto()) @map("_id") @db.ObjectId
+  postId      String   @db.ObjectId
+  userId      String?  @db.ObjectId
+  ipAddress   String?  // For anonymous likes
+  createdAt   DateTime @default(now())
+  
+  post        Post     @relation(fields: [postId], references: [id], onDelete: Cascade)
+  user        User?    @relation(fields: [userId], references: [id])
+  
+  @@unique([postId, userId])
+  @@unique([postId, ipAddress])
 }
 
 model Contact {

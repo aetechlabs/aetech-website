@@ -6,10 +6,10 @@ import { authOptions } from '@/lib/auth'
 // GET /api/blog/[slug] - Get a single blog post
 export async function GET(
   request: NextRequest,
-  { params }: { params: { slug: string } }
+  { params }: { params: Promise<{ slug: string }> }
 ) {
   try {
-    const { slug } = params
+    const { slug } = await params
 
     const post = await prisma.post.findUnique({
       where: {
@@ -44,7 +44,7 @@ export async function GET(
                 name: true,
                 image: true,
               }
-            }
+            },
           },
           orderBy: {
             createdAt: 'desc'
@@ -79,7 +79,7 @@ export async function GET(
 // PUT /api/blog/[slug] - Update a blog post (admin only)
 export async function PUT(
   request: NextRequest,
-  { params }: { params: { slug: string } }
+  { params }: { params: Promise<{ slug: string }> }
 ) {
   try {
     const session = await getServerSession(authOptions)
@@ -91,7 +91,7 @@ export async function PUT(
       )
     }
 
-    const { slug } = params
+    const { slug } = await params
     const body = await request.json()
 
     const post = await prisma.post.update({
@@ -133,7 +133,7 @@ export async function PUT(
 // DELETE /api/blog/[slug] - Delete a blog post (admin only)
 export async function DELETE(
   request: NextRequest,
-  { params }: { params: { slug: string } }
+  { params }: { params: Promise<{ slug: string }> }
 ) {
   try {
     const session = await getServerSession(authOptions)
@@ -145,7 +145,7 @@ export async function DELETE(
       )
     }
 
-    const { slug } = params
+    const { slug } = await params
 
     await prisma.post.delete({
       where: { slug }

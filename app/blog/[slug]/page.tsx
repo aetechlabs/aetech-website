@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, use } from 'react';
 import { motion } from 'framer-motion';
 import Image from 'next/image';
 import Link from 'next/link';
@@ -8,6 +8,7 @@ import ReactMarkdown from 'react-markdown';
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
 import { tomorrow } from 'react-syntax-highlighter/dist/esm/styles/prism';
 import { useSession } from 'next-auth/react';
+import LikeButton from '@/components/LikeButton';
 
 interface Post {
   id: string;
@@ -20,6 +21,7 @@ interface Post {
   updatedAt: string;
   readingTime?: number;
   views: number;
+  likes: number;
   tags: string[];
   seoTitle?: string;
   seoDescription?: string;
@@ -42,6 +44,7 @@ interface Comment {
   id: string;
   content: string;
   createdAt: string;
+  parentId?: string | null;
   author?: {
     id: string;
     name: string;
@@ -51,7 +54,12 @@ interface Comment {
   anonymousEmail?: string;
 }
 
-export default function BlogPostPage({ params }: { params: { slug: string } }) {
+interface OrganizedComment extends Comment {
+  replies: Comment[];
+}
+
+export default function BlogPostPage({ params }: { params: Promise<{ slug: string }> }) {
+  const resolvedParams = use(params);
   const { data: session } = useSession()
   const [post, setPost] = useState<Post | null>(null);
   const [loading, setLoading] = useState(true);
@@ -63,19 +71,24 @@ export default function BlogPostPage({ params }: { params: { slug: string } }) {
   const [anonymousEmail, setAnonymousEmail] = useState('');
   const [isSubmittingComment, setIsSubmittingComment] = useState(false);
   const [commentMessage, setCommentMessage] = useState('');
+  
+  // Reply form state
+  const [replyingTo, setReplyingTo] = useState<string | null>(null);
+  const [replyContent, setReplyContent] = useState('');
+  const [replyAnonymousName, setReplyAnonymousName] = useState('');
+  const [replyAnonymousEmail, setReplyAnonymousEmail] = useState('');
+  const [isSubmittingReply, setIsSubmittingReply] = useState(false);
 
   useEffect(() => {
     fetchPost();
-  }, [params.slug]);
+  }, [resolvedParams.slug]);
 
   const fetchPost = async () => {
     setLoading(true);
     try {
-      const response = await fetch(`/api/blog/${params.slug}`);
+      const response = await fetch(`/api/blog/${resolvedParams.slug}`);
       if (response.ok) {
         const data = await response.json();
-        console.log('Fetched post data:', data);
-        console.log('Comments in post:', data.comments);
         setPost(data);
         
         // Fetch related posts
@@ -107,6 +120,17 @@ export default function BlogPostPage({ params }: { params: { slug: string } }) {
       month: 'long',
       day: 'numeric'
     });
+  };
+
+  // Organize comments into parent-child hierarchy
+  const organizeComments = (comments: Comment[]): OrganizedComment[] => {
+    const parentComments = comments.filter(comment => !comment.parentId);
+    const childComments = comments.filter(comment => comment.parentId);
+    
+    return parentComments.map(parent => ({
+      ...parent,
+      replies: childComments.filter(child => child.parentId === parent.id)
+    }));
   };
 
   const sharePost = (platform: string) => {
@@ -172,6 +196,61 @@ export default function BlogPostPage({ params }: { params: { slug: string } }) {
       setCommentMessage('Failed to submit comment. Please try again.');
     } finally {
       setIsSubmittingComment(false);
+    }
+  };
+
+  const handleReplySubmit = async (e: React.FormEvent, parentId: string) => {
+    e.preventDefault();
+    
+    if (!replyContent.trim()) {
+      setCommentMessage('Please enter a reply');
+      return;
+    }
+
+    if (!session && (!replyAnonymousName.trim() || !replyAnonymousEmail.trim())) {
+      setCommentMessage('Please enter your name and email');
+      return;
+    }
+
+    setIsSubmittingReply(true);
+    setCommentMessage('');
+
+    try {
+      const response = await fetch('/api/comments/create', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          postId: post?.id,
+          content: replyContent.trim(),
+          parentId: parentId,
+          authorName: !session ? replyAnonymousName.trim() : undefined,
+          authorEmail: !session ? replyAnonymousEmail.trim() : undefined,
+        }),
+      });
+
+      const result = await response.json();
+
+      if (response.ok) {
+        setCommentMessage(result.message);
+        setReplyContent('');
+        setReplyAnonymousName('');
+        setReplyAnonymousEmail('');
+        setReplyingTo(null);
+        
+        // Refresh the post to get updated comments (if approved immediately)
+        if (!result.requiresApproval) {
+          fetchPost();
+        }
+      } else {
+        setCommentMessage(result.error || 'Failed to submit reply');
+      }
+    } catch (error) {
+      console.error('Error submitting reply:', error);
+      setCommentMessage('Failed to submit reply. Please try again.');
+    } finally {
+      setIsSubmittingReply(false);
     }
   };
 
@@ -282,27 +361,32 @@ export default function BlogPostPage({ params }: { params: { slug: string } }) {
               </div>
             )}
 
-            {/* Share Buttons */}
-            <div className="flex items-center space-x-4 mb-8 pb-8 border-b border-gray-200 dark:border-gray-700">
-              <span className="text-sm font-medium">Share:</span>
-              <button
-                onClick={() => sharePost('twitter')}
-                className="text-blue-500 hover:text-blue-600 transition-colors"
-              >
-                Twitter
-              </button>
-              <button
-                onClick={() => sharePost('linkedin')}
-                className="text-blue-700 hover:text-blue-800 transition-colors"
-              >
-                LinkedIn
-              </button>
-              <button
-                onClick={() => sharePost('facebook')}
-                className="text-blue-600 hover:text-blue-700 transition-colors"
-              >
-                Facebook
-              </button>
+            {/* Share & Like Buttons */}
+            <div className="flex items-center justify-between mb-8 pb-8 border-b border-gray-200 dark:border-gray-700">
+              <div className="flex items-center space-x-4">
+                <span className="text-sm font-medium">Share:</span>
+                <button
+                  onClick={() => sharePost('twitter')}
+                  className="text-blue-500 hover:text-blue-600 transition-colors"
+                >
+                  Twitter
+                </button>
+                <button
+                  onClick={() => sharePost('linkedin')}
+                  className="text-blue-700 hover:text-blue-800 transition-colors"
+                >
+                  LinkedIn
+                </button>
+                <button
+                  onClick={() => sharePost('facebook')}
+                  className="text-blue-600 hover:text-blue-700 transition-colors"
+                >
+                  Facebook
+                </button>
+              </div>
+              
+              {/* Like Button */}
+              <LikeButton slug={post.slug} initialLikes={post.likes} />
             </div>
           </motion.div>
         </div>
@@ -384,7 +468,7 @@ export default function BlogPostPage({ params }: { params: { slug: string } }) {
             </div>
           ) : (
             <div className="space-y-6">
-              {post.comments.map((comment) => (
+              {organizeComments(post.comments).map((comment) => (
                 <div key={comment.id} className="bg-gray-50 dark:bg-gray-900 rounded-lg p-6">
                   {/* Comment Header */}
                   <div className="flex items-center gap-3 mb-4">
@@ -423,6 +507,112 @@ export default function BlogPostPage({ params }: { params: { slug: string } }) {
                       {comment.content}
                     </p>
                   </div>
+
+                  {/* Reply Button */}
+                  <div className="ml-13 mb-4">
+                    <button
+                      onClick={() => setReplyingTo(replyingTo === comment.id ? null : comment.id)}
+                      className="text-sm text-red-600 hover:text-red-700 dark:text-red-400 dark:hover:text-red-300 font-medium transition-colors"
+                    >
+                      {replyingTo === comment.id ? 'Cancel Reply' : 'Reply'}
+                    </button>
+                  </div>
+
+                  {/* Reply Form */}
+                  {replyingTo === comment.id && (
+                    <div className="ml-13 mb-4 p-4 bg-gray-100 dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-600">
+                      <h5 className="text-sm font-medium text-gray-900 dark:text-gray-100 mb-3">
+                        Reply to {comment.author?.name || comment.anonymousName || 'Anonymous'}
+                      </h5>
+                      
+                      <form onSubmit={(e) => handleReplySubmit(e, comment.id)} className="space-y-3">
+                        {!session && (
+                          <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                            <input
+                              type="text"
+                              value={replyAnonymousName}
+                              onChange={(e) => setReplyAnonymousName(e.target.value)}
+                              className="w-full px-3 py-2 text-sm border border-gray-300 dark:border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500 dark:bg-gray-700 dark:text-gray-100"
+                              placeholder="Your name"
+                              required
+                            />
+                            <input
+                              type="email"
+                              value={replyAnonymousEmail}
+                              onChange={(e) => setReplyAnonymousEmail(e.target.value)}
+                              className="w-full px-3 py-2 text-sm border border-gray-300 dark:border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500 dark:bg-gray-700 dark:text-gray-100"
+                              placeholder="your@email.com"
+                              required
+                            />
+                          </div>
+                        )}
+                        
+                        <textarea
+                          rows={3}
+                          value={replyContent}
+                          onChange={(e) => setReplyContent(e.target.value)}
+                          className="w-full px-3 py-2 text-sm border border-gray-300 dark:border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500 dark:bg-gray-700 dark:text-gray-100 resize-vertical"
+                          placeholder="Write your reply..."
+                          required
+                        />
+                        
+                        <div className="flex items-center justify-between">
+                          <p className="text-xs text-gray-500 dark:text-gray-400">
+                            {session ? 'Your reply will be posted immediately.' : 'Anonymous replies require approval.'}
+                          </p>
+                          <button
+                            type="submit"
+                            disabled={isSubmittingReply}
+                            className="px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors text-sm font-medium"
+                          >
+                            {isSubmittingReply ? 'Submitting...' : 'Post Reply'}
+                          </button>
+                        </div>
+                      </form>
+                    </div>
+                  )}
+
+                  {/* Replies */}
+                  {comment.replies && comment.replies.length > 0 && (
+                    <div className="ml-13 pl-4 border-l-2 border-gray-200 dark:border-gray-700 space-y-4">
+                      {comment.replies.map((reply) => (
+                        <div key={reply.id} className="bg-white dark:bg-gray-800 rounded-lg p-4">
+                          <div className="flex items-center gap-3 mb-3">
+                            <div className="w-8 h-8 bg-gradient-to-r from-red-500 to-red-600 rounded-full flex items-center justify-center text-white font-medium text-sm">
+                              {reply.author?.image ? (
+                                <Image
+                                  src={reply.author.image}
+                                  alt={reply.author.name}
+                                  width={32}
+                                  height={32}
+                                  className="w-8 h-8 rounded-full object-cover"
+                                />
+                              ) : (
+                                (reply.author?.name || reply.anonymousName || 'Anonymous').charAt(0).toUpperCase()
+                              )}
+                            </div>
+                            <div>
+                              <p className="font-medium text-gray-900 dark:text-gray-100 text-sm">
+                                {reply.author?.name || reply.anonymousName || 'Anonymous'}
+                              </p>
+                              <p className="text-xs text-gray-500 dark:text-gray-400">
+                                {new Date(reply.createdAt).toLocaleDateString('en-US', {
+                                  year: 'numeric',
+                                  month: 'long',
+                                  day: 'numeric',
+                                  hour: '2-digit',
+                                  minute: '2-digit'
+                                })}
+                              </p>
+                            </div>
+                          </div>
+                          <p className="text-gray-700 dark:text-gray-300 text-sm leading-relaxed">
+                            {reply.content}
+                          </p>
+                        </div>
+                      ))}
+                    </div>
+                  )}
                 </div>
               ))}
             </div>
