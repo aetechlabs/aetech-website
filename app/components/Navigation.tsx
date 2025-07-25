@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import Image from 'next/image';
+import Link from 'next/link';
 import { motion, AnimatePresence } from 'framer-motion';
 
 export default function Navigation() {
@@ -43,11 +44,20 @@ export default function Navigation() {
     setIsMobileMenuOpen(false);
   };
 
+  const handleNavClick = (item: any) => {
+    if (item.type === 'scroll') {
+      scrollToSection(item.id);
+    } else {
+      setIsMobileMenuOpen(false);
+    }
+  };
+
   const navItems = [
-    { id: 'home', label: 'Home' },
-    { id: 'about', label: 'About' },
-    { id: 'services', label: 'Services' },
-    { id: 'contact', label: 'Contact' }
+    { id: 'home', label: 'Home', type: 'scroll' },
+    { id: 'about', label: 'About', type: 'scroll' },
+    { id: 'services', label: 'Services', type: 'scroll' },
+    { id: 'blog', label: 'Blog', type: 'link', href: '/blog' },
+    { id: 'contact', label: 'Contact', type: 'scroll' }
   ];
 
   return (
@@ -81,29 +91,44 @@ export default function Navigation() {
           
           {/* Desktop Navigation */}
           <div className="hidden md:flex space-x-8">
-            {navItems.map((item) => (
-              <motion.button
-                key={item.id}
-                whileHover={{ y: -2 }}
-                whileTap={{ scale: 0.95 }}
-                onClick={() => scrollToSection(item.id)}
-                className={`relative font-medium transition-colors duration-300 ${
-                  activeSection === item.id
-                    ? 'text-red-600 dark:text-red-400'
-                    : 'hover:text-red-600 dark:hover:text-red-400'
-                }`}
-              >
-                {item.label}
-                {activeSection === item.id && (
-                  <motion.div
-                    layoutId="activeIndicator"
-                    className="absolute -bottom-1 left-0 right-0 h-0.5 bg-red-600 dark:bg-red-400"
-                    initial={false}
-                    transition={{ type: "spring", stiffness: 400, damping: 30 }}
-                  />
-                )}
-              </motion.button>
-            ))}
+            {navItems.map((item) => {
+              if (item.type === 'link' && item.href) {
+                return (
+                  <Link key={item.id} href={item.href}>
+                    <motion.span
+                      whileHover={{ y: -2 }}
+                      className="font-medium transition-colors duration-300 hover:text-red-600 dark:hover:text-red-400 cursor-pointer"
+                    >
+                      {item.label}
+                    </motion.span>
+                  </Link>
+                );
+              }
+              
+              return (
+                <motion.button
+                  key={item.id}
+                  whileHover={{ y: -2 }}
+                  whileTap={{ scale: 0.95 }}
+                  onClick={() => scrollToSection(item.id)}
+                  className={`relative font-medium transition-colors duration-300 ${
+                    activeSection === item.id
+                      ? 'text-red-600 dark:text-red-400'
+                      : 'hover:text-red-600 dark:hover:text-red-400'
+                  }`}
+                >
+                  {item.label}
+                  {activeSection === item.id && (
+                    <motion.div
+                      layoutId="activeIndicator"
+                      className="absolute -bottom-1 left-0 right-0 h-0.5 bg-red-600 dark:bg-red-400"
+                      initial={false}
+                      transition={{ type: "spring", stiffness: 400, damping: 30 }}
+                    />
+                  )}
+                </motion.button>
+              );
+            })}
           </div>
 
           {/* Mobile menu button */}
@@ -142,24 +167,42 @@ export default function Navigation() {
               className="md:hidden overflow-hidden"
             >
               <div className="px-2 pt-2 pb-3 space-y-1 bg-white dark:bg-black border-t border-gray-200 dark:border-gray-700">
-                {navItems.map((item, index) => (
-                  <motion.button
-                    key={item.id}
-                    initial={{ opacity: 0, x: -20 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    transition={{ delay: index * 0.1 }}
-                    whileHover={{ x: 5 }}
-                    whileTap={{ scale: 0.95 }}
-                    onClick={() => scrollToSection(item.id)}
-                    className={`block w-full text-left px-3 py-2 text-base font-medium transition-colors ${
-                      activeSection === item.id
-                        ? 'text-red-600 dark:text-red-400 bg-red-50 dark:bg-red-900/20'
-                        : 'hover:text-red-600 dark:hover:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/20'
-                    }`}
-                  >
-                    {item.label}
-                  </motion.button>
-                ))}
+                {navItems.map((item, index) => {
+                  if (item.type === 'link' && item.href) {
+                    return (
+                      <Link key={item.id} href={item.href}>
+                        <motion.span
+                          initial={{ opacity: 0, x: -20 }}
+                          animate={{ opacity: 1, x: 0 }}
+                          transition={{ delay: index * 0.1 }}
+                          className="block w-full text-left px-3 py-2 text-base font-medium transition-colors hover:text-red-600 dark:hover:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/20 cursor-pointer"
+                          onClick={() => setIsMobileMenuOpen(false)}
+                        >
+                          {item.label}
+                        </motion.span>
+                      </Link>
+                    );
+                  }
+
+                  return (
+                    <motion.button
+                      key={item.id}
+                      initial={{ opacity: 0, x: -20 }}
+                      animate={{ opacity: 1, x: 0 }}
+                      transition={{ delay: index * 0.1 }}
+                      whileHover={{ x: 5 }}
+                      whileTap={{ scale: 0.95 }}
+                      onClick={() => handleNavClick(item)}
+                      className={`block w-full text-left px-3 py-2 text-base font-medium transition-colors ${
+                        activeSection === item.id
+                          ? 'text-red-600 dark:text-red-400 bg-red-50 dark:bg-red-900/20'
+                          : 'hover:text-red-600 dark:hover:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/20'
+                      }`}
+                    >
+                      {item.label}
+                    </motion.button>
+                  );
+                })}
               </div>
             </motion.div>
           )}
