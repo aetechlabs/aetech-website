@@ -28,10 +28,38 @@ export default function ContactPage() {
     message: '',
     projectType: '',
     budget: '',
+    currency: 'USD',
     timeline: ''
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitStatus, setSubmitStatus] = useState<'idle' | 'success' | 'error'>('idle');
+
+  const currencies = [
+    { code: 'USD', symbol: '$', name: 'US Dollar' },
+    { code: 'NGN', symbol: '₦', name: 'Nigerian Naira' },
+    { code: 'GBP', symbol: '£', name: 'British Pound' },
+    { code: 'EUR', symbol: '€', name: 'Euro' },
+    { code: 'CAD', symbol: 'C$', name: 'Canadian Dollar' },
+    { code: 'AUD', symbol: 'A$', name: 'Australian Dollar' },
+    { code: 'ZAR', symbol: 'R', name: 'South African Rand' },
+    { code: 'KES', symbol: 'KSh', name: 'Kenyan Shilling' },
+    { code: 'GHS', symbol: '₵', name: 'Ghanaian Cedi' },
+    { code: 'Others', symbol: 'Custom', name: 'Custom Currency' }
+
+  ];
+
+  const budgetRanges = {
+    USD: ['$2k - $15k', '$15k - $35k', '$35k - $75k', '$75k - $150k', '$150k+'],
+    NGN: ['₦700k - ₦6M', '₦6M - ₦14M', '₦14M - ₦30M', '₦30M - ₦60M', '₦60M+'],
+    GBP: ['£3k - £12k', '£12k - £28k', '£28k - £60k', '£60k - £120k', '£120k+'],
+    EUR: ['€4.5k - €13.5k', '€13.5k - €31.5k', '€31.5k - €67.5k', '€67.5k - €135k', '€135k+'],
+    CAD: ['C$3.5k - C$20k', 'C$20k - C$47k', 'C$47k - C$100k', 'C$100k - C$200k', 'C$200k+'],
+    AUD: ['A$3.5k - A$22.5k', 'A$22.5k - A$52.5k', 'A$52.5k - A$112.5k', 'A$112.5k - A$225k', 'A$225k+'],
+    ZAR: ['R25k - R225k', 'R225k - R525k', 'R525k - R1.1M', 'R1.1M - R2.25M', 'R2.25M+'],
+    KES: ['KSh250k - KSh1.95M', 'KSh1.95M - KSh4.55M', 'KSh4.55M - KSh9.75M', 'KSh9.75M - KSh19.5M', 'KSh19.5M+'],
+    GHS: ['₵25k - ₵90k', '₵90k - ₵210k', '₵210k - ₵450k', '₵450k - ₵900k', '₵900k+'],
+    Others: ['Specify Range and Currency in contact body']
+  };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -58,6 +86,7 @@ export default function ContactPage() {
           message: '',
           projectType: '',
           budget: '',
+          currency: 'USD',
           timeline: ''
         });
       } else {
@@ -305,22 +334,68 @@ export default function ContactPage() {
                     </select>
                   </div>
                   <div>
-                    <label htmlFor="budget" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-                      Budget Range
+                    <label htmlFor="timeline" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                      Timeline
                     </label>
                     <select
-                      id="budget"
-                      value={formData.budget}
-                      onChange={(e) => setFormData(prev => ({ ...prev, budget: e.target.value }))}
+                      id="timeline"
+                      value={formData.timeline}
+                      onChange={(e) => setFormData(prev => ({ ...prev, timeline: e.target.value }))}
                       className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-xl bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-red-500 focus:border-transparent transition-all"
                     >
-                      <option value="">Select Budget Range</option>
-                      <option value="$10k - $25k">$10k - $25k</option>
-                      <option value="$25k - $50k">$25k - $50k</option>
-                      <option value="$50k - $100k">$50k - $100k</option>
-                      <option value="$100k+">$100k+</option>
+                      <option value="">Select Timeline</option>
+                      <option value="ASAP">ASAP (Rush Project)</option>
+                      <option value="1-2 months">1-2 months</option>
+                      <option value="3-6 months">3-6 months</option>
+                      <option value="6-12 months">6-12 months</option>
+                      <option value="12+ months">12+ months</option>
+                      <option value="Flexible">Flexible</option>
                     </select>
                   </div>
+                </div>
+
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                    Budget Range
+                  </label>
+                  <div className="grid grid-cols-3 gap-4">
+                    <div>
+                      <label htmlFor="currency" className="block text-xs text-gray-500 dark:text-gray-400 mb-1">
+                        Currency
+                      </label>
+                      <select
+                        id="currency"
+                        value={formData.currency}
+                        onChange={(e) => setFormData(prev => ({ ...prev, currency: e.target.value, budget: '' }))}
+                        className="w-full px-3 py-3 border border-gray-300 dark:border-gray-600 rounded-xl bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-red-500 focus:border-transparent transition-all text-sm"
+                      >
+                        {currencies.map((currency) => (
+                          <option key={currency.code} value={currency.code}>
+                            {currency.symbol} {currency.code}
+                          </option>
+                        ))}
+                      </select>
+                    </div>
+                    <div className="col-span-2">
+                      <label htmlFor="budget" className="block text-xs text-gray-500 dark:text-gray-400 mb-1">
+                        Amount Range
+                      </label>
+                      <select
+                        id="budget"
+                        value={formData.budget}
+                        onChange={(e) => setFormData(prev => ({ ...prev, budget: e.target.value }))}
+                        className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-xl bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-red-500 focus:border-transparent transition-all"
+                      >
+                        <option value="">Select Budget Range</option>
+                        {budgetRanges[formData.currency as keyof typeof budgetRanges]?.map((range) => (
+                          <option key={range} value={range}>{range}</option>
+                        ))}
+                      </select>
+                    </div>
+                  </div>
+                  <p className="text-xs text-gray-500 dark:text-gray-400 mt-2">
+                    💰 Selected Currency: {currencies.find(c => c.code === formData.currency)?.symbol} {currencies.find(c => c.code === formData.currency)?.name}
+                  </p>
                 </div>
 
                 <div>

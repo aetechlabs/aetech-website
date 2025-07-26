@@ -34,14 +34,14 @@ export default function BlogHeader({ currentPage = 'blog' }: BlogHeaderProps) {
           {/* Logo */}
           <Link href="/" className="flex items-center space-x-3 group">
             <Image
-              src="/website-assets/logo-dark-500.png"
+              src="/website-assets/logo-white-500.png"
               alt="AETech Research Labs Limited"
               width={40}
               height={40}
               className="h-10 w-10 dark:hidden transform group-hover:scale-105 transition-transform"
             />
             <Image
-              src="/website-assets/logo-white-500.png"
+              src="/website-assets/logo-dark-500.png"
               alt="AETech Research Labs Limited"
               width={40}
               height={40}
