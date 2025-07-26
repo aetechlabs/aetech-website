@@ -6,6 +6,8 @@ export default function ContactForm() {
   const [formData, setFormData] = useState({
     name: '',
     email: '',
+    phone: '',
+    country: '',
     subject: '',
     message: ''
   });
@@ -35,7 +37,7 @@ export default function ContactForm() {
 
       if (response.ok) {
         setSubmitStatus('success');
-        setFormData({ name: '', email: '', subject: '', message: '' });
+        setFormData({ name: '', email: '', phone: '', country: '', subject: '', message: '' });
       } else {
         setSubmitStatus('error');
       }
@@ -94,6 +96,62 @@ export default function ContactForm() {
             className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-800 focus:ring-2 focus:ring-red-500 focus:border-transparent transition-colors"
             placeholder="your.email@example.com"
           />
+        </div>
+
+        <div>
+          <label htmlFor="phone" className="block text-sm font-medium mb-2">
+            Phone Number
+          </label>
+          <input
+            type="tel"
+            id="phone"
+            name="phone"
+            value={formData.phone}
+            onChange={handleChange}
+            className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-800 focus:ring-2 focus:ring-red-500 focus:border-transparent transition-colors"
+            placeholder="+1 (555) 123-4567"
+          />
+        </div>
+
+        <div>
+          <label htmlFor="country" className="block text-sm font-medium mb-2">
+            Country
+          </label>
+          <select
+            id="country"
+            name="country"
+            value={formData.country}
+            onChange={handleChange}
+            className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-800 focus:ring-2 focus:ring-red-500 focus:border-transparent transition-colors"
+          >
+            <option value="">Select your country</option>
+            <option value="US">United States</option>
+            <option value="CA">Canada</option>
+            <option value="UK">United Kingdom</option>
+            <option value="AU">Australia</option>
+            <option value="DE">Germany</option>
+            <option value="FR">France</option>
+            <option value="JP">Japan</option>
+            <option value="IN">India</option>
+            <option value="BR">Brazil</option>
+            <option value="CN">China</option>
+            <option value="NG">Nigeria</option>
+            <option value="ZA">South Africa</option>
+            <option value="MX">Mexico</option>
+            <option value="AR">Argentina</option>
+            <option value="CL">Chile</option>
+            <option value="PE">Peru</option>
+            <option value="CO">Colombia</option>
+            <option value="VE">Venezuela</option>
+            <option value="EC">Ecuador</option>
+            <option value="UY">Uruguay</option>
+            <option value="PY">Paraguay</option>
+            <option value="BO">Bolivia</option>
+            <option value="GY">Guyana</option>
+            <option value="SR">Suriname</option>
+            <option value="GF">French Guiana</option>
+            <option value="OTHER">Other</option>
+          </select>
         </div>
 
         <div>

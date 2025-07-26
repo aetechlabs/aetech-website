@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { motion, AnimatePresence } from 'framer-motion';
+import ThemeToggle from '../../components/ThemeToggle';
 
 export default function Navigation() {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -90,49 +91,55 @@ export default function Navigation() {
           </div>
           
           {/* Desktop Navigation */}
-          <div className="hidden md:flex space-x-8">
-            {navItems.map((item) => {
-              if (item.type === 'link' && item.href) {
+          <div className="hidden md:flex items-center space-x-6">
+            <div className="flex space-x-8">
+              {navItems.map((item) => {
+                if (item.type === 'link' && item.href) {
+                  return (
+                    <Link key={item.id} href={item.href}>
+                      <motion.span
+                        whileHover={{ y: -2 }}
+                        className="font-medium transition-colors duration-300 hover:text-red-600 dark:hover:text-red-400 cursor-pointer"
+                      >
+                        {item.label}
+                      </motion.span>
+                    </Link>
+                  );
+                }
+                
                 return (
-                  <Link key={item.id} href={item.href}>
-                    <motion.span
-                      whileHover={{ y: -2 }}
-                      className="font-medium transition-colors duration-300 hover:text-red-600 dark:hover:text-red-400 cursor-pointer"
-                    >
-                      {item.label}
-                    </motion.span>
-                  </Link>
+                  <motion.button
+                    key={item.id}
+                    whileHover={{ y: -2 }}
+                    whileTap={{ scale: 0.95 }}
+                    onClick={() => scrollToSection(item.id)}
+                    className={`relative font-medium transition-colors duration-300 ${
+                      activeSection === item.id
+                        ? 'text-red-600 dark:text-red-400'
+                        : 'hover:text-red-600 dark:hover:text-red-400'
+                    }`}
+                  >
+                    {item.label}
+                    {activeSection === item.id && (
+                      <motion.div
+                        layoutId="activeIndicator"
+                        className="absolute -bottom-1 left-0 right-0 h-0.5 bg-red-600 dark:bg-red-400"
+                        initial={false}
+                        transition={{ type: "spring", stiffness: 400, damping: 30 }}
+                      />
+                    )}
+                  </motion.button>
                 );
-              }
-              
-              return (
-                <motion.button
-                  key={item.id}
-                  whileHover={{ y: -2 }}
-                  whileTap={{ scale: 0.95 }}
-                  onClick={() => scrollToSection(item.id)}
-                  className={`relative font-medium transition-colors duration-300 ${
-                    activeSection === item.id
-                      ? 'text-red-600 dark:text-red-400'
-                      : 'hover:text-red-600 dark:hover:text-red-400'
-                  }`}
-                >
-                  {item.label}
-                  {activeSection === item.id && (
-                    <motion.div
-                      layoutId="activeIndicator"
-                      className="absolute -bottom-1 left-0 right-0 h-0.5 bg-red-600 dark:bg-red-400"
-                      initial={false}
-                      transition={{ type: "spring", stiffness: 400, damping: 30 }}
-                    />
-                  )}
-                </motion.button>
-              );
-            })}
+              })}
+            </div>
+            
+            {/* Theme Toggle */}
+            <ThemeToggle />
           </div>
 
-          {/* Mobile menu button */}
-          <motion.div className="md:hidden">
+          {/* Mobile menu button and theme toggle */}
+          <div className="md:hidden flex items-center space-x-3">
+            <ThemeToggle />
             <motion.button
               whileTap={{ scale: 0.95 }}
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
@@ -153,7 +160,7 @@ export default function Navigation() {
                 )}
               </motion.svg>
             </motion.button>
-          </motion.div>
+          </div>
         </div>
 
         {/* Mobile Navigation */}

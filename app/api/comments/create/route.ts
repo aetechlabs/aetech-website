@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server'
 import { prisma } from '@/lib/prisma'
 import { getServerSession } from 'next-auth/next'
 import { authOptions } from '@/lib/auth'
+import { sendNewCommentNotificationSMTP, sendReplyNotificationSMTP } from '@/lib/smtp-email'
 
 // POST /api/comments - Create a new comment
 export async function POST(request: NextRequest) {
@@ -95,6 +96,74 @@ export async function POST(request: NextRequest) {
       comment = await prisma.comment.create({
         data: commentData
       })
+    }
+
+    // Send email notifications
+    try {
+      // Get post details for email
+      const postWithSlug = await prisma.post.findUnique({
+        where: { id: postId },
+        select: { title: true, slug: true }
+      });
+
+      if (postWithSlug) {
+        // Send notification to admin about new comment/reply
+        const authorName = session?.user?.name || authorName;
+        const authorEmail = session?.user?.email || authorEmail;
+        
+        // Check if this is a reply and get parent comment details
+        let isReply = false;
+        let parentAuthor = '';
+        let parentComment = null;
+
+        if (parentId) {
+          isReply = true;
+          parentComment = await prisma.comment.findUnique({
+            where: { id: parentId },
+            include: {
+              author: { select: { name: true, email: true } }
+            }
+          });
+          
+          if (parentComment) {
+            parentAuthor = parentComment.author?.name || parentComment.anonymousName || 'Anonymous';
+          }
+        }
+
+        // Send admin notification
+        await sendNewCommentNotificationSMTP({
+          postTitle: postWithSlug.title,
+          postSlug: postWithSlug.slug,
+          authorName,
+          authorEmail,
+          content,
+          isReply,
+          parentAuthor
+        });
+
+        // Send reply notification to original commenter (if this is a reply and we have their email)
+        if (isReply && parentComment) {
+          const originalEmail = parentComment.author?.email || parentComment.anonymousEmail;
+          const originalName = parentComment.author?.name || parentComment.anonymousName || 'Anonymous';
+          
+          if (originalEmail && originalEmail !== authorEmail) {
+            await sendReplyNotificationSMTP({
+              originalAuthorName: originalName,
+              originalAuthorEmail: originalEmail,
+              replyAuthorName: authorName,
+              postTitle: postWithSlug.title,
+              postSlug: postWithSlug.slug,
+              originalComment: parentComment.content,
+              replyContent: content
+            });
+          }
+        }
+
+        console.log('✅ Comment email notifications sent successfully');
+      }
+    } catch (emailError) {
+      console.error('❌ Error sending comment email notifications:', emailError);
+      // Continue without failing the comment creation
     }
 
     return NextResponse.json({

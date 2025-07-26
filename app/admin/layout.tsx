@@ -3,9 +3,11 @@
 import { useSession } from 'next-auth/react'
 import { useRouter, usePathname } from 'next/navigation'
 import { useEffect, useState } from 'react'
+// import { useTheme } from 'next-themes'
 import Link from 'next/link'
 import Image from 'next/image'
 import { motion, AnimatePresence } from 'framer-motion'
+import ThemeToggle from '../../components/ThemeToggle'
 import { 
   HomeIcon, 
   DocumentTextIcon, 
@@ -17,7 +19,9 @@ import {
   XMarkIcon,
   ArrowRightOnRectangleIcon,
   ChevronLeftIcon,
-  ChevronRightIcon
+  ChevronRightIcon,
+  SunIcon,
+  MoonIcon
 } from '@heroicons/react/24/outline'
 
 const navigation = [
@@ -65,7 +69,7 @@ export default function AdminLayout({
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100">
+    <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 dark:from-gray-900 dark:to-gray-800">
       {/* Mobile sidebar overlay */}
       <AnimatePresence>
         {sidebarOpen && (
@@ -87,7 +91,7 @@ export default function AdminLayout({
           animate={{ x: 0 }}
           transition={{ duration: 0.3 }}
         >
-          <div className="flex flex-col flex-1 bg-white shadow-xl border-r border-gray-200">
+          <div className="flex flex-col flex-1 bg-white dark:bg-gray-800 shadow-xl border-r border-gray-200 dark:border-gray-700">
             {/* Logo and branding with collapse button */}
             <div className="flex items-center justify-between p-6 bg-gradient-to-r from-[#c1272d] to-red-600">
               {!sidebarCollapsed ? (
@@ -116,7 +120,7 @@ export default function AdminLayout({
             </div>
             
             {/* Admin info */}
-            <div className="p-6 border-b border-gray-200">
+            <div className="p-6 border-b border-gray-200 dark:border-gray-700">
               <div className="flex items-center">
                 <div className="flex-shrink-0">
                   <Image
@@ -129,10 +133,10 @@ export default function AdminLayout({
                 </div>
                 {!sidebarCollapsed && (
                   <div className="ml-3 overflow-hidden">
-                    <p className="text-sm font-medium text-gray-900 truncate">
+                    <p className="text-sm font-medium text-gray-900 dark:text-gray-100 truncate">
                       {session.user?.name || 'Admin User'}
                     </p>
-                    <p className="text-xs text-gray-500 truncate">
+                    <p className="text-xs text-gray-500 dark:text-gray-400 truncate">
                       {session.user?.email || 'admin@aetech.com'}
                     </p>
                   </div>
@@ -151,13 +155,13 @@ export default function AdminLayout({
                     className={`group flex items-center ${sidebarCollapsed ? 'justify-center px-2' : 'px-4'} py-3 text-sm font-medium rounded-lg transition-all duration-200 ${
                       isActive
                         ? 'bg-[#c1272d] text-white shadow-lg'
-                        : 'text-gray-700 hover:bg-gray-100 hover:text-gray-900'
+                        : 'text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 hover:text-gray-900 dark:hover:text-gray-100'
                     }`}
                     title={sidebarCollapsed ? item.name : undefined}
                   >
                     <item.icon
                       className={`h-5 w-5 ${sidebarCollapsed ? '' : 'mr-3'} ${
-                        isActive ? 'text-white' : 'text-gray-400 group-hover:text-gray-500'
+                        isActive ? 'text-white' : 'text-gray-400 dark:text-gray-500 group-hover:text-gray-500 dark:group-hover:text-gray-400'
                       }`}
                     />
                     {!sidebarCollapsed && item.name}
@@ -166,14 +170,24 @@ export default function AdminLayout({
               })}
             </nav>
 
+            {/* Theme Toggle */}
+            <div className="p-4">
+              <div className={`flex ${sidebarCollapsed ? 'justify-center' : 'items-center space-x-3'}`}>
+                <ThemeToggle />
+                {!sidebarCollapsed && (
+                  <span className="text-sm text-gray-600 dark:text-gray-400">Theme</span>
+                )}
+              </div>
+            </div>
+
             {/* Sign out button */}
-            <div className="p-4 border-t border-gray-200">
+            <div className="p-4 border-t border-gray-200 dark:border-gray-700">
               <Link
                 href="/admin/signout"
-                className={`group flex items-center w-full ${sidebarCollapsed ? 'justify-center px-2' : 'px-4'} py-3 text-sm font-medium text-gray-700 rounded-lg hover:bg-red-50 hover:text-red-600 transition-all duration-200`}
+                className={`group flex items-center w-full ${sidebarCollapsed ? 'justify-center px-2' : 'px-4'} py-3 text-sm font-medium text-gray-700 dark:text-gray-300 rounded-lg hover:bg-red-50 dark:hover:bg-red-900/20 hover:text-red-600 dark:hover:text-red-400 transition-all duration-200`}
                 title={sidebarCollapsed ? 'Sign Out' : undefined}
               >
-                <ArrowRightOnRectangleIcon className={`h-5 w-5 ${sidebarCollapsed ? '' : 'mr-3'} text-gray-400 group-hover:text-red-500`} />
+                <ArrowRightOnRectangleIcon className={`h-5 w-5 ${sidebarCollapsed ? '' : 'mr-3'} text-gray-400 dark:text-gray-500 group-hover:text-red-500 dark:group-hover:text-red-400`} />
                 {!sidebarCollapsed && 'Sign Out'}
               </Link>
             </div>
@@ -188,7 +202,7 @@ export default function AdminLayout({
               animate={{ x: 0 }}
               exit={{ x: -288 }}
               transition={{ type: "spring", damping: 25, stiffness: 200 }}
-              className="fixed inset-y-0 left-0 z-50 w-72 bg-white shadow-xl lg:hidden"
+              className="fixed inset-y-0 left-0 z-50 w-72 bg-white dark:bg-gray-800 shadow-xl lg:hidden"
             >
               <div className="flex flex-col h-full">
                 {/* Mobile header */}
@@ -209,7 +223,7 @@ export default function AdminLayout({
                 </div>
 
                 {/* Mobile admin info */}
-                <div className="p-6 border-b border-gray-200">
+                <div className="p-6 border-b border-gray-200 dark:border-gray-700">
                   <div className="flex items-center">
                     <div className="flex-shrink-0">
                       <Image
@@ -221,10 +235,10 @@ export default function AdminLayout({
                       />
                     </div>
                     <div className="ml-3 overflow-hidden">
-                      <p className="text-sm font-medium text-gray-900 truncate">
+                      <p className="text-sm font-medium text-gray-900 dark:text-gray-100 truncate">
                         {session.user?.name || 'Admin User'}
                       </p>
-                      <p className="text-xs text-gray-500 truncate">
+                      <p className="text-xs text-gray-500 dark:text-gray-400 truncate">
                         {session.user?.email || 'admin@aetech.com'}
                       </p>
                     </div>
@@ -243,12 +257,12 @@ export default function AdminLayout({
                         className={`group flex items-center px-4 py-3 text-sm font-medium rounded-lg transition-all duration-200 ${
                           isActive
                             ? 'bg-[#c1272d] text-white shadow-lg'
-                            : 'text-gray-700 hover:bg-gray-100 hover:text-gray-900'
+                            : 'text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 hover:text-gray-900 dark:hover:text-gray-100'
                         }`}
                       >
                         <item.icon
                           className={`mr-3 h-5 w-5 ${
-                            isActive ? 'text-white' : 'text-gray-400 group-hover:text-gray-500'
+                            isActive ? 'text-white' : 'text-gray-400 dark:text-gray-500 group-hover:text-gray-500 dark:group-hover:text-gray-400'
                           }`}
                         />
                         {item.name}
@@ -257,13 +271,17 @@ export default function AdminLayout({
                   })}
                 </nav>
 
-                {/* Mobile sign out */}
-                <div className="p-4 border-t border-gray-200">
+                {/* Mobile theme toggle and sign out */}
+                <div className="p-4 border-t border-gray-200 dark:border-gray-700 space-y-3">
+                  <div className="flex items-center space-x-3">
+                    <ThemeToggle />
+                    <span className="text-sm text-gray-600 dark:text-gray-400">Theme</span>
+                  </div>
                   <Link
                     href="/admin/signout"
-                    className="group flex items-center w-full px-4 py-3 text-sm font-medium text-gray-700 rounded-lg hover:bg-red-50 hover:text-red-600 transition-all duration-200"
+                    className="group flex items-center w-full px-4 py-3 text-sm font-medium text-gray-700 dark:text-gray-300 rounded-lg hover:bg-red-50 dark:hover:bg-red-900/20 hover:text-red-600 dark:hover:text-red-400 transition-all duration-200"
                   >
-                    <ArrowRightOnRectangleIcon className="mr-3 h-5 w-5 text-gray-400 group-hover:text-red-500" />
+                    <ArrowRightOnRectangleIcon className="mr-3 h-5 w-5 text-gray-400 dark:text-gray-500 group-hover:text-red-500 dark:group-hover:text-red-400" />
                     Sign Out
                   </Link>
                 </div>
@@ -275,11 +293,11 @@ export default function AdminLayout({
         {/* Main content */}
         <div className="flex-1 flex flex-col overflow-hidden">
           {/* Mobile header */}
-          <div className="lg:hidden bg-white shadow-sm border-b border-gray-200 px-4 py-3">
+          <div className="lg:hidden bg-white dark:bg-gray-800 shadow-sm border-b border-gray-200 dark:border-gray-700 px-4 py-3">
             <div className="flex items-center justify-between">
               <button
                 onClick={() => setSidebarOpen(true)}
-                className="text-gray-500 hover:text-gray-700"
+                className="text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200"
               >
                 <Bars3Icon className="h-6 w-6" />
               </button>
@@ -288,9 +306,16 @@ export default function AdminLayout({
                 alt="AETech"
                 width={120}
                 height={30}
-                className="h-8 w-auto"
+                className="h-8 w-auto dark:hidden"
               />
-              <div className="w-6" /> {/* Spacer */}
+              <Image
+                src="/website-assets/logo-white-500.png"
+                alt="AETech"
+                width={120}
+                height={30}
+                className="h-8 w-auto hidden dark:block"
+              />
+              <ThemeToggle />
             </div>
           </div>
 

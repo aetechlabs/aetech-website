@@ -7,6 +7,8 @@ interface Contact {
   id: string;
   name: string;
   email: string;
+  phone?: string;
+  country?: string;
   subject: string;
   message: string;
   status: 'NEW' | 'IN_PROGRESS' | 'RESOLVED' | 'CLOSED';
@@ -17,6 +19,9 @@ export default function ContactsManagement() {
   const [contacts, setContacts] = useState<Contact[]>([]);
   const [loading, setLoading] = useState(true);
   const [selectedContact, setSelectedContact] = useState<Contact | null>(null);
+  const [showStatusModal, setShowStatusModal] = useState(false);
+  const [statusUpdate, setStatusUpdate] = useState<{contactId: string, newStatus: Contact['status']}>({contactId: '', newStatus: 'NEW'});
+  const [customMessage, setCustomMessage] = useState('');
 
   useEffect(() => {
     fetchContacts();
@@ -43,14 +48,14 @@ export default function ContactsManagement() {
     }
   };
 
-  const updateContactStatus = async (id: string, status: Contact['status']) => {
+  const updateContactStatus = async (id: string, status: Contact['status'], customMessage?: string) => {
     try {
       const response = await fetch(`/api/contacts/${id}`, {
         method: 'PATCH',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ status }),
+        body: JSON.stringify({ status, message: customMessage }),
       });
 
       if (response.ok) {
@@ -60,10 +65,25 @@ export default function ContactsManagement() {
         if (selectedContact?.id === id) {
           setSelectedContact({ ...selectedContact, status });
         }
+        
+        // Show success message
+        console.log('✅ Contact status updated and notification sent');
       }
     } catch (error) {
       console.error('Error updating contact status:', error);
     }
+  };
+
+  const handleStatusChange = (contactId: string, newStatus: Contact['status']) => {
+    setStatusUpdate({ contactId, newStatus });
+    setCustomMessage('');
+    setShowStatusModal(true);
+  };
+
+  const confirmStatusUpdate = async () => {
+    await updateContactStatus(statusUpdate.contactId, statusUpdate.newStatus, customMessage);
+    setShowStatusModal(false);
+    setCustomMessage('');
   };
 
   const getStatusColor = (status: Contact['status']) => {
@@ -184,6 +204,16 @@ export default function ContactsManagement() {
                       <p className="text-sm text-gray-500 dark:text-gray-400">
                         {contact.email}
                       </p>
+                      {(contact.phone || contact.country) && (
+                        <div className="flex items-center space-x-3 text-xs text-gray-400 dark:text-gray-500 mt-1">
+                          {contact.phone && (
+                            <span>📞 {contact.phone}</span>
+                          )}
+                          {contact.country && (
+                            <span>🌍 {contact.country}</span>
+                          )}
+                        </div>
+                      )}
                     </div>
                   </div>
                   <div className="flex items-center space-x-2">
@@ -208,7 +238,7 @@ export default function ContactsManagement() {
                 <div className="flex items-center space-x-3">
                   <select
                     value={contact.status}
-                    onChange={(e) => updateContactStatus(contact.id, e.target.value as Contact['status'])}
+                    onChange={(e) => handleStatusChange(contact.id, e.target.value as Contact['status'])}
                     className="px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500 bg-white dark:bg-gray-800"
                   >
                     <option value="NEW">New</option>
@@ -239,6 +269,50 @@ export default function ContactsManagement() {
           </div>
         )}
       </motion.div>
+
+      {/* Status Update Modal */}
+      {showStatusModal && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+          <div className="bg-white dark:bg-gray-800 rounded-lg p-6 w-full max-w-md mx-4">
+            <h3 className="text-lg font-semibold text-gray-900 dark:text-gray-100 mb-4">
+              Update Contact Status
+            </h3>
+            
+            <p className="text-gray-600 dark:text-gray-400 mb-4">
+              Updating status to: <span className="font-medium">{statusUpdate.newStatus.replace('_', ' ')}</span>
+            </p>
+            
+            <div className="mb-4">
+              <label htmlFor="customMessage" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                Optional message to customer:
+              </label>
+              <textarea
+                id="customMessage"
+                rows={3}
+                value={customMessage}
+                onChange={(e) => setCustomMessage(e.target.value)}
+                className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-emerald-500 dark:bg-gray-700 dark:text-gray-100"
+                placeholder="Add a personal message (optional)..."
+              />
+            </div>
+            
+            <div className="flex space-x-3">
+              <button
+                onClick={() => setShowStatusModal(false)}
+                className="flex-1 px-4 py-2 border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors"
+              >
+                Cancel
+              </button>
+              <button
+                onClick={confirmStatusUpdate}
+                className="flex-1 px-4 py-2 bg-emerald-600 text-white rounded-lg hover:bg-emerald-700 transition-colors font-medium"
+              >
+                Update & Notify
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

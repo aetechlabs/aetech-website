@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server'
 import { prisma } from '@/lib/prisma'
 import { getServerSession } from 'next-auth/next'
 import { authOptions } from '@/lib/auth'
+import { sendContactStatusUpdateSMTP } from '@/lib/smtp-email'
 
 // PATCH /api/contacts/[id] - Update contact status
 export async function PATCH(
@@ -19,12 +20,28 @@ export async function PATCH(
     }
 
     const { id } = await params
-    const { status } = await request.json()
+    const { status, message } = await request.json()
 
     const contact = await prisma.contact.update({
       where: { id },
       data: { status }
     })
+
+    // Send status update notification email to the user
+    try {
+      await sendContactStatusUpdateSMTP({
+        name: contact.name,
+        email: contact.email,
+        subject: contact.subject,
+        status,
+        message
+      });
+      
+      console.log('✅ Contact status update notification sent successfully');
+    } catch (emailError) {
+      console.error('❌ Error sending contact status update notification:', emailError);
+      // Continue without failing the update
+    }
 
     return NextResponse.json(contact)
   } catch (error) {

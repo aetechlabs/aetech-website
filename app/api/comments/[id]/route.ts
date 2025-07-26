@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server'
 import { prisma } from '@/lib/prisma'
 import { getServerSession } from 'next-auth/next'
 import { authOptions } from '@/lib/auth'
+import { sendCommentApprovedNotificationSMTP } from '@/lib/smtp-email'
 
 // PATCH /api/comments/[id] - Update comment status
 export async function PATCH(
@@ -39,6 +40,29 @@ export async function PATCH(
         }
       }
     })
+
+    // Send approval notification email if comment was approved
+    if (approved && comment.post) {
+      try {
+        const authorEmail = comment.author?.email || comment.anonymousEmail;
+        const authorName = comment.author?.name || comment.anonymousName || 'Anonymous';
+        
+        if (authorEmail) {
+          await sendCommentApprovedNotificationSMTP({
+            authorName,
+            authorEmail,
+            postTitle: comment.post.title,
+            postSlug: comment.post.slug,
+            content: comment.content
+          });
+          
+          console.log('✅ Comment approval notification sent successfully');
+        }
+      } catch (emailError) {
+        console.error('❌ Error sending comment approval notification:', emailError);
+        // Continue without failing the update
+      }
+    }
 
     return NextResponse.json(comment)
   } catch (error) {

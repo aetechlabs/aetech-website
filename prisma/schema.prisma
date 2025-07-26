@@ -135,6 +135,8 @@ model Contact {
   id        String      @id @default(auto()) @map("_id") @db.ObjectId
   name      String
   email     String
+  phone     String?
+  country   String?
   subject   String
   message   String
   status    ContactStatus @default(NEW)

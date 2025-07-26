@@ -13,6 +13,7 @@ import {
 } from '@heroicons/react/24/outline'
 import { ArrowTrendingUpIcon as TrendingUpIcon } from '@heroicons/react/24/solid'
 import Link from 'next/link'
+import EmailNotificationsDashboard from '@/components/EmailNotificationsDashboard'
 
 interface DashboardStats {
   posts: { total: number; published: number; drafts: number }
@@ -350,6 +351,16 @@ export default function AdminDashboard() {
             </div>
           </div>
         </div>
+      </motion.div>
+
+      {/* Email Notifications Dashboard */}
+      <motion.div 
+        className="mt-6"
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5, delay: 0.9 }}
+      >
+        <EmailNotificationsDashboard />
       </motion.div>
     </div>
   )

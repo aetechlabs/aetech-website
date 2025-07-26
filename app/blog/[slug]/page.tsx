@@ -9,6 +9,7 @@ import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
 import { tomorrow } from 'react-syntax-highlighter/dist/esm/styles/prism';
 import { useSession } from 'next-auth/react';
 import LikeButton from '@/components/LikeButton';
+import BlogHeader from '../../components/BlogHeader';
 
 interface Post {
   id: string;
@@ -256,7 +257,8 @@ export default function BlogPostPage({ params }: { params: Promise<{ slug: strin
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-white dark:bg-black pt-20">
+      <div className="min-h-screen bg-gradient-to-br from-gray-50 via-white to-red-50 dark:from-black dark:via-gray-900 dark:to-red-950">
+        <BlogHeader currentPage="blog" />
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
           <div className="animate-pulse">
             <div className="h-8 bg-gray-200 dark:bg-gray-800 rounded mb-4"></div>
@@ -275,21 +277,25 @@ export default function BlogPostPage({ params }: { params: Promise<{ slug: strin
 
   if (!post) {
     return (
-      <div className="min-h-screen bg-white dark:bg-black pt-20 flex items-center justify-center">
-        <div className="text-center">
-          <h1 className="text-2xl font-bold mb-4">Post not found</h1>
-          <Link href="/blog" className="text-red-600 hover:text-red-700">
-            ← Back to Blog
-          </Link>
+      <div className="min-h-screen bg-gradient-to-br from-gray-50 via-white to-red-50 dark:from-black dark:via-gray-900 dark:to-red-950">
+        <BlogHeader currentPage="blog" />
+        <div className="flex items-center justify-center pt-20">
+          <div className="text-center">
+            <h1 className="text-2xl font-bold mb-4">Post not found</h1>
+            <Link href="/blog" className="text-red-600 hover:text-red-700">
+              ← Back to Blog
+            </Link>
+          </div>
         </div>
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen bg-white dark:bg-black">
+    <div className="min-h-screen bg-gradient-to-br from-gray-50 via-white to-red-50 dark:from-black dark:via-gray-900 dark:to-red-950">
+      <BlogHeader currentPage="blog" />
       {/* Header */}
-      <div className="pt-20 pb-8">
+      <div className="py-8">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
