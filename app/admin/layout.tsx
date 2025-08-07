@@ -15,6 +15,7 @@ import {
   ChatBubbleLeftIcon, 
   UserGroupIcon, 
   EnvelopeIcon,
+  PaperAirplaneIcon,
   Bars3Icon,
   XMarkIcon,
   ArrowRightOnRectangleIcon,
@@ -31,6 +32,7 @@ const navigation = [
   { name: 'Comments', href: '/admin/comments', icon: ChatBubbleLeftIcon },
   { name: 'Users', href: '/admin/users', icon: UserGroupIcon },
   { name: 'Contacts', href: '/admin/contacts', icon: EnvelopeIcon },
+  { name: 'Email Marketing', href: '/admin/emails', icon: PaperAirplaneIcon },
 ]
 
 export default function AdminLayout({
