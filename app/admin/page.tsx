@@ -9,7 +9,8 @@ import {
   UserGroupIcon, 
   EnvelopeIcon,
   EyeIcon,
-  CalendarDaysIcon
+  CalendarDaysIcon,
+  AcademicCapIcon
 } from '@heroicons/react/24/outline'
 import { ArrowTrendingUpIcon as TrendingUpIcon } from '@heroicons/react/24/solid'
 import Link from 'next/link'
@@ -21,6 +22,7 @@ interface DashboardStats {
   comments: { total: number; pending: number }
   users: { total: number; admins: number }
   contacts: { total: number; unread: number }
+  bootcamp: { total: number; pending: number; approved: number }
 }
 
 interface RecentActivity {
@@ -44,12 +46,13 @@ export default function AdminDashboard() {
   const fetchDashboardData = async () => {
     try {
       // Fetch dashboard stats
-      const [postsRes, categoriesRes, commentsRes, usersRes, contactsRes] = await Promise.all([
+      const [postsRes, categoriesRes, commentsRes, usersRes, contactsRes, bootcampRes] = await Promise.all([
         fetch('/api/blog?limit=1000&all=true'), // Get all posts for admin
         fetch('/api/categories'),
         fetch('/api/comments'),
         fetch('/api/users'),
-        fetch('/api/contacts')
+        fetch('/api/contacts'),
+        fetch('/api/bootcamp?limit=1000')
       ])
 
       // Check if all responses are OK
@@ -57,15 +60,18 @@ export default function AdminDashboard() {
         throw new Error('One or more API calls failed')
       }
 
-      const [postsData, categories, comments, users, contacts] = await Promise.all([
+      const [postsData, categories, comments, users, contacts, bootcampData] = await Promise.all([
         postsRes.json(),
         categoriesRes.json(),
         commentsRes.json(),
         usersRes.json(),
-        contactsRes.json()
+        contactsRes.json(),
+        bootcampRes.ok ? bootcampRes.json() : { success: false, data: { enrollments: [], stats: { total: 0, PENDING: 0, APPROVED: 0 } } }
       ])
 
       const posts = postsData.posts || postsData // Handle both array and object response
+      const bootcampEnrollments = bootcampData.success ? bootcampData.data.enrollments : []
+      const bootcampStats = bootcampData.success ? bootcampData.data.stats : { total: 0, PENDING: 0, APPROVED: 0 }
 
       // Calculate stats with fallbacks
       const dashboardStats: DashboardStats = {
@@ -86,6 +92,11 @@ export default function AdminDashboard() {
         contacts: {
           total: Array.isArray(contacts) ? contacts.length : 0,
           unread: Array.isArray(contacts) ? contacts.filter((c: any) => c.status === 'NEW').length : 0
+        },
+        bootcamp: {
+          total: bootcampStats.total || 0,
+          pending: bootcampStats.PENDING || 0,
+          approved: bootcampStats.APPROVED || 0
         }
       }
 
@@ -128,7 +139,8 @@ export default function AdminDashboard() {
         categories: 0,
         comments: { total: 0, pending: 0 },
         users: { total: 0, admins: 0 },
-        contacts: { total: 0, unread: 0 }
+        contacts: { total: 0, unread: 0 },
+        bootcamp: { total: 0, pending: 0, approved: 0 }
       })
       setRecentActivity([])
     } finally {
@@ -184,6 +196,14 @@ export default function AdminDashboard() {
       icon: EnvelopeIcon,
       color: 'from-red-500 to-red-600',
       href: '/admin/contacts'
+    },
+    {
+      title: 'Bootcamp',
+      value: stats?.bootcamp.total || 0,
+      subtitle: `${stats?.bootcamp.pending || 0} pending, ${stats?.bootcamp.approved || 0} approved`,
+      icon: AcademicCapIcon,
+      color: 'from-indigo-500 to-indigo-600',
+      href: '/admin/bootcamp'
     }
   ]
 
@@ -232,7 +252,7 @@ export default function AdminDashboard() {
       </motion.div>
 
       {/* Statistics Cards */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-6">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6 gap-6">
         {statCards.map((card, index) => (
           <motion.div
             key={card.title}

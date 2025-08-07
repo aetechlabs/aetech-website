@@ -5,6 +5,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { motion, AnimatePresence } from 'framer-motion';
 import ThemeToggle from '../../components/ThemeToggle';
+import TopAnnouncementBanner from '../../components/TopAnnouncementBanner';
 
 export default function Navigation() {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -62,15 +63,20 @@ export default function Navigation() {
   ];
 
   return (
-    <motion.nav 
-      initial={{ y: -100 }}
-      animate={{ y: 0 }}
-      className={`fixed top-0 w-full z-50 transition-all duration-500 ${
-        isScrolled 
-          ? 'bg-white/95 dark:bg-black/95 backdrop-blur-md shadow-lg border-b border-gray-200/20 dark:border-gray-700/20' 
-          : 'bg-transparent'
-      }`}
-    >
+    <>
+      {/* Top Announcement Banner */}
+      <TopAnnouncementBanner />
+      
+      <motion.nav 
+        initial={{ y: -100 }}
+        animate={{ y: 0 }}
+        className={`fixed w-full z-50 transition-all duration-500 ${
+          isScrolled 
+            ? 'bg-white/95 dark:bg-black/95 backdrop-blur-md shadow-lg border-b border-gray-200/20 dark:border-gray-700/20 top-0' 
+            : 'bg-transparent top-14'
+        }`}
+        style={{ top: isScrolled ? '0' : '56px' }} // Adjust for banner height
+      >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-16">
           <div className="flex items-center">
@@ -216,6 +222,7 @@ export default function Navigation() {
         </AnimatePresence>
       </div>
     </motion.nav>
+    </>
   );
 }
     

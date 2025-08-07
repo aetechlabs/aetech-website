@@ -2,6 +2,9 @@
 
 import Navigation from "./components/Navigation";
 import ContactForm from "./components/ContactForm";
+import FloatingParticles from "@/components/FloatingParticles";
+import BootcampBanner from "@/components/BootcampBanner";
+import FloatingBootcampButton from "@/components/FloatingBootcampButton";
 import Image from "next/image";
 import Link from "next/link";
 import { motion } from "framer-motion";
@@ -18,8 +21,26 @@ export default function Home() {
       <Navigation />
 
       {/* Hero Section */}
-      <section id="home" className="pt-16 min-h-screen flex items-center bg-gradient-to-br from-red-50 to-red-100 dark:from-gray-900 dark:to-red-900">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
+      <section id="home" className="relative pt-16 min-h-screen flex items-center overflow-hidden">
+        {/* Video Background */}
+        <div className="absolute inset-0 z-0">
+          <video
+            autoPlay
+            muted
+            loop
+            playsInline
+            className="w-full h-full object-cover"
+          >
+            <source src="/videos/person-typing-keyboard.mp4" type="video/mp4" />
+          </video>
+          {/* Dark overlay for better text readability */}
+          <div className="absolute inset-0 bg-black/60 dark:bg-black/70"></div>
+          {/* Floating Particles */}
+          <FloatingParticles count={30} className="text-white/30" />
+        </div>
+        
+        {/* Content */}
+        <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
           <motion.div 
             initial={{ opacity: 0, y: 50 }}
             animate={{ opacity: 1, y: 0 }}
@@ -33,41 +54,34 @@ export default function Home() {
               className="mb-8"
             >
               <Image
-                src="/website-assets/logo-banner-dark.png"
-                alt="AETech Research Labs Limited"
-                width={400}
-                height={120}
-                className="mx-auto h-20 w-auto dark:hidden"
-              />
-              <Image
                 src="/website-assets/logo-banner-white.png"
                 alt="AETech Research Labs Limited"
                 width={400}
                 height={120}
-                className="mx-auto h-20 w-auto hidden dark:block"
+                className="mx-auto h-20 w-auto"
               />
             </motion.div>
             <motion.h1 
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.4 }}
-              className="text-4xl md:text-6xl font-bold mb-6"
+              className="text-4xl md:text-6xl font-bold mb-6 text-white"
             >
-              <span className="text-red-600 dark:text-red-400">AETech</span> Research Labs Limited
+              <span className="text-red-400">AETech</span> Research Labs Limited
             </motion.h1>
             <motion.p 
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.6 }}
-              className="text-xl md:text-2xl mb-8 text-gray-600 dark:text-gray-300 max-w-4xl mx-auto"
+              className="text-xl md:text-2xl mb-8 text-gray-200 max-w-4xl mx-auto"
             >
-              ✨ Engineering Tomorrow's Solutions
+                Engineering Tomorrow's Solutions
             </motion.p>
             <motion.p 
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.8 }}
-              className="text-lg mb-12 text-gray-700 dark:text-gray-300 max-w-4xl mx-auto"
+              className="text-lg mb-12 text-gray-300 max-w-4xl mx-auto"
             >
               Innovation-driven technology company committed to researching, developing, and deploying advanced solutions across software engineering, artificial intelligence, data systems, and integrated technologies.
             </motion.p>
@@ -81,7 +95,7 @@ export default function Home() {
                 whileHover={{ scale: 1.05, y: -2 }}
                 whileTap={{ scale: 0.95 }}
                 onClick={() => scrollToSection('services')}
-                className="bg-red-600 hover:bg-red-700 dark:bg-red-500 dark:hover:bg-red-600 text-white px-8 py-3 rounded-lg font-medium transition-all duration-300 shadow-lg hover:shadow-xl"
+                className="bg-red-600 hover:bg-red-700 text-white px-8 py-3 rounded-lg font-medium transition-all duration-300 shadow-lg hover:shadow-xl"
               >
                 Our Services
               </motion.button>
@@ -89,7 +103,7 @@ export default function Home() {
                 whileHover={{ scale: 1.05, y: -2 }}
                 whileTap={{ scale: 0.95 }}
                 onClick={() => scrollToSection('contact')}
-                className="border border-red-600 dark:border-red-400 text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/20 px-8 py-3 rounded-lg font-medium transition-all duration-300"
+                className="border border-red-400 text-red-400 hover:bg-red-400/20 px-8 py-3 rounded-lg font-medium transition-all duration-300 backdrop-blur-sm"
               >
                 Get in Touch
               </motion.button>
@@ -147,8 +161,24 @@ export default function Home() {
       </section>
 
       {/* Services Section */}
-      <section id="services" className="py-20 bg-gray-50 dark:bg-gray-900">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <section id="services" className="relative py-20 overflow-hidden">
+        {/* Subtle Video Background */}
+        <div className="absolute inset-0 z-0">
+          <video
+            autoPlay
+            muted
+            loop
+            playsInline
+            className="w-full h-full object-cover opacity-10"
+          >
+            <source src="/videos/person-typing-keyboard.mp4" type="video/mp4" />
+          </video>
+          {/* Light overlay */}
+          <div className="absolute inset-0 bg-gray-50/95 dark:bg-gray-900/95"></div>
+        </div>
+        
+        {/* Content */}
+        <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
             <h2 className="text-3xl md:text-4xl font-bold mb-6">🔷 Service Offerings</h2>
             <p className="text-lg text-gray-600 dark:text-gray-400 max-w-3xl mx-auto">
@@ -187,15 +217,33 @@ export default function Home() {
                 desc: "Supporting startups with technical strategy, product design, MVP development, and scale planning to accelerate growth efficiently."
               }
             ].map((service, index) => (
-              <div key={service.title} className="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105 group">
-                <div className="text-green-500 text-2xl mb-4 group-hover:scale-110 transition-transform duration-300">✔️</div>
-                <h3 className="text-xl font-bold mb-4 group-hover:text-red-600 dark:group-hover:text-red-400 transition-colors duration-300">
-                  {service.title}
-                </h3>
-                <p className="text-gray-600 dark:text-gray-400">
-                  {service.desc}
-                </p>
-              </div>
+              <motion.div 
+                key={service.title} 
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6, delay: index * 0.1 }}
+                viewport={{ once: true }}
+                whileHover={{ y: -8, scale: 1.02 }}
+                className="bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm p-8 rounded-xl shadow-lg hover:shadow-2xl transition-all duration-500 border border-gray-200/50 dark:border-gray-700/50 hover:border-red-300 dark:hover:border-red-600 group relative overflow-hidden"
+              >
+                {/* Animated background gradient on hover */}
+                <div className="absolute inset-0 bg-gradient-to-br from-red-50/50 to-transparent dark:from-red-900/20 dark:to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                
+                <div className="relative z-10">
+                  <motion.div 
+                    className="text-red-500 dark:text-red-400 text-3xl mb-6 group-hover:scale-110 transition-transform duration-300"
+                    whileHover={{ rotate: 5 }}
+                  >
+                    🚀
+                  </motion.div>
+                  <h3 className="text-xl font-bold mb-4 group-hover:text-red-600 dark:group-hover:text-red-400 transition-colors duration-300">
+                    {service.title}
+                  </h3>
+                  <p className="text-gray-600 dark:text-gray-400 leading-relaxed">
+                    {service.desc}
+                  </p>
+                </div>
+              </motion.div>
             ))}
           </div>
         </div>
@@ -262,6 +310,12 @@ export default function Home() {
           </div>
         </div>
       </footer>
+
+      {/* Bootcamp Banner - Shows after 3 seconds */}
+      <BootcampBanner delay={3000} autoShow={true} />
+      
+      {/* Floating Bootcamp Button - Shows after 5 seconds */}
+      <FloatingBootcampButton />
     </div>
   );
 }

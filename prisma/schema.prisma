@@ -156,3 +156,28 @@ enum ContactStatus {
   RESOLVED
   CLOSED
 }
+
+model BootcampEnrollment {
+  id                  String   @id @default(auto()) @map("_id") @db.ObjectId
+  firstName           String
+  lastName            String
+  email               String
+  phone               String
+  age                 String
+  educationLevel      String
+  coursesInterested   String[]
+  hasLaptop           String
+  experience          String?
+  motivation          String
+  heardAbout          String?
+  status              EnrollmentStatus @default(PENDING)
+  createdAt           DateTime @default(now())
+  updatedAt           DateTime @updatedAt
+}
+
+enum EnrollmentStatus {
+  PENDING
+  APPROVED
+  REJECTED
+  WAITLISTED
+}

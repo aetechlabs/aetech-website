@@ -22,7 +22,8 @@ import {
   ChevronLeftIcon,
   ChevronRightIcon,
   SunIcon,
-  MoonIcon
+  MoonIcon,
+  AcademicCapIcon
 } from '@heroicons/react/24/outline'
 
 const navigation = [
@@ -32,6 +33,7 @@ const navigation = [
   { name: 'Comments', href: '/admin/comments', icon: ChatBubbleLeftIcon },
   { name: 'Users', href: '/admin/users', icon: UserGroupIcon },
   { name: 'Contacts', href: '/admin/contacts', icon: EnvelopeIcon },
+  { name: 'Bootcamp', href: '/admin/bootcamp', icon: AcademicCapIcon },
   { name: 'Email Marketing', href: '/admin/emails', icon: PaperAirplaneIcon },
 ]
 
