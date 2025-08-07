@@ -48,7 +48,7 @@ export default function AdminLayout({
     if (status === 'loading') return
     
     if (!session || (session.user as any)?.role !== 'ADMIN') {
-      router.push('/admin/signin')
+      router.push('/auth/signin')
       return
     }
   }, [session, status, router])
