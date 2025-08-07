@@ -137,7 +137,7 @@ export default function AdminLayout({
                       {session.user?.name || 'Admin User'}
                     </p>
                     <p className="text-xs text-gray-500 dark:text-gray-400 truncate">
-                      {session.user?.email || 'admin@aetech.com'}
+                      {session.user?.email || 'admin@aetechlabs.com'}
                     </p>
                   </div>
                 )}
@@ -239,7 +239,7 @@ export default function AdminLayout({
                         {session.user?.name || 'Admin User'}
                       </p>
                       <p className="text-xs text-gray-500 dark:text-gray-400 truncate">
-                        {session.user?.email || 'admin@aetech.com'}
+                        {session.user?.email || 'admin@aetechlabs.com'}
                       </p>
                     </div>
                   </div>

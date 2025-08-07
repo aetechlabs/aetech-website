@@ -104,22 +104,22 @@ export default function ContactPage() {
     {
       icon: <MapPinIcon className="w-6 h-6" />,
       title: "Headquarters",
-      details: ["123 Innovation Drive", "Tech City, TC 12345", "United States"]
+      details: ["Suite 30, 2nd Floor Es-Em Plaza", "No 34, Munguno Crescent", "Behind Berger Yard, Utako Abuja, Nigeria"]
     },
     {
       icon: <PhoneIcon className="w-6 h-6" />,
       title: "Phone",
-      details: ["+1 (555) 123-4567", "+1 (555) 987-6543"]
+      details: ["+234 704 440 0347", "WhatsApp Available"]
     },
     {
       icon: <EnvelopeIcon className="w-6 h-6" />,
       title: "Email",
-      details: ["info@aetech.com", "partnerships@aetech.com"]
+      details: ["info@aetechlabs.com", "support@aetechlabs.com"]
     },
     {
       icon: <ClockIcon className="w-6 h-6" />,
       title: "Business Hours",
-      details: ["Monday - Friday: 9:00 AM - 6:00 PM", "Saturday: 10:00 AM - 4:00 PM", "Sunday: Closed"]
+      details: ["Monday - Friday: 9:00 AM - 6:00 PM WAT", "Saturday: 10:00 AM - 4:00 PM WAT", "Sunday: Closed"]
     }
   ];
 
@@ -169,7 +169,7 @@ export default function ContactPage() {
               transition={{ duration: 0.8, delay: 0.4 }}
             >
               Ready to transform your business with cutting-edge technology? 
-              Let's discuss your project and explore how we can help you achieve your goals.
+              Let's discuss your project and explore how AETech Labs can help you achieve your goals.
             </motion.p>
           </motion.div>
         </div>
@@ -254,7 +254,7 @@ export default function ContactPage() {
                       value={formData.name}
                       onChange={(e) => setFormData(prev => ({ ...prev, name: e.target.value }))}
                       className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-xl bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-red-500 focus:border-transparent transition-all"
-                      placeholder="John Doe"
+                      placeholder="Your Full Name"
                     />
                   </div>
                   <div>
@@ -268,7 +268,7 @@ export default function ContactPage() {
                       value={formData.email}
                       onChange={(e) => setFormData(prev => ({ ...prev, email: e.target.value }))}
                       className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-xl bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-red-500 focus:border-transparent transition-all"
-                      placeholder="john@company.com"
+                      placeholder="your.email@company.com"
                     />
                   </div>
                 </div>
@@ -297,7 +297,7 @@ export default function ContactPage() {
                       value={formData.country}
                       onChange={(e) => setFormData(prev => ({ ...prev, country: e.target.value }))}
                       className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-xl bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-red-500 focus:border-transparent transition-all"
-                      placeholder="United States"
+                      placeholder="Nigeria"
                     />
                   </div>
                 </div>
@@ -466,7 +466,7 @@ export default function ContactPage() {
               <div className="bg-white dark:bg-gray-800 rounded-2xl p-8 shadow-xl border border-gray-100 dark:border-gray-700">
                 <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-6 flex items-center">
                   <GlobeAltIcon className="w-6 h-6 text-red-600 dark:text-red-400 mr-3" />
-                  Why Choose AETech?
+                  Why Choose AETech Labs?
                 </h3>
                 <ul className="space-y-4">
                   <li className="flex items-start space-x-3">
