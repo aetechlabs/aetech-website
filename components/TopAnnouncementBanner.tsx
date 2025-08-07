@@ -43,7 +43,7 @@ export default function TopAnnouncementBanner() {
           animate={{ height: "auto", opacity: 1 }}
           exit={{ height: 0, opacity: 0 }}
           transition={{ duration: 0.3 }}
-          className="bg-gradient-to-r from-[#c1272d] to-red-600 text-white fixed top-0 left-0 right-0 z-[60] overflow-hidden"
+          className="bg-gradient-to-r from-[#c1272d] to-red-600 text-white fixed top-0 left-0 right-0 z-50 overflow-hidden"
         >
           {/* Animated background pattern */}
           <div className="absolute inset-0 opacity-10">

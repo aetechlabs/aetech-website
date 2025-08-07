@@ -26,7 +26,7 @@ export default function FloatingBootcampButton() {
           stiffness: 300,
           delay: 5 // Show after 5 seconds
         }}
-        className="fixed bottom-6 right-6 z-40"
+        className="fixed bottom-6 right-6 z-30"
         onMouseEnter={() => setIsHovered(true)}
         onMouseLeave={() => setIsHovered(false)}
       >
