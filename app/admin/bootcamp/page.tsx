@@ -161,17 +161,17 @@ export default function BootcampManagement() {
     <div className="space-y-8">
       {/* Header */}
       <motion.div 
-        className="bg-gradient-to-r from-[#c1272d] to-red-600 rounded-2xl p-8 text-white"
+        className="bg-gradient-to-r from-[#c1272d] to-red-600 rounded-2xl p-4 sm:p-6 lg:p-8 text-white"
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5 }}
       >
-        <div className="flex items-center justify-between">
+        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between">
           <div>
-            <h1 className="text-3xl font-bold mb-2">Bootcamp Enrollments</h1>
-            <p className="text-red-100">Manage DevStarter Bootcamp applications</p>
+            <h1 className="text-xl sm:text-2xl lg:text-3xl font-bold mb-2">Bootcamp Enrollments</h1>
+            <p className="text-red-100 text-sm sm:text-base">Manage DevStarter Bootcamp applications</p>
           </div>
-          <div className="hidden lg:flex items-center space-x-4">
+          <div className="hidden lg:flex items-center space-x-4 mt-4 sm:mt-0">
             <div className="bg-white/10 backdrop-blur-sm rounded-lg p-4">
               <UserGroupIcon className="h-8 w-8" />
             </div>
@@ -181,104 +181,104 @@ export default function BootcampManagement() {
 
       {/* Statistics Cards */}
       {stats && (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-6">
+        <div className="grid grid-cols-2 lg:grid-cols-5 gap-3 sm:gap-4 lg:gap-6">
           <motion.div
-            className="bg-white rounded-xl shadow-sm p-6 border border-gray-100"
+            className="bg-white rounded-xl shadow-sm p-4 sm:p-6 border border-gray-100"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5 }}
           >
             <div className="flex items-center justify-between mb-4">
-              <div className="p-3 rounded-lg bg-gradient-to-r from-gray-500 to-gray-600">
-                <UserGroupIcon className="h-6 w-6 text-white" />
+              <div className="p-2 sm:p-3 rounded-lg bg-gradient-to-r from-gray-500 to-gray-600">
+                <UserGroupIcon className="h-5 w-5 sm:h-6 sm:w-6 text-white" />
               </div>
             </div>
             <div>
-              <h3 className="text-2xl font-bold text-gray-900">{stats.total}</h3>
-              <p className="text-gray-600 text-sm">Total Applications</p>
+              <h3 className="text-lg sm:text-2xl font-bold text-gray-900">{stats.total}</h3>
+              <p className="text-gray-600 text-xs sm:text-sm">Total Applications</p>
             </div>
           </motion.div>
 
           <motion.div
-            className="bg-white rounded-xl shadow-sm p-6 border border-gray-100"
+            className="bg-white rounded-xl shadow-sm p-4 sm:p-6 border border-gray-100"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.1 }}
           >
             <div className="flex items-center justify-between mb-4">
-              <div className="p-3 rounded-lg bg-gradient-to-r from-blue-500 to-blue-600">
-                <ClockIcon className="h-6 w-6 text-white" />
+              <div className="p-2 sm:p-3 rounded-lg bg-gradient-to-r from-blue-500 to-blue-600">
+                <ClockIcon className="h-5 w-5 sm:h-6 sm:w-6 text-white" />
               </div>
             </div>
             <div>
-              <h3 className="text-2xl font-bold text-gray-900">{stats.PENDING}</h3>
-              <p className="text-gray-600 text-sm">Pending Review</p>
+              <h3 className="text-lg sm:text-2xl font-bold text-gray-900">{stats.PENDING}</h3>
+              <p className="text-gray-600 text-xs sm:text-sm">Pending Review</p>
             </div>
           </motion.div>
 
           <motion.div
-            className="bg-white rounded-xl shadow-sm p-6 border border-gray-100"
+            className="bg-white rounded-xl shadow-sm p-4 sm:p-6 border border-gray-100"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.2 }}
           >
             <div className="flex items-center justify-between mb-4">
-              <div className="p-3 rounded-lg bg-gradient-to-r from-green-500 to-green-600">
-                <CheckCircleIcon className="h-6 w-6 text-white" />
+              <div className="p-2 sm:p-3 rounded-lg bg-gradient-to-r from-green-500 to-green-600">
+                <CheckCircleIcon className="h-5 w-5 sm:h-6 sm:w-6 text-white" />
               </div>
             </div>
             <div>
-              <h3 className="text-2xl font-bold text-gray-900">{stats.APPROVED}</h3>
-              <p className="text-gray-600 text-sm">Approved</p>
+              <h3 className="text-lg sm:text-2xl font-bold text-gray-900">{stats.APPROVED}</h3>
+              <p className="text-gray-600 text-xs sm:text-sm">Approved</p>
             </div>
           </motion.div>
 
           <motion.div
-            className="bg-white rounded-xl shadow-sm p-6 border border-gray-100"
+            className="bg-white rounded-xl shadow-sm p-4 sm:p-6 border border-gray-100"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.3 }}
           >
             <div className="flex items-center justify-between mb-4">
-              <div className="p-3 rounded-lg bg-gradient-to-r from-yellow-500 to-yellow-600">
-                <ExclamationTriangleIcon className="h-6 w-6 text-white" />
+              <div className="p-2 sm:p-3 rounded-lg bg-gradient-to-r from-yellow-500 to-yellow-600">
+                <ExclamationTriangleIcon className="h-5 w-5 sm:h-6 sm:w-6 text-white" />
               </div>
             </div>
             <div>
-              <h3 className="text-2xl font-bold text-gray-900">{stats.WAITLISTED}</h3>
-              <p className="text-gray-600 text-sm">Waitlisted</p>
+              <h3 className="text-lg sm:text-2xl font-bold text-gray-900">{stats.WAITLISTED}</h3>
+              <p className="text-gray-600 text-xs sm:text-sm">Waitlisted</p>
             </div>
           </motion.div>
 
           <motion.div
-            className="bg-white rounded-xl shadow-sm p-6 border border-gray-100"
+            className="bg-white rounded-xl shadow-sm p-4 sm:p-6 border border-gray-100"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.4 }}
           >
             <div className="flex items-center justify-between mb-4">
-              <div className="p-3 rounded-lg bg-gradient-to-r from-red-500 to-red-600">
-                <XCircleIcon className="h-6 w-6 text-white" />
+              <div className="p-2 sm:p-3 rounded-lg bg-gradient-to-r from-red-500 to-red-600">
+                <XCircleIcon className="h-5 w-5 sm:h-6 sm:w-6 text-white" />
               </div>
             </div>
             <div>
-              <h3 className="text-2xl font-bold text-gray-900">{stats.REJECTED}</h3>
-              <p className="text-gray-600 text-sm">Rejected</p>
+              <h3 className="text-lg sm:text-2xl font-bold text-gray-900">{stats.REJECTED}</h3>
+              <p className="text-gray-600 text-xs sm:text-sm">Rejected</p>
             </div>
           </motion.div>
         </div>
       )}
 
       {/* Filters and Search */}
-      <div className="bg-white rounded-xl shadow-sm p-6 border border-gray-100">
-        <div className="flex flex-col md:flex-row gap-4 items-center justify-between">
-          <div className="flex items-center gap-4">
+      <div className="bg-white rounded-xl shadow-sm p-4 sm:p-6 border border-gray-100">
+        <div className="flex flex-col space-y-4 sm:space-y-0 md:flex-row gap-4 items-start sm:items-center justify-between">
+          <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4 w-full">
             <div className="flex items-center gap-2">
               <FunnelIcon className="h-5 w-5 text-gray-400" />
               <select
                 value={statusFilter}
                 onChange={(e) => setStatusFilter(e.target.value)}
-                className="border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-[#c1272d] focus:border-transparent"
+                className="border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-[#c1272d] focus:border-transparent min-w-0 flex-1 sm:flex-none"
               >
                 <option value="all">All Status</option>
                 <option value="PENDING">Pending</option>
@@ -289,7 +289,7 @@ export default function BootcampManagement() {
             </div>
           </div>
 
-          <div className="relative">
+          <div className="relative w-full md:w-auto">
             <MagnifyingGlassIcon className="h-5 w-5 text-gray-400 absolute left-3 top-1/2 transform -translate-y-1/2" />
             <input
               type="text"
@@ -302,93 +302,174 @@ export default function BootcampManagement() {
         </div>
       </div>
 
-      {/* Enrollments Table */}
+      {/* Enrollments - Desktop Table */}
       <div className="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden">
-        <div className="overflow-x-auto">
-          <table className="w-full">
-            <thead className="bg-gray-50 border-b border-gray-200">
-              <tr>
-                <th className="px-6 py-3 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
-                  Applicant
-                </th>
-                <th className="px-6 py-3 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
-                  Contact
-                </th>
-                <th className="px-6 py-3 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
-                  Courses Interested
-                </th>
-                <th className="px-6 py-3 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
-                  Status
-                </th>
-                <th className="px-6 py-3 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
-                  Applied
-                </th>
-                <th className="px-6 py-3 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
-                  Actions
-                </th>
-              </tr>
-            </thead>
-            <tbody className="bg-white divide-y divide-gray-200">
-              {enrollments.map((enrollment, index) => (
-                <motion.tr
-                  key={enrollment.id}
-                  initial={{ opacity: 0, x: -20 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  transition={{ duration: 0.3, delay: index * 0.05 }}
-                  className="hover:bg-gray-50"
-                >
-                  <td className="px-6 py-4 whitespace-nowrap">
-                    <div>
-                      <div className="text-sm font-semibold text-gray-900">
-                        {enrollment.firstName} {enrollment.lastName}
+        <div className="hidden lg:block">
+          <div className="overflow-x-auto">
+            <table className="w-full">
+              <thead className="bg-gray-50 border-b border-gray-200">
+                <tr>
+                  <th className="px-6 py-3 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
+                    Applicant
+                  </th>
+                  <th className="px-6 py-3 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
+                    Contact
+                  </th>
+                  <th className="px-6 py-3 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
+                    Courses Interested
+                  </th>
+                  <th className="px-6 py-3 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
+                    Status
+                  </th>
+                  <th className="px-6 py-3 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
+                    Applied
+                  </th>
+                  <th className="px-6 py-3 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
+                    Actions
+                  </th>
+                </tr>
+              </thead>
+              <tbody className="bg-white divide-y divide-gray-200">
+                {enrollments.map((enrollment, index) => (
+                  <motion.tr
+                    key={enrollment.id}
+                    initial={{ opacity: 0, x: -20 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ duration: 0.3, delay: index * 0.05 }}
+                    className="hover:bg-gray-50"
+                  >
+                    <td className="px-6 py-4 whitespace-nowrap">
+                      <div>
+                        <div className="text-sm font-semibold text-gray-900">
+                          {enrollment.firstName} {enrollment.lastName}
+                        </div>
+                        <div className="text-sm text-gray-500">
+                          Age: {enrollment.age} • {enrollment.educationLevel}
+                        </div>
                       </div>
-                      <div className="text-sm text-gray-500">
-                        Age: {enrollment.age} • {enrollment.educationLevel}
+                    </td>
+                    <td className="px-6 py-4 whitespace-nowrap">
+                      <div className="text-sm text-gray-900">{enrollment.email}</div>
+                      <div className="text-sm text-gray-500">{enrollment.phone}</div>
+                    </td>
+                    <td className="px-6 py-4">
+                      <div className="flex flex-wrap gap-1">
+                        {enrollment.coursesInterested.slice(0, 2).map((course, idx) => (
+                          <span
+                            key={idx}
+                            className="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-gray-100 text-gray-800"
+                          >
+                            {course}
+                          </span>
+                        ))}
+                        {enrollment.coursesInterested.length > 2 && (
+                          <span className="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-gray-100 text-gray-800">
+                            +{enrollment.coursesInterested.length - 2} more
+                          </span>
+                        )}
                       </div>
-                    </div>
-                  </td>
-                  <td className="px-6 py-4 whitespace-nowrap">
-                    <div className="text-sm text-gray-900">{enrollment.email}</div>
-                    <div className="text-sm text-gray-500">{enrollment.phone}</div>
-                  </td>
-                  <td className="px-6 py-4">
-                    <div className="flex flex-wrap gap-1">
-                      {enrollment.coursesInterested.slice(0, 2).map((course, idx) => (
-                        <span
-                          key={idx}
-                          className="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-gray-100 text-gray-800"
-                        >
-                          {course}
-                        </span>
-                      ))}
-                      {enrollment.coursesInterested.length > 2 && (
-                        <span className="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-gray-100 text-gray-800">
-                          +{enrollment.coursesInterested.length - 2} more
-                        </span>
-                      )}
-                    </div>
-                  </td>
-                  <td className="px-6 py-4 whitespace-nowrap">
-                    <div className={`inline-flex items-center gap-1 px-2 py-1 rounded-full text-xs font-semibold border ${getStatusColor(enrollment.status)}`}>
-                      {getStatusIcon(enrollment.status)}
-                      {enrollment.status}
-                    </div>
-                  </td>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                    {formatDate(enrollment.createdAt)}
-                  </td>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
-                    <button
-                      onClick={() => setSelectedEnrollment(enrollment)}
-                      className="text-[#c1272d] hover:text-red-700 mr-3"
-                    >
-                      <EyeIcon className="h-5 w-5" />
-                    </button>
-                  </td>
-                </motion.tr>
-              ))}
-            </tbody>
-          </table>
+                    </td>
+                    <td className="px-6 py-4 whitespace-nowrap">
+                      <div className={`inline-flex items-center gap-1 px-2 py-1 rounded-full text-xs font-semibold border ${getStatusColor(enrollment.status)}`}>
+                        {getStatusIcon(enrollment.status)}
+                        {enrollment.status}
+                      </div>
+                    </td>
+                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                      {formatDate(enrollment.createdAt)}
+                    </td>
+                    <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
+                      <button
+                        onClick={() => setSelectedEnrollment(enrollment)}
+                        className="text-[#c1272d] hover:text-red-700 mr-3"
+                      >
+                        <EyeIcon className="h-5 w-5" />
+                      </button>
+                    </td>
+                  </motion.tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        {/* Enrollments - Mobile Cards */}
+        <div className="lg:hidden divide-y divide-gray-200">
+          {enrollments.map((enrollment, index) => (
+            <motion.div
+              key={enrollment.id}
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.3, delay: index * 0.05 }}
+              className="p-4 sm:p-6 hover:bg-gray-50"
+            >
+              <div className="flex items-start justify-between mb-4">
+                <div className="flex items-center space-x-3">
+                  <div className="w-10 h-10 bg-gradient-to-r from-[#c1272d] to-red-600 rounded-full flex items-center justify-center text-white font-medium text-sm">
+                    {enrollment.firstName.charAt(0)}{enrollment.lastName.charAt(0)}
+                  </div>
+                  <div className="min-w-0 flex-1">
+                    <p className="font-semibold text-gray-900 text-sm sm:text-base">
+                      {enrollment.firstName} {enrollment.lastName}
+                    </p>
+                    <p className="text-xs sm:text-sm text-gray-500">
+                      Age: {enrollment.age} • {enrollment.educationLevel}
+                    </p>
+                  </div>
+                </div>
+                <div className={`inline-flex items-center gap-1 px-2 py-1 rounded-full text-xs font-semibold border ${getStatusColor(enrollment.status)}`}>
+                  {getStatusIcon(enrollment.status)}
+                  {enrollment.status}
+                </div>
+              </div>
+
+              <div className="space-y-3">
+                <div className="flex flex-col space-y-1">
+                  <div className="flex items-center space-x-2">
+                    <EnvelopeIcon className="h-4 w-4 text-gray-400" />
+                    <span className="text-sm text-gray-900 break-all">{enrollment.email}</span>
+                  </div>
+                  <div className="flex items-center space-x-2">
+                    <PhoneIcon className="h-4 w-4 text-gray-400" />
+                    <span className="text-sm text-gray-900">{enrollment.phone}</span>
+                  </div>
+                </div>
+
+                <div>
+                  <p className="text-xs text-gray-500 mb-2">Courses Interested:</p>
+                  <div className="flex flex-wrap gap-1">
+                    {enrollment.coursesInterested.slice(0, 3).map((course, idx) => (
+                      <span
+                        key={idx}
+                        className="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-gray-100 text-gray-800"
+                      >
+                        {course}
+                      </span>
+                    ))}
+                    {enrollment.coursesInterested.length > 3 && (
+                      <span className="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-gray-100 text-gray-800">
+                        +{enrollment.coursesInterested.length - 3} more
+                      </span>
+                    )}
+                  </div>
+                </div>
+
+                <div className="flex items-center justify-between pt-2">
+                  <div className="flex items-center space-x-2">
+                    <CalendarDaysIcon className="h-4 w-4 text-gray-400" />
+                    <span className="text-xs text-gray-500">Applied {formatDate(enrollment.createdAt)}</span>
+                  </div>
+                  <button
+                    onClick={() => setSelectedEnrollment(enrollment)}
+                    className="inline-flex items-center px-3 py-1 bg-[#c1272d] text-white rounded-lg hover:bg-red-700 transition-colors text-xs font-medium"
+                  >
+                    <EyeIcon className="h-4 w-4 mr-1" />
+                    View Details
+                  </button>
+                </div>
+              </div>
+            </motion.div>
+          ))}
         </div>
 
         {enrollments.length === 0 && (

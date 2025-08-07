@@ -233,15 +233,15 @@ export default function AdminDashboard() {
     <div className="space-y-8">
       {/* Welcome Header */}
       <motion.div 
-        className="bg-gradient-to-r from-[#c1272d] to-red-600 rounded-2xl p-8 text-white"
+        className="bg-gradient-to-r from-[#c1272d] to-red-600 rounded-2xl p-4 sm:p-6 lg:p-8 text-white"
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5 }}
       >
-        <div className="flex items-center justify-between">
-          <div>
-            <h1 className="text-3xl font-bold mb-2">Welcome to AETech Admin</h1>
-            <p className="text-red-100">Manage your website content and monitor activity</p>
+        <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between">
+          <div className="mb-4 lg:mb-0">
+            <h1 className="text-2xl sm:text-3xl font-bold mb-2">Welcome to AETech Admin</h1>
+            <p className="text-red-100 text-sm sm:text-base">Manage your website content and monitor activity</p>
           </div>
           <div className="hidden lg:flex items-center space-x-4">
             <div className="bg-white/10 backdrop-blur-sm rounded-lg p-4">
@@ -252,7 +252,7 @@ export default function AdminDashboard() {
       </motion.div>
 
       {/* Statistics Cards */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6 gap-6">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6 gap-4 sm:gap-6">
         {statCards.map((card, index) => (
           <motion.div
             key={card.title}
@@ -261,17 +261,17 @@ export default function AdminDashboard() {
             transition={{ duration: 0.5, delay: index * 0.1 }}
           >
             <Link href={card.href}>
-              <div className="bg-white rounded-xl shadow-sm hover:shadow-lg transition-all duration-300 p-6 border border-gray-100 hover:border-gray-200 group">
-                <div className="flex items-center justify-between mb-4">
-                  <div className={`p-3 rounded-lg bg-gradient-to-r ${card.color}`}>
-                    <card.icon className="h-6 w-6 text-white" />
+              <div className="bg-white rounded-xl shadow-sm hover:shadow-lg transition-all duration-300 p-4 sm:p-6 border border-gray-100 hover:border-gray-200 group">
+                <div className="flex items-center justify-between mb-3 sm:mb-4">
+                  <div className={`p-2 sm:p-3 rounded-lg bg-gradient-to-r ${card.color}`}>
+                    <card.icon className="h-5 w-5 sm:h-6 sm:w-6 text-white" />
                   </div>
-                  <EyeIcon className="h-5 w-5 text-gray-400 group-hover:text-gray-600 transition-colors" />
+                  <EyeIcon className="h-4 w-4 sm:h-5 sm:w-5 text-gray-400 group-hover:text-gray-600 transition-colors" />
                 </div>
                 <div>
-                  <p className="text-2xl font-bold text-gray-900 mb-1">{card.value}</p>
+                  <p className="text-xl sm:text-2xl font-bold text-gray-900 mb-1">{card.value}</p>
                   <p className="text-sm font-medium text-gray-600 mb-1">{card.title}</p>
-                  <p className="text-xs text-gray-500">{card.subtitle}</p>
+                  <p className="text-xs text-gray-500 leading-relaxed">{card.subtitle}</p>
                 </div>
               </div>
             </Link>
@@ -286,7 +286,7 @@ export default function AdminDashboard() {
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5, delay: 0.6 }}
       >
-        <div className="px-6 py-4 border-b border-gray-100">
+        <div className="px-4 sm:px-6 py-4 border-b border-gray-100">
           <h2 className="text-lg font-semibold text-gray-900">Recent Activity</h2>
         </div>
         <div className="divide-y divide-gray-100">
@@ -295,15 +295,15 @@ export default function AdminDashboard() {
             return (
               <motion.div
                 key={activity.id}
-                className="p-6 hover:bg-gray-50 transition-colors"
+                className="p-4 sm:p-6 hover:bg-gray-50 transition-colors"
                 initial={{ opacity: 0, x: -20 }}
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ duration: 0.3, delay: 0.1 * index }}
               >
-                <div className="flex items-center space-x-4">
+                <div className="flex items-start sm:items-center space-x-3 sm:space-x-4">
                   <div className="flex-shrink-0">
                     <div className="p-2 bg-gray-100 rounded-lg">
-                      <Icon className="h-5 w-5 text-gray-600" />
+                      <Icon className="h-4 w-4 sm:h-5 sm:w-5 text-gray-600" />
                     </div>
                   </div>
                   <div className="flex-1 min-w-0">
@@ -314,7 +314,7 @@ export default function AdminDashboard() {
                       {activity.description}
                     </p>
                   </div>
-                  <div className="flex items-center space-x-3">
+                  <div className="flex flex-col sm:flex-row sm:items-center space-y-2 sm:space-y-0 sm:space-x-3">
                     {activity.status && (
                       <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${getStatusColor(activity.status)}`}>
                         {activity.status}
@@ -333,12 +333,12 @@ export default function AdminDashboard() {
 
       {/* Quick Actions */}
       <motion.div 
-        className="grid grid-cols-1 md:grid-cols-2 gap-6"
+        className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6"
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5, delay: 0.8 }}
       >
-        <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-6">
+        <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-4 sm:p-6">
           <h3 className="text-lg font-semibold text-gray-900 mb-4">Quick Actions</h3>
           <div className="space-y-3">
             <Link 
@@ -346,19 +346,19 @@ export default function AdminDashboard() {
               className="flex items-center p-3 bg-[#c1272d] text-white rounded-lg hover:bg-red-700 transition-colors"
             >
               <DocumentTextIcon className="h-5 w-5 mr-3" />
-              Create New Post
+              <span className="text-sm sm:text-base">Create New Post</span>
             </Link>
             <Link 
               href="/admin/categories"
               className="flex items-center p-3 bg-gray-100 text-gray-700 rounded-lg hover:bg-gray-200 transition-colors"
             >
               <TagIcon className="h-5 w-5 mr-3" />
-              Manage Categories
+              <span className="text-sm sm:text-base">Manage Categories</span>
             </Link>
           </div>
         </div>
 
-        <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-6">
+        <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-4 sm:p-6">
           <h3 className="text-lg font-semibold text-gray-900 mb-4">System Status</h3>
           <div className="space-y-3">
             <div className="flex items-center justify-between p-3 bg-green-50 rounded-lg">

@@ -27,6 +27,7 @@
     "cloudinary": "^2.7.0",
     "framer-motion": "^12.23.9",
     "heroicons": "^2.2.0",
+    "html2canvas": "^1.4.1",
     "multer": "^2.0.2",
     "next": "15.4.4",
     "next-auth": "^4.24.11",
@@ -42,6 +43,7 @@
   },
   "devDependencies": {
     "@tailwindcss/postcss": "^4",
+    "@types/html2canvas": "^0.5.35",
     "@types/multer": "^2.0.0",
     "@types/node": "^20",
     "@types/nodemailer": "^6.4.17",

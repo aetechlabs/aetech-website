@@ -23,7 +23,8 @@ import {
   ChevronRightIcon,
   SunIcon,
   MoonIcon,
-  AcademicCapIcon
+  AcademicCapIcon,
+  MegaphoneIcon
 } from '@heroicons/react/24/outline'
 
 const navigation = [
@@ -34,6 +35,7 @@ const navigation = [
   { name: 'Users', href: '/admin/users', icon: UserGroupIcon },
   { name: 'Contacts', href: '/admin/contacts', icon: EnvelopeIcon },
   { name: 'Bootcamp', href: '/admin/bootcamp', icon: AcademicCapIcon },
+  { name: 'Announcements', href: '/admin/announcements', icon: MegaphoneIcon },
   { name: 'Email Marketing', href: '/admin/emails', icon: PaperAirplaneIcon },
 ]
 
@@ -326,7 +328,7 @@ export default function AdminLayout({
           {/* Main content area */}
           <main className="flex-1 overflow-auto">
             <motion.div 
-              className="p-6 lg:p-8"
+              className="p-3 sm:p-6 lg:p-8"
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.3 }}
