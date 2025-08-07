@@ -3,6 +3,7 @@
 import Navigation from "./components/Navigation";
 import ContactForm from "./components/ContactForm";
 import Image from "next/image";
+import Link from "next/link";
 import { motion } from "framer-motion";
 
 export default function Home() {
@@ -248,10 +249,12 @@ export default function Home() {
             <h3 className="text-2xl font-bold mb-4 text-red-400">AETech Research Labs Limited</h3>
             <p className="text-gray-300 mb-6">✨ Engineering Tomorrow's Solutions</p>
             <div className="flex justify-center space-x-6 mb-6">
-              <a href="#home" className="text-gray-400 hover:text-red-400 transition-colors">Home</a>
-              <a href="#about" className="text-gray-400 hover:text-red-400 transition-colors">About</a>
-              <a href="#services" className="text-gray-400 hover:text-red-400 transition-colors">Services</a>
-              <a href="#contact" className="text-gray-400 hover:text-red-400 transition-colors">Contact</a>
+              <Link href="#home" className="text-gray-400 hover:text-red-400 transition-colors">Home</Link>
+              <Link href="#about" className="text-gray-400 hover:text-red-400 transition-colors">About</Link>
+              <Link href="#services" className="text-gray-400 hover:text-red-400 transition-colors">Services</Link>
+              <Link href="#contact" className="text-gray-400 hover:text-red-400 transition-colors">Contact</Link>
+              <Link href="/terms" className="text-gray-400 hover:text-red-400 transition-colors">Terms</Link>
+              <Link href="/privacy" className="text-gray-400 hover:text-red-400 transition-colors">Privacy</Link>
             </div>
             <p className="text-gray-400 text-sm">
               © 2025 AETech Research Labs Limited. All rights reserved.

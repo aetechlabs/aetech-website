@@ -14,7 +14,7 @@ import {
 } from '@heroicons/react/24/outline';
 
 interface BlogHeaderProps {
-  currentPage?: 'blog' | 'about' | 'contact';
+  currentPage?: 'blog' | 'about' | 'contact' | 'terms' | 'privacy';
 }
 
 export default function BlogHeader({ currentPage = 'blog' }: BlogHeaderProps) {

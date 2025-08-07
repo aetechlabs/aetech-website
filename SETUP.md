@@ -12,7 +12,7 @@ DATABASE_URL="your_mongodb_connection_string"
 
 # NextAuth
 NEXTAUTH_SECRET="your_nextauth_secret"
-NEXTAUTH_URL="http://localhost:3000"
+NEXTAUTH_URL="https://www.aetechlabs.com"
 
 # Google OAuth
 GOOGLE_CLIENT_ID="your_google_client_id"
@@ -106,7 +106,7 @@ Use the ZeptoMail utilities:
 import { sendEmail } from '@/lib/zeptomail';
 
 await sendEmail({
-  to: 'user@example.com',
+  to: 'info@aetechlabs.com',
   subject: 'Welcome!',
   htmlBody: '<h1>Welcome to AETech!</h1>'
 });

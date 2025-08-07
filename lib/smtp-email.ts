@@ -35,7 +35,7 @@ export const sendEmailSMTP = async ({
   html,
   text,
   fromName = process.env.ZEPTOMAIL_SENDER_NAME || 'AETech',
-  fromEmail = process.env.ZEPTOMAIL_SENDER || 'noreply@nxditechsolutions.com.ng'
+  fromEmail = process.env.ZEPTOMAIL_SENDER || 'noreply@aetechlabs.com'
 }: EmailOptions) => {
   try {
     const transporter = createTransporter();
@@ -93,7 +93,7 @@ export const sendContactNotificationSMTP = async (contactData: {
   subject: string;
   message: string;
 }) => {
-  const adminEmail = process.env.ADMIN_EMAIL || 'support@nxditechsolutions.com.ng';
+  const adminEmail = process.env.ADMIN_EMAIL || 'support@aetechlabs.com';
   
   const html = `
     <!DOCTYPE html>
@@ -221,7 +221,7 @@ export const sendContactConfirmationSMTP = async (contactData: {
         
         <div class="footer">
           <p>This is an automated confirmation email.</p>
-          <p>AETech Research Labs | nxditechsolutions.com.ng</p>
+          <p>AETech Research Labs | www.aetechlabs.com</p>
         </div>
       </div>
     </body>
@@ -245,8 +245,8 @@ export const sendNewCommentNotificationSMTP = async (commentData: {
   isReply?: boolean;
   parentAuthor?: string;
 }) => {
-  const adminEmail = process.env.ADMIN_EMAIL || 'support@nxditechsolutions.com.ng';
-  const websiteUrl = process.env.NEXTAUTH_URL || 'http://localhost:3000';
+  const adminEmail = process.env.ADMIN_EMAIL || 'support@aetechlabs.com';
+  const websiteUrl = process.env.NEXTAUTH_URL || 'https://www.aetechlabs.com';
   
   const html = `
     <!DOCTYPE html>
@@ -308,7 +308,7 @@ export const sendCommentApprovedNotificationSMTP = async (commentData: {
   postSlug: string;
   content: string;
 }) => {
-  const websiteUrl = process.env.NEXTAUTH_URL || 'http://localhost:3000';
+  const websiteUrl = process.env.NEXTAUTH_URL || 'https://www.aetechlabs.com';
   
   const html = `
     <!DOCTYPE html>
@@ -370,7 +370,7 @@ export const sendReplyNotificationSMTP = async (replyData: {
   originalComment: string;
   replyContent: string;
 }) => {
-  const websiteUrl = process.env.NEXTAUTH_URL || 'http://localhost:3000';
+  const websiteUrl = process.env.NEXTAUTH_URL || 'https://www.aetechlabs.com';
   
   const html = `
     <!DOCTYPE html>

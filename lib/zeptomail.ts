@@ -24,7 +24,7 @@ export const sendEmail = async ({
   htmlBody,
   textBody,
   fromName = process.env.ZEPTOMAIL_SENDER_NAME || 'AETech Research Labs',
-  fromEmail = process.env.ZEPTOMAIL_SENDER || 'noreply@nxditechsolutions.com.ng'
+  fromEmail = process.env.ZEPTOMAIL_SENDER || 'noreply@aetechlabs.com'
 }: EmailData) => {
   try {
     console.log('Sending email with config:', {
@@ -68,7 +68,7 @@ export const sendContactNotification = async (contactData: {
   subject: string;
   message: string;
 }) => {
-  const adminEmail = process.env.ADMIN_EMAIL || 'admin@nxditechsolutions.com.ng';
+  const adminEmail = process.env.ADMIN_EMAIL || 'admin@aetechlabs.com';
   
   const htmlBody = `
     <h2>New Contact Form Submission</h2>
