@@ -44,8 +44,20 @@ export default function AboutPage() {
 
       {/* Hero Section */}
       <section className="relative py-20 lg:py-32 overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-br from-red-500/10 to-orange-500/10 dark:from-red-500/5 dark:to-orange-500/5"></div>
-        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        {/* Background Image */}
+        <div className="absolute inset-0 z-0">
+          <Image
+            src="/images/a-computer-instructor-standing-while-students-code.jpg"
+            alt="Computer instructor teaching students"
+            fill
+            className="object-cover"
+            priority
+          />
+          {/* Dark overlay for better text readability */}
+          <div className="absolute inset-0 bg-gradient-to-br from-black/70 via-black/60 to-red-900/70"></div>
+        </div>
+        
+        <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
@@ -59,18 +71,11 @@ export default function AboutPage() {
               className="mb-8"
             >
               <Image
-                src="/website-assets/logo-banner-dark.png"
-                alt="AETech Research Labs Limited"
-                width={400}
-                height={120}
-                className="mx-auto h-20 w-auto dark:hidden"
-              />
-              <Image
                 src="/website-assets/logo-banner-white.png"
                 alt="AETech Research Labs Limited"
                 width={400}
                 height={120}
-                className="mx-auto h-20 w-auto hidden dark:block"
+                className="mx-auto h-20 w-auto"
               />
             </motion.div>
             
@@ -80,15 +85,15 @@ export default function AboutPage() {
               animate={{ opacity: 1, scale: 1 }}
               transition={{ duration: 0.8, delay: 0.3 }}
             >
-              <span className="bg-gradient-to-r from-red-600 via-red-500 to-orange-500 bg-clip-text text-transparent">
+              <span className="bg-gradient-to-r from-red-400 via-orange-400 to-yellow-400 bg-clip-text text-transparent">
                 About
               </span>
               <br />
-              <span className="text-gray-900 dark:text-white">AETech</span>
+              <span className="text-white">AETech</span>
             </motion.h1>
             
             <motion.p 
-              className="text-xl lg:text-2xl text-gray-600 dark:text-gray-300 max-w-4xl mx-auto mb-12 leading-relaxed"
+              className="text-xl lg:text-2xl text-gray-200 max-w-4xl mx-auto mb-12 leading-relaxed"
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.5 }}
