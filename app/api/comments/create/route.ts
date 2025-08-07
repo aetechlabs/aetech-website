@@ -108,8 +108,8 @@ export async function POST(request: NextRequest) {
 
       if (postWithSlug) {
         // Send notification to admin about new comment/reply
-        const authorName = session?.user?.name || authorName;
-        const authorEmail = session?.user?.email || authorEmail;
+        const finalAuthorName = session?.user?.name || authorName;
+        const finalAuthorEmail = session?.user?.email || authorEmail;
         
         // Check if this is a reply and get parent comment details
         let isReply = false;
@@ -134,8 +134,8 @@ export async function POST(request: NextRequest) {
         await sendNewCommentNotificationSMTP({
           postTitle: postWithSlug.title,
           postSlug: postWithSlug.slug,
-          authorName,
-          authorEmail,
+          authorName: finalAuthorName,
+          authorEmail: finalAuthorEmail,
           content,
           isReply,
           parentAuthor
@@ -146,11 +146,11 @@ export async function POST(request: NextRequest) {
           const originalEmail = parentComment.author?.email || parentComment.anonymousEmail;
           const originalName = parentComment.author?.name || parentComment.anonymousName || 'Anonymous';
           
-          if (originalEmail && originalEmail !== authorEmail) {
+          if (originalEmail && originalEmail !== finalAuthorEmail) {
             await sendReplyNotificationSMTP({
               originalAuthorName: originalName,
               originalAuthorEmail: originalEmail,
-              replyAuthorName: authorName,
+              replyAuthorName: finalAuthorName,
               postTitle: postWithSlug.title,
               postSlug: postWithSlug.slug,
               originalComment: parentComment.content,
