@@ -56,7 +56,7 @@ export async function PATCH(
 // DELETE /api/contacts/[id] - Delete contact
 export async function DELETE(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
     const session = await getServerSession(authOptions)
@@ -68,7 +68,7 @@ export async function DELETE(
       )
     }
 
-    const { id } = params
+    const { id } = await params
 
     await prisma.contact.delete({
       where: { id }
