@@ -3,6 +3,7 @@ import { prisma } from '@/lib/prisma'
 import { getServerSession } from 'next-auth'
 import { authOptions } from '@/lib/auth'
 import { sendEmailSMTP } from '@/lib/smtp-email'
+import { createEmailTemplate, approvalEmailContent, rejectionEmailContent, waitlistEmailContent } from '@/lib/email-templates'
 
 export async function GET(request: NextRequest) {
   try {
@@ -189,7 +190,7 @@ async function sendStatusUpdateEmail(enrollment: any, status: string, notes?: st
   const baseTemplate = `
     <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px;">
       <div style="text-align: center; margin-bottom: 30px;">
-        <img src="https://yoursite.com/logo.png" alt="AETech Research Labs" style="max-width: 200px;">
+        <img src="${process.env.NEXTAUTH_URL || 'https://aetechlabs.com'}/logo-light.png" alt="AETech Research Labs" style="max-width: 200px;">
         <h1 style="color: #c1272d; margin: 20px 0;">AETech Bootcamp Application Update</h1>
       </div>
       
