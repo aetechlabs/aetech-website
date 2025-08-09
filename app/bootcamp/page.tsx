@@ -118,7 +118,7 @@ export default function BootcampPage() {
     },
     {
       question: "What's the cost of the bootcamp?",
-      answer: "The AETech DevStarter Bootcamp is completely FREE! We believe in making quality tech education accessible to everyone, regardless of their financial background."
+      answer: "The AETech DevStars Bootcamp is completely FREE! We believe in making quality tech education accessible to everyone, regardless of their financial background."
     },
     {
       question: "Do I need any prior programming experience?",
@@ -126,7 +126,11 @@ export default function BootcampPage() {
     },
     {
       question: "What happens after the bootcamp?",
-      answer: "Graduates will join our exclusive WhatsApp group and Discord community where you can continue to share ideas, collaborate on projects, brainstorm solutions, and network with fellow tech enthusiasts. It's a supportive space for ongoing learning and connection."
+      answer: "Graduates will join our exclusive Discord community where you can continue to share ideas, collaborate on projects, brainstorm solutions, and network with fellow tech enthusiasts. It's a supportive space for ongoing learning and connection."
+    },
+    {
+      question: "How do I join the Discord community?",
+      answer: "Once you're accepted, we'll share our Discord server link in your approval email. You can also join directly at: https://discord.gg/zXjBjJnQ - This is where you'll connect with fellow students, get updates, and participate in group discussions!"
     },
     {
       question: "When does registration close?",
@@ -134,7 +138,7 @@ export default function BootcampPage() {
     },
     {
       question: "When do classes begin?",
-      answer: "Onboarding and classes begin on Monday, August 12, 2025 at 11:00 AM. Please arrive on time as we'll cover important orientation information and begin with our first learning session."
+      answer: "Orientation begins on Monday, August 11th, 2025 at 11:00 AM via Google Meet. Regular classes start Tuesday, August 13th. Please join on time as we'll cover important orientation information and class expectations."
     }
   ]
 
@@ -464,8 +468,8 @@ export default function BootcampPage() {
               className="mb-12"
             >
               <UrgencyBanner 
-                message="⚡ Only 3 days left to register!"
                 countdown="Registration closes August 10, 2025 at 11:59 PM"
+                deadlineDate="2025-08-10T23:59:59"
               />
             </motion.div>
 
@@ -494,14 +498,14 @@ export default function BootcampPage() {
               </div>
 
               <div className="bg-white dark:bg-gray-900 rounded-xl p-8 shadow-lg">
-                <MapPinIcon className="h-12 w-12 text-[#c1272d] mx-auto mb-4" />
+                <GlobeAltIcon className="h-12 w-12 text-[#c1272d] mx-auto mb-4" />
                 <h3 className="text-xl font-bold text-gray-900 dark:text-gray-100 mb-2">
-                  Location
+                  Format
                 </h3>
                 <p className="text-gray-600 dark:text-gray-300">
-                  AETech Labs<br />
-                  Suite 30, Es-Em Plaza<br />
-                  Utako, Abuja
+                  100% Online Classes<br />
+                  Google Meet & Zoom<br />
+                  Learn from anywhere
                 </p>
               </div>
 
@@ -533,6 +537,187 @@ export default function BootcampPage() {
                 Limited spots available. Secure your place today!
               </p>
             </motion.div>
+          </motion.div>
+        </div>
+      </section>
+
+      {/* Schedule Section */}
+      <section className="py-20 bg-gray-50 dark:bg-gray-800">
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8 }}
+            viewport={{ once: true }}
+            className="text-center mb-16"
+          >
+            <h2 className="text-4xl font-bold text-gray-900 dark:text-gray-100 mb-4">
+              Class Schedule
+            </h2>
+            <p className="text-xl text-gray-600 dark:text-gray-300">
+              Our structured weekly schedule designed for maximum learning impact
+            </p>
+          </motion.div>
+
+          <div className="grid lg:grid-cols-2 gap-8 mb-12">
+            {/* Tuesday Schedule */}
+            <motion.div
+              initial={{ opacity: 0, x: -30 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.8 }}
+              viewport={{ once: true }}
+              className="bg-white dark:bg-gray-900 rounded-xl p-6 shadow-lg"
+            >
+              <div className="flex items-center mb-6">
+                <CalendarDaysIcon className="h-8 w-8 text-[#c1272d] mr-3" />
+                <div>
+                  <h3 className="text-2xl font-bold text-gray-900 dark:text-gray-100">Tuesdays</h3>
+                  <p className="text-[#c1272d] font-semibold">Instruction Day</p>
+                </div>
+              </div>
+              
+              <div className="space-y-4">
+                <div className="grid grid-cols-3 gap-4 text-sm font-semibold text-gray-700 dark:text-gray-300 border-b pb-2">
+                  <span>Time</span>
+                  <span>Course</span>
+                  <span>Format</span>
+                </div>
+                
+                <div className="grid grid-cols-3 gap-4 text-sm py-2 border-b border-gray-100 dark:border-gray-700">
+                  <span className="text-gray-600 dark:text-gray-400">9:00am – 10:30am</span>
+                  <span className="font-medium text-gray-900 dark:text-gray-100">Data Science</span>
+                  <span className="text-blue-600 dark:text-blue-400">Lecture</span>
+                </div>
+                
+                <div className="grid grid-cols-3 gap-4 text-sm py-2 border-b border-gray-100 dark:border-gray-700">
+                  <span className="text-gray-600 dark:text-gray-400">10:30am – 12:00pm</span>
+                  <span className="font-medium text-gray-900 dark:text-gray-100">Beginner Web Development</span>
+                  <span className="text-blue-600 dark:text-blue-400">Lecture</span>
+                </div>
+                
+                <div className="grid grid-cols-3 gap-4 text-sm py-2 border-b border-gray-100 dark:border-gray-700">
+                  <span className="text-gray-600 dark:text-gray-400">12:00pm – 1:00pm</span>
+                  <span className="font-medium text-yellow-600 dark:text-yellow-400">Break</span>
+                  <span className="text-gray-500">—</span>
+                </div>
+                
+                <div className="grid grid-cols-3 gap-4 text-sm py-2 border-b border-gray-100 dark:border-gray-700">
+                  <span className="text-gray-600 dark:text-gray-400">1:00pm – 2:00pm</span>
+                  <span className="font-medium text-gray-900 dark:text-gray-100">Creative Programming</span>
+                  <span className="text-green-600 dark:text-green-400">Coding Demo</span>
+                </div>
+                
+                <div className="grid grid-cols-3 gap-4 text-sm py-2 border-b border-gray-100 dark:border-gray-700">
+                  <span className="text-gray-600 dark:text-gray-400">2:00pm – 3:00pm</span>
+                  <span className="font-medium text-gray-900 dark:text-gray-100">AI & Machine Learning</span>
+                  <span className="text-blue-600 dark:text-blue-400">Lecture</span>
+                </div>
+                
+                <div className="grid grid-cols-3 gap-4 text-sm py-2">
+                  <span className="text-gray-600 dark:text-gray-400">3:00pm – 4:00pm</span>
+                  <span className="font-medium text-gray-900 dark:text-gray-100">Graphic Design with Canva</span>
+                  <span className="text-purple-600 dark:text-purple-400">Design Workshop</span>
+                </div>
+              </div>
+            </motion.div>
+
+            {/* Thursday Schedule */}
+            <motion.div
+              initial={{ opacity: 0, x: 30 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.8 }}
+              viewport={{ once: true }}
+              className="bg-white dark:bg-gray-900 rounded-xl p-6 shadow-lg"
+            >
+              <div className="flex items-center mb-6">
+                <TrophyIcon className="h-8 w-8 text-[#c1272d] mr-3" />
+                <div>
+                  <h3 className="text-2xl font-bold text-gray-900 dark:text-gray-100">Thursdays</h3>
+                  <p className="text-[#c1272d] font-semibold">Project Assessment Day</p>
+                </div>
+              </div>
+              
+              <div className="space-y-4">
+                <div className="grid grid-cols-3 gap-4 text-sm font-semibold text-gray-700 dark:text-gray-300 border-b pb-2">
+                  <span>Time</span>
+                  <span>Course</span>
+                  <span>Activity</span>
+                </div>
+                
+                <div className="grid grid-cols-3 gap-4 text-sm py-2 border-b border-gray-100 dark:border-gray-700">
+                  <span className="text-gray-600 dark:text-gray-400">9:00am – 10:30am</span>
+                  <span className="font-medium text-gray-900 dark:text-gray-100">Data Science</span>
+                  <span className="text-orange-600 dark:text-orange-400">Project Task</span>
+                </div>
+                
+                <div className="grid grid-cols-3 gap-4 text-sm py-2 border-b border-gray-100 dark:border-gray-700">
+                  <span className="text-gray-600 dark:text-gray-400">10:30am – 12:00pm</span>
+                  <span className="font-medium text-gray-900 dark:text-gray-100">Beginner Web Development</span>
+                  <span className="text-orange-600 dark:text-orange-400">Project Task</span>
+                </div>
+                
+                <div className="grid grid-cols-3 gap-4 text-sm py-2 border-b border-gray-100 dark:border-gray-700">
+                  <span className="text-gray-600 dark:text-gray-400">12:00pm – 1:00pm</span>
+                  <span className="font-medium text-yellow-600 dark:text-yellow-400">Break</span>
+                  <span className="text-gray-500">—</span>
+                </div>
+                
+                <div className="grid grid-cols-3 gap-4 text-sm py-2 border-b border-gray-100 dark:border-gray-700">
+                  <span className="text-gray-600 dark:text-gray-400">1:00pm – 2:00pm</span>
+                  <span className="font-medium text-gray-900 dark:text-gray-100">Creative Programming</span>
+                  <span className="text-green-600 dark:text-green-400">Interactive Project</span>
+                </div>
+                
+                <div className="grid grid-cols-3 gap-4 text-sm py-2 border-b border-gray-100 dark:border-gray-700">
+                  <span className="text-gray-600 dark:text-gray-400">2:00pm – 3:00pm</span>
+                  <span className="font-medium text-gray-900 dark:text-gray-100">AI & Machine Learning</span>
+                  <span className="text-orange-600 dark:text-orange-400">Project Work</span>
+                </div>
+                
+                <div className="grid grid-cols-3 gap-4 text-sm py-2">
+                  <span className="text-gray-600 dark:text-gray-400">3:00pm – 4:00pm</span>
+                  <span className="font-medium text-gray-900 dark:text-gray-100">Graphic Design with Canva</span>
+                  <span className="text-purple-600 dark:text-purple-400">Design Submission</span>
+                </div>
+              </div>
+            </motion.div>
+          </div>
+
+          {/* Optional Support Sessions */}
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.2 }}
+            viewport={{ once: true }}
+            className="bg-gradient-to-r from-blue-50 to-indigo-50 dark:from-blue-900/20 dark:to-indigo-900/20 rounded-xl p-6 shadow-lg"
+          >
+            <div className="flex items-center mb-6">
+              <HandRaisedIcon className="h-8 w-8 text-[#c1272d] mr-3" />
+              <div>
+                <h3 className="text-2xl font-bold text-gray-900 dark:text-gray-100">Optional Support Sessions</h3>
+                <p className="text-gray-600 dark:text-gray-400">Extra help when you need it most</p>
+              </div>
+            </div>
+            
+            <div className="grid md:grid-cols-2 gap-6">
+              <div className="bg-white dark:bg-gray-800 rounded-lg p-4">
+                <div className="flex items-center mb-3">
+                  <div className="w-3 h-3 bg-blue-500 rounded-full mr-3"></div>
+                  <span className="font-semibold text-gray-900 dark:text-gray-100">Monday Q&A Sessions</span>
+                </div>
+                <p className="text-sm text-gray-600 dark:text-gray-400 mb-2">9:00am – 11:00am</p>
+                <p className="text-sm text-gray-700 dark:text-gray-300">Get answers to your questions and clarify concepts from the previous week</p>
+              </div>
+              
+              <div className="bg-white dark:bg-gray-800 rounded-lg p-4">
+                <div className="flex items-center mb-3">
+                  <div className="w-3 h-3 bg-green-500 rounded-full mr-3"></div>
+                  <span className="font-semibold text-gray-900 dark:text-gray-100">Wednesday Clinics</span>
+                </div>
+                <p className="text-sm text-gray-600 dark:text-gray-400 mb-2">9:00am – 11:00am</p>
+                <p className="text-sm text-gray-700 dark:text-gray-300">Canva & Code Clinics for hands-on help with projects and tools</p>
+              </div>
+            </div>
           </motion.div>
         </div>
       </section>

@@ -67,6 +67,14 @@ export default function BootcampManagement() {
   const [searchTerm, setSearchTerm] = useState('')
   const [currentPage, setCurrentPage] = useState(1)
   const [updating, setUpdating] = useState<string | null>(null)
+  const [showStatusModal, setShowStatusModal] = useState(false)
+  const [currentEnrollmentForUpdate, setCurrentEnrollmentForUpdate] = useState<BootcampEnrollment | null>(null)
+  const [statusUpdateData, setStatusUpdateData] = useState({
+    enrollmentId: '',
+    status: '',
+    notes: '',
+    selectedCourse: ''
+  })
 
   useEffect(() => {
     fetchEnrollments()
@@ -96,7 +104,7 @@ export default function BootcampManagement() {
     }
   }
 
-  const updateEnrollmentStatus = async (enrollmentId: string, newStatus: string) => {
+  const updateEnrollmentStatus = async (enrollmentId: string, newStatus: string, notes?: string, selectedCourse?: string) => {
     try {
       setUpdating(enrollmentId)
       const response = await fetch('/api/bootcamp', {
@@ -106,19 +114,45 @@ export default function BootcampManagement() {
         },
         body: JSON.stringify({
           enrollmentId,
-          status: newStatus
+          status: newStatus,
+          notes,
+          selectedCourse
         })
       })
 
       if (response.ok) {
         await fetchEnrollments()
         setSelectedEnrollment(null)
+        setShowStatusModal(false)
+        setStatusUpdateData({ enrollmentId: '', status: '', notes: '', selectedCourse: '' })
+        setCurrentEnrollmentForUpdate(null)
       }
     } catch (error) {
       console.error('Error updating enrollment status:', error)
     } finally {
       setUpdating(null)
     }
+  }
+
+  const handleStatusUpdate = (enrollmentId: string, status: string) => {
+    const enrollment = enrollments.find(e => e.id === enrollmentId)
+    setCurrentEnrollmentForUpdate(enrollment || null)
+    setStatusUpdateData({
+      enrollmentId,
+      status,
+      notes: '',
+      selectedCourse: enrollment?.coursesInterested[0] || '' // Default to first course
+    })
+    setShowStatusModal(true)
+  }
+
+  const confirmStatusUpdate = async () => {
+    await updateEnrollmentStatus(
+      statusUpdateData.enrollmentId, 
+      statusUpdateData.status, 
+      statusUpdateData.notes,
+      statusUpdateData.selectedCourse
+    )
   }
 
   const getStatusIcon = (status: string) => {
@@ -520,7 +554,7 @@ export default function BootcampManagement() {
                     {['PENDING', 'APPROVED', 'WAITLISTED', 'REJECTED'].map((status) => (
                       <button
                         key={status}
-                        onClick={() => updateEnrollmentStatus(selectedEnrollment.id, status)}
+                        onClick={() => handleStatusUpdate(selectedEnrollment.id, status)}
                         disabled={updating === selectedEnrollment.id}
                         className={`px-4 py-2 rounded-lg text-sm font-semibold transition-colors ${
                           selectedEnrollment.status === status
@@ -627,6 +661,110 @@ export default function BootcampManagement() {
                   <div className="bg-gray-50 rounded-lg p-4">
                     <p className="text-sm text-gray-700 whitespace-pre-wrap">{selectedEnrollment.motivation}</p>
                   </div>
+                </div>
+              </div>
+            </motion.div>
+          </div>
+        </div>
+      )}
+
+      {/* Status Update Modal */}
+      {showStatusModal && (
+        <div className="fixed inset-0 z-50 overflow-y-auto">
+          <div className="flex min-h-screen items-center justify-center p-4">
+            <div className="fixed inset-0 bg-black/60 backdrop-blur-sm" onClick={() => {
+              setShowStatusModal(false)
+              setCurrentEnrollmentForUpdate(null)
+            }}></div>
+            
+            <motion.div
+              initial={{ opacity: 0, scale: 0.95 }}
+              animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0, scale: 0.95 }}
+              className="relative bg-white rounded-xl shadow-2xl w-full max-w-md"
+            >
+              <div className="p-6">
+                <h3 className="text-lg font-semibold text-gray-900 mb-4">
+                  Update Status to {statusUpdateData.status}
+                </h3>
+                
+                <div className="mb-4">
+                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                    Notes/Comments (Optional)
+                  </label>
+                  <textarea
+                    value={statusUpdateData.notes}
+                    onChange={(e) => setStatusUpdateData(prev => ({ ...prev, notes: e.target.value }))}
+                    rows={4}
+                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-transparent resize-none"
+                    placeholder={`Add notes for ${statusUpdateData.status.toLowerCase()} status...`}
+                  />
+                  <p className="text-xs text-gray-500 mt-1">
+                    {statusUpdateData.status === 'APPROVED' && 'Include course details, start dates, or special instructions.'}
+                    {statusUpdateData.status === 'REJECTED' && 'Provide constructive feedback for improvement.'}
+                    {statusUpdateData.status === 'WAITLISTED' && 'Explain waitlist position and next steps.'}
+                    {statusUpdateData.status === 'PENDING' && 'Add any internal notes or follow-up reminders.'}
+                  </p>
+                </div>
+
+                {/* Course Selection for Approved Status */}
+                {statusUpdateData.status === 'APPROVED' && currentEnrollmentForUpdate && currentEnrollmentForUpdate.coursesInterested.length > 1 && (
+                  <div className="mb-4">
+                    <label className="block text-sm font-medium text-gray-700 mb-2">
+                      Select Course to Approve <span className="text-red-500">*</span>
+                    </label>
+                    <select
+                      value={statusUpdateData.selectedCourse}
+                      onChange={(e) => setStatusUpdateData(prev => ({ ...prev, selectedCourse: e.target.value }))}
+                      className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-transparent"
+                      required
+                    >
+                      {currentEnrollmentForUpdate.coursesInterested.map((course) => (
+                        <option key={course} value={course}>
+                          {course}
+                        </option>
+                      ))}
+                    </select>
+                    <p className="text-xs text-gray-500 mt-1">
+                      This student applied for multiple courses. Select which course to approve them for.
+                    </p>
+                  </div>
+                )}
+
+                {/* Show selected course for single course applications */}
+                {statusUpdateData.status === 'APPROVED' && currentEnrollmentForUpdate && currentEnrollmentForUpdate.coursesInterested.length === 1 && (
+                  <div className="mb-4">
+                    <label className="block text-sm font-medium text-gray-700 mb-2">
+                      Course to Approve
+                    </label>
+                    <div className="px-3 py-2 bg-gray-50 border border-gray-200 rounded-lg">
+                      <span className="text-gray-900">{currentEnrollmentForUpdate.coursesInterested[0]}</span>
+                    </div>
+                  </div>
+                )}
+
+                <div className="flex gap-3">
+                  <button
+                    onClick={() => {
+                      setShowStatusModal(false)
+                      setCurrentEnrollmentForUpdate(null)
+                    }}
+                    className="flex-1 px-4 py-2 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50 transition-colors"
+                  >
+                    Cancel
+                  </button>
+                  <button
+                    onClick={confirmStatusUpdate}
+                    disabled={!!updating}
+                    className={`flex-1 px-4 py-2 rounded-lg text-white transition-colors ${
+                      statusUpdateData.status === 'APPROVED' ? 'bg-green-600 hover:bg-green-700' :
+                      statusUpdateData.status === 'REJECTED' ? 'bg-red-600 hover:bg-red-700' :
+                      statusUpdateData.status === 'WAITLISTED' ? 'bg-yellow-600 hover:bg-yellow-700' :
+                      'bg-blue-600 hover:bg-blue-700'
+                    } disabled:opacity-50`}
+                  >
+                    {updating ? 'Updating...' : `Confirm ${statusUpdateData.status}`}
+                  </button>
                 </div>
               </div>
             </motion.div>
