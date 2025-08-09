@@ -148,6 +148,7 @@ enum Role {
   USER
   ADMIN
   AUTHOR
+  STUDENT
 }
 
 enum ContactStatus {
@@ -180,4 +181,29 @@ enum EnrollmentStatus {
   APPROVED
   REJECTED
   WAITLISTED
+}
+
+model Volunteer {
+  id                    String   @id @default(auto()) @map("_id") @db.ObjectId
+  name                  String
+  email                 String
+  phone                 String?
+  experience            String
+  interests             String[]
+  availability          String
+  motivation            String
+  skills                String?
+  previousVolunteering  String?
+  status                VolunteerStatus @default(PENDING)
+  notes                 String?
+  createdAt             DateTime @default(now())
+  updatedAt             DateTime @updatedAt
+}
+
+enum VolunteerStatus {
+  PENDING
+  APPROVED
+  REJECTED
+  ACTIVE
+  INACTIVE
 }

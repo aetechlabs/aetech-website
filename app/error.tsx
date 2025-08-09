@@ -156,7 +156,7 @@ export default function Error({
                 </Link>
                 <span className="text-gray-300 dark:text-gray-600">•</span>
                 <a 
-                  href="mailto:support@aetech.com" 
+                  href="mailto:support@aetechlabs.com" 
                   className="text-orange-500 hover:text-orange-600 dark:hover:text-orange-400 transition-colors font-medium"
                 >
                   Email Us

@@ -23,6 +23,7 @@ interface DashboardStats {
   users: { total: number; admins: number }
   contacts: { total: number; unread: number }
   bootcamp: { total: number; pending: number; approved: number }
+  volunteers: { total: number; pending: number; approved: number }
 }
 
 interface RecentActivity {
@@ -35,7 +36,15 @@ interface RecentActivity {
 }
 
 export default function AdminDashboard() {
-  const [stats, setStats] = useState<DashboardStats | null>(null)
+    const [stats, setStats] = useState<{
+    posts: { total: number; published: number; drafts: number }
+    categories: number
+    comments: { total: number; pending: number }
+    users: { total: number; admins: number }
+    contacts: { total: number; unread: number }
+    bootcamp: { total: number; pending: number; approved: number }
+    volunteers: { total: number; pending: number; approved: number }
+  } | null>(null)
   const [recentActivity, setRecentActivity] = useState<RecentActivity[]>([])
   const [loading, setLoading] = useState(true)
 
@@ -46,13 +55,14 @@ export default function AdminDashboard() {
   const fetchDashboardData = async () => {
     try {
       // Fetch dashboard stats
-      const [postsRes, categoriesRes, commentsRes, usersRes, contactsRes, bootcampRes] = await Promise.all([
+      const [postsRes, categoriesRes, commentsRes, usersRes, contactsRes, bootcampRes, volunteersRes] = await Promise.all([
         fetch('/api/blog?limit=1000&all=true'), // Get all posts for admin
         fetch('/api/categories'),
         fetch('/api/comments'),
         fetch('/api/users'),
         fetch('/api/contacts'),
-        fetch('/api/bootcamp?limit=1000')
+        fetch('/api/bootcamp?limit=1000'),
+        fetch('/api/volunteer?limit=1000')
       ])
 
       // Check if all responses are OK
@@ -60,18 +70,20 @@ export default function AdminDashboard() {
         throw new Error('One or more API calls failed')
       }
 
-      const [postsData, categories, comments, users, contacts, bootcampData] = await Promise.all([
+      const [postsData, categories, comments, users, contacts, bootcampData, volunteersData] = await Promise.all([
         postsRes.json(),
         categoriesRes.json(),
         commentsRes.json(),
         usersRes.json(),
         contactsRes.json(),
-        bootcampRes.ok ? bootcampRes.json() : { success: false, data: { enrollments: [], stats: { total: 0, PENDING: 0, APPROVED: 0 } } }
+        bootcampRes.ok ? bootcampRes.json() : { success: false, data: { enrollments: [], stats: { total: 0, PENDING: 0, APPROVED: 0 } } },
+        volunteersRes.ok ? volunteersRes.json() : { success: false, data: { volunteers: [], stats: { total: 0, PENDING: 0, APPROVED: 0 } } }
       ])
 
       const posts = postsData.posts || postsData // Handle both array and object response
       const bootcampEnrollments = bootcampData.success ? bootcampData.data.enrollments : []
       const bootcampStats = bootcampData.success ? bootcampData.data.stats : { total: 0, PENDING: 0, APPROVED: 0 }
+      const volunteers = volunteersData.volunteers || []
 
       // Calculate stats with fallbacks
       const dashboardStats: DashboardStats = {
@@ -97,6 +109,11 @@ export default function AdminDashboard() {
           total: bootcampStats.total || 0,
           pending: bootcampStats.PENDING || 0,
           approved: bootcampStats.APPROVED || 0
+        },
+        volunteers: {
+          total: Array.isArray(volunteers) ? volunteers.length : 0,
+          pending: Array.isArray(volunteers) ? volunteers.filter((v: any) => v.status === 'PENDING').length : 0,
+          approved: Array.isArray(volunteers) ? volunteers.filter((v: any) => v.status === 'APPROVED').length : 0
         }
       }
 
@@ -140,7 +157,8 @@ export default function AdminDashboard() {
         comments: { total: 0, pending: 0 },
         users: { total: 0, admins: 0 },
         contacts: { total: 0, unread: 0 },
-        bootcamp: { total: 0, pending: 0, approved: 0 }
+        bootcamp: { total: 0, pending: 0, approved: 0 },
+        volunteers: { total: 0, pending: 0, approved: 0 }
       })
       setRecentActivity([])
     } finally {
@@ -204,6 +222,14 @@ export default function AdminDashboard() {
       icon: AcademicCapIcon,
       color: 'from-indigo-500 to-indigo-600',
       href: '/admin/bootcamp'
+    },
+    {
+      title: 'Volunteers',
+      value: stats?.volunteers.total || 0,
+      subtitle: `${stats?.volunteers.pending || 0} pending, ${stats?.volunteers.approved || 0} approved`,
+      icon: UserGroupIcon,
+      color: 'from-teal-500 to-teal-600',
+      href: '/admin/volunteers'
     }
   ]
 

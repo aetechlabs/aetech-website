@@ -98,7 +98,7 @@ export default function GlobalError({
               </p>
               <div className="flex flex-wrap justify-center gap-4 text-sm">
                 <a 
-                  href="mailto:support@aetech.com" 
+                  href="mailto:support@aetechlabs.com" 
                   className="text-red-500 hover:text-red-600 dark:hover:text-red-400 transition-colors font-medium"
                 >
                   Email Support

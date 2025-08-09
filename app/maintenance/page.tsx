@@ -262,7 +262,7 @@ export default function MaintenancePage() {
               </p>
               <div className="flex flex-wrap justify-center gap-4 text-sm">
                 <a 
-                  href="mailto:support@aetech.com" 
+                  href="mailto:support@aetechlabs.com" 
                   className="text-yellow-500 hover:text-yellow-600 dark:hover:text-yellow-400 transition-colors font-medium"
                 >
                   Email Support

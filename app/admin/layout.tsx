@@ -24,7 +24,8 @@ import {
   SunIcon,
   MoonIcon,
   AcademicCapIcon,
-  MegaphoneIcon
+  MegaphoneIcon,
+  HeartIcon
 } from '@heroicons/react/24/outline'
 
 const navigation = [
@@ -35,6 +36,7 @@ const navigation = [
   { name: 'Users', href: '/admin/users', icon: UserGroupIcon },
   { name: 'Contacts', href: '/admin/contacts', icon: EnvelopeIcon },
   { name: 'Bootcamp', href: '/admin/bootcamp', icon: AcademicCapIcon },
+  { name: 'Volunteers', href: '/admin/volunteers', icon: HeartIcon },
   { name: 'Announcements', href: '/admin/announcements', icon: MegaphoneIcon },
   { name: 'Email Marketing', href: '/admin/emails', icon: PaperAirplaneIcon },
 ]
