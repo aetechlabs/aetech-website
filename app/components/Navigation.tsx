@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 import { motion, AnimatePresence } from 'framer-motion';
 import ThemeToggle from '../../components/ThemeToggle';
 import TopAnnouncementBanner from '../../components/TopAnnouncementBanner';
@@ -11,24 +12,40 @@ export default function Navigation() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [activeSection, setActiveSection] = useState('home');
+  const pathname = usePathname();
+
+  useEffect(() => {
+    // Set active section based on current pathname
+    if (pathname === '/about') {
+      setActiveSection('about');
+    } else if (pathname === '/contact') {
+      setActiveSection('contact');
+    } else if (pathname === '/blog') {
+      setActiveSection('blog');
+    } else {
+      setActiveSection('home');
+    }
+  }, [pathname]);
 
   useEffect(() => {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 10);
       
-      // Update active section based on scroll position
-      const sections = ['home', 'about', 'services', 'contact'];
-      const scrollPos = window.scrollY + 100;
-      
-      for (const section of sections) {
-        const element = document.getElementById(section);
-        if (element) {
-          const offsetTop = element.offsetTop;
-          const height = element.offsetHeight;
-          
-          if (scrollPos >= offsetTop && scrollPos < offsetTop + height) {
-            setActiveSection(section);
-            break;
+      // Only update active section based on scroll position if we're on the home page
+      if (pathname === '/') {
+        const sections = ['home', 'services'];
+        const scrollPos = window.scrollY + 100;
+        
+        for (const section of sections) {
+          const element = document.getElementById(section);
+          if (element) {
+            const offsetTop = element.offsetTop;
+            const height = element.offsetHeight;
+            
+            if (scrollPos >= offsetTop && scrollPos < offsetTop + height) {
+              setActiveSection(section);
+              break;
+            }
           }
         }
       }
@@ -36,9 +53,15 @@ export default function Navigation() {
 
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
+  }, [pathname]);
 
   const scrollToSection = (sectionId: string) => {
+    // If we're not on the home page and trying to scroll to a section, redirect to home first
+    if (pathname !== '/' && (sectionId === 'home' || sectionId === 'services')) {
+      window.location.href = `/#${sectionId}`;
+      return;
+    }
+    
     const element = document.getElementById(sectionId);
     if (element) {
       element.scrollIntoView({ behavior: 'smooth', block: 'start' });
@@ -56,10 +79,10 @@ export default function Navigation() {
 
   const navItems = [
     { id: 'home', label: 'Home', type: 'scroll' },
-    { id: 'about', label: 'About', type: 'scroll' },
+    { id: 'about', label: 'About', type: 'link', href: '/about' },
     { id: 'services', label: 'Services', type: 'scroll' },
     { id: 'blog', label: 'Blog', type: 'link', href: '/blog' },
-    { id: 'contact', label: 'Contact', type: 'scroll' }
+    { id: 'contact', label: 'Contact', type: 'link', href: '/contact' }
   ];
 
   return (
@@ -81,14 +104,14 @@ export default function Navigation() {
         <div className="flex justify-between items-center h-16">
           <div className="flex items-center">
             <Image
-              src="/website-assets/logo-white-500.png"
+              src="/assets/Dark transparent logo.png"
               alt="AETech Logo"
               width={120}
               height={40}
               className="h-8 w-auto dark:hidden"
             />
             <Image
-              src="/website-assets/logo-dark-500.png"
+              src="/assets/Light transparent logo.png"
               alt="AETech Logo"
               width={120}
               height={40}

@@ -3,31 +3,39 @@
 import { motion } from 'framer-motion';
 import Link from 'next/link';
 import Image from 'next/image';
+import Footer from '@/components/Footer';
 
 export default function TermsOfService() {
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-50 via-white to-red-50 dark:from-black dark:via-gray-900 dark:to-red-950">
+    <div className="min-h-screen bg-white dark:bg-gray-900">
       {/* Simple Header */}
       <header className="bg-white/80 dark:bg-black/80 backdrop-blur-md border-b border-gray-200 dark:border-gray-800 sticky top-0 z-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-16">
             <Link href="/" className="flex items-center space-x-3 group">
               <Image
-                src="/website-assets/logo-white-500.png"
+                src="/assets/Dark transparent logo.png"
                 alt="AETech Research Labs Limited"
-                width={40}
+                width={120}
                 height={40}
-                className="group-hover:scale-110 transition-transform duration-200"
+                className="h-8 w-auto dark:hidden group-hover:scale-110 transition-transform duration-200"
               />
-              <span className="text-xl font-bold text-gray-900 dark:text-white group-hover:text-red-600 dark:group-hover:text-red-400 transition-colors">
+              <Image
+                src="/assets/Light transparent logo.png"
+                alt="AETech Research Labs Limited"
+                width={120}
+                height={40}
+                className="h-8 w-auto hidden dark:block group-hover:scale-110 transition-transform duration-200"
+              />
+              <span className="text-xl font-bold text-gray-900 dark:text-white group-hover:text-red-300 dark:group-hover:text-red-300 transition-colors">
                 AETech Labs
               </span>
             </Link>
             <nav className="flex items-center space-x-6">
-              <Link href="/" className="text-gray-600 dark:text-gray-300 hover:text-red-600 dark:hover:text-red-400 transition-colors">
+              <Link href="/" className="text-gray-600 dark:text-gray-300 hover:text-red-300 dark:hover:text-red-300 transition-colors">
                 Home
               </Link>
-              <Link href="/contact" className="text-gray-600 dark:text-gray-300 hover:text-red-600 dark:hover:text-red-400 transition-colors">
+              <Link href="/contact" className="text-gray-600 dark:text-gray-300 hover:text-red-300 dark:hover:text-red-300 transition-colors">
                 Contact
               </Link>
             </nav>
@@ -42,7 +50,7 @@ export default function TermsOfService() {
           transition={{ duration: 0.8 }}
         >
           <h1 className="text-4xl lg:text-5xl font-bold mb-8 text-center">
-            <span className="bg-gradient-to-r from-red-600 via-red-500 to-orange-500 bg-clip-text text-transparent">
+            <span className="text-red-400">
               Terms of Service
             </span>
           </h1>
@@ -165,6 +173,8 @@ export default function TermsOfService() {
           </div>
         </motion.div>
       </div>
+
+      <Footer />
     </div>
   );
 }

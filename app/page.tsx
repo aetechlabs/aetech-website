@@ -2,6 +2,7 @@
 
 import Navigation from "./components/Navigation";
 import ContactForm from "./components/ContactForm";
+import Footer from "@/components/Footer";
 import FloatingParticles from "@/components/FloatingParticles";
 import BootcampBanner from "@/components/BootcampBanner";
 import FloatingBootcampButton from "@/components/FloatingBootcampButton";
@@ -54,7 +55,7 @@ export default function Home() {
               className="mb-8"
             >
               <Image
-                src="/website-assets/logo-banner-white.png"
+                src="/assets/Light transparent logo.png"
                 alt="AETech Research Labs Limited"
                 width={400}
                 height={120}
@@ -95,7 +96,7 @@ export default function Home() {
                 whileHover={{ scale: 1.05, y: -2 }}
                 whileTap={{ scale: 0.95 }}
                 onClick={() => scrollToSection('services')}
-                className="bg-red-600 hover:bg-red-700 text-white px-8 py-3 rounded-lg font-medium transition-all duration-300 shadow-lg hover:shadow-xl"
+                className="bg-red-400 hover:bg-red-500 text-white px-8 py-3 rounded-lg font-medium transition-all duration-300 shadow-lg hover:shadow-xl"
               >
                 Our Services
               </motion.button>
@@ -124,14 +125,14 @@ export default function Home() {
 
           <div className="grid md:grid-cols-2 gap-12 mb-16">
             <div className="bg-gray-50 dark:bg-gray-900 p-8 rounded-lg transform hover:scale-105 transition-all duration-300 shadow-lg hover:shadow-xl">
-              <h3 className="text-2xl font-bold mb-4 text-red-600 dark:text-red-400">🌟 Vision</h3>
+              <h3 className="text-2xl font-bold mb-4 text-red-400 dark:text-red-400">🌟 Vision</h3>
               <p className="text-gray-700 dark:text-gray-300">
                 To become a leading force in technological innovation, creating impactful solutions that transform industries and empower communities across Africa and the world.
               </p>
             </div>
 
             <div className="bg-gray-50 dark:bg-gray-900 p-8 rounded-lg transform hover:scale-105 transition-all duration-300 shadow-lg hover:shadow-xl">
-              <h3 className="text-2xl font-bold mb-4 text-red-600 dark:text-red-400">🎯 Mission</h3>
+              <h3 className="text-2xl font-bold mb-4 text-red-400 dark:text-red-400">🎯 Mission</h3>
               <p className="text-gray-700 dark:text-gray-300">
                 Our mission is to research, develop, and deploy advanced technologies that solve real-world problems, drive business growth, and shape the future of digital transformation.
               </p>
@@ -150,7 +151,7 @@ export default function Home() {
               ].map((value, index) => (
                 <div key={value.title} className="text-center group">
                   <div className="bg-red-100 dark:bg-red-900/30 p-4 rounded-lg mb-4 transform group-hover:scale-110 transition-all duration-300">
-                    <h4 className="font-semibold text-red-600 dark:text-red-400">{value.title}</h4>
+                    <h4 className="font-semibold text-red-400 dark:text-red-400">{value.title}</h4>
                   </div>
                   <p className="text-sm text-gray-600 dark:text-gray-400">{value.desc}</p>
                 </div>
@@ -224,19 +225,19 @@ export default function Home() {
                 transition={{ duration: 0.6, delay: index * 0.1 }}
                 viewport={{ once: true }}
                 whileHover={{ y: -8, scale: 1.02 }}
-                className="bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm p-8 rounded-xl shadow-lg hover:shadow-2xl transition-all duration-500 border border-gray-200/50 dark:border-gray-700/50 hover:border-red-300 dark:hover:border-red-600 group relative overflow-hidden"
+                className="bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm p-8 rounded-xl shadow-lg hover:shadow-2xl transition-all duration-500 border border-gray-200/50 dark:border-gray-700/50 hover:border-red-200 dark:hover:border-red-600 group relative overflow-hidden"
               >
                 {/* Animated background gradient on hover */}
                 <div className="absolute inset-0 bg-gradient-to-br from-red-50/50 to-transparent dark:from-red-900/20 dark:to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
                 
                 <div className="relative z-10">
                   <motion.div 
-                    className="text-red-500 dark:text-red-400 text-3xl mb-6 group-hover:scale-110 transition-transform duration-300"
+                    className="text-red-400 dark:text-red-400 text-3xl mb-6 group-hover:scale-110 transition-transform duration-300"
                     whileHover={{ rotate: 5 }}
                   >
                     🚀
                   </motion.div>
-                  <h3 className="text-xl font-bold mb-4 group-hover:text-red-600 dark:group-hover:text-red-400 transition-colors duration-300">
+                  <h3 className="text-xl font-bold mb-4 group-hover:text-red-400 dark:group-hover:text-red-400 transition-colors duration-300">
                     {service.title}
                   </h3>
                   <p className="text-gray-600 dark:text-gray-400 leading-relaxed">
@@ -264,7 +265,7 @@ export default function Home() {
               <h3 className="text-2xl font-bold mb-6">Contact Information</h3>
               <div className="space-y-6">
                 <div className="bg-gray-50 dark:bg-gray-900 p-6 rounded-lg">
-                  <h4 className="font-semibold mb-3 text-red-600 dark:text-red-400">Company Details</h4>
+                  <h4 className="font-semibold mb-3 text-red-400 dark:text-red-400">Company Details</h4>
                   <div className="space-y-2 text-gray-600 dark:text-gray-400">
                     <p><strong>AETech Research Labs Limited</strong></p>
                     <p>Advanced Engineering Technology Research Labs Limited</p>
@@ -273,7 +274,7 @@ export default function Home() {
                 </div>
                 
                 <div className="bg-red-50 dark:bg-red-900/20 p-6 rounded-lg">
-                  <h4 className="font-semibold mb-3 text-red-600 dark:text-red-400">Why Choose AETech?</h4>
+                  <h4 className="font-semibold mb-3 text-red-400 dark:text-red-400">Why Choose AETech?</h4>
                   <ul className="space-y-2 text-gray-600 dark:text-gray-400">
                     <li>• Expert team with proven track record</li>
                     <li>• Cutting-edge technology solutions</li>
@@ -291,25 +292,7 @@ export default function Home() {
       </section>
 
       {/* Footer */}
-      <footer className="bg-gray-900 dark:bg-gray-950 text-white py-12">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center">
-            <h3 className="text-2xl font-bold mb-4 text-red-400">AETech Research Labs Limited</h3>
-            <p className="text-gray-300 mb-6">✨ Engineering Tomorrow's Solutions</p>
-            <div className="flex justify-center space-x-6 mb-6">
-              <Link href="#home" className="text-gray-400 hover:text-red-400 transition-colors">Home</Link>
-              <Link href="#about" className="text-gray-400 hover:text-red-400 transition-colors">About</Link>
-              <Link href="#services" className="text-gray-400 hover:text-red-400 transition-colors">Services</Link>
-              <Link href="#contact" className="text-gray-400 hover:text-red-400 transition-colors">Contact</Link>
-              <Link href="/terms" className="text-gray-400 hover:text-red-400 transition-colors">Terms</Link>
-              <Link href="/privacy" className="text-gray-400 hover:text-red-400 transition-colors">Privacy</Link>
-            </div>
-            <p className="text-gray-400 text-sm">
-              © 2025 AETech Research Labs Limited. All rights reserved.
-            </p>
-          </div>
-        </div>
-      </footer>
+      <Footer />
 
       {/* Bootcamp Banner - Shows after 3 seconds */}
       <BootcampBanner delay={3000} autoShow={true} />

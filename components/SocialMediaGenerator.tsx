@@ -26,7 +26,7 @@ const defaultSocialData: SocialPostData = {
   eventTime: '9:00 AM',
   callToAction: 'Register Now!',
   hashtags: ['#ProgrammingBootcamp', '#WebDevelopment', '#AETech', '#TechEducation'],
-  logoUrl: '/website-assets/logo-banner-white.png',
+  logoUrl: '/assets/Light transparent logo.png',
   backgroundType: 'gradient',
   backgroundValue: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
   textColor: '#ffffff',

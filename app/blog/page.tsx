@@ -450,11 +450,11 @@ export default function BlogPage() {
             <div className="lg:col-span-2">
               <div className="flex items-center space-x-3 mb-6">
                 <Image
-                  src="/website-assets/logo-white-500.png"
+                  src="/assets/Light transparent logo.png"
                   alt="AETech Research Labs Limited"
-                  width={48}
+                  width={150}
                   height={48}
-                  className="h-12 w-12"
+                  className="h-12 w-auto"
                 />
                 <div>
                   <span className="text-2xl font-bold">AETech Blog</span>
@@ -511,9 +511,6 @@ export default function BlogPage() {
           <div className="border-t border-gray-800 mt-12 pt-8 flex flex-col md:flex-row items-center justify-between">
             <p className="text-gray-400 text-sm">
               © 2025 AETech. All rights reserved.
-            </p>
-            <p className="text-gray-400 text-sm mt-4 md:mt-0">
-              Built with ❤️ using Next.js & modern web technologies
             </p>
           </div>
         </div>

@@ -34,18 +34,18 @@ export default function BlogHeader({ currentPage = 'blog' }: BlogHeaderProps) {
           {/* Logo */}
           <Link href="/" className="flex items-center space-x-3 group">
             <Image
-              src="/website-assets/logo-white-500.png"
+              src="/assets/Dark transparent logo.png"
               alt="AETech Research Labs Limited"
-              width={40}
+              width={120}
               height={40}
-              className="h-10 w-10 dark:hidden transform group-hover:scale-105 transition-transform"
+              className="h-8 w-auto dark:hidden transform group-hover:scale-105 transition-transform"
             />
             <Image
-              src="/website-assets/logo-dark-500.png"
+              src="/assets/Light transparent logo.png"
               alt="AETech Research Labs Limited"
-              width={40}
+              width={120}
               height={40}
-              className="h-10 w-10 hidden dark:block transform group-hover:scale-105 transition-transform"
+              className="h-8 w-auto hidden dark:block transform group-hover:scale-105 transition-transform"
             />
             <div className="hidden sm:block">
               <span className="text-xl font-bold text-gray-900 dark:text-white">AETech</span>

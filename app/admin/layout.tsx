@@ -102,7 +102,7 @@ export default function AdminLayout({
             <div className="flex items-center justify-between p-6 bg-gradient-to-r from-[#c1272d] to-red-600">
               {!sidebarCollapsed ? (
                 <Image
-                  src="/website-assets/logo-banner-white.png"
+                  src="/assets/Light transparent logo.png"
                   alt="AETech"
                   width={200}
                   height={50}
@@ -214,7 +214,7 @@ export default function AdminLayout({
                 {/* Mobile header */}
                 <div className="flex items-center justify-between p-6 bg-gradient-to-r from-[#c1272d] to-red-600">
                   <Image
-                    src="/website-assets/logo-banner-white.png"
+                    src="/assets/Light transparent logo.png"
                     alt="AETech"
                     width={200}
                     height={50}
@@ -308,14 +308,14 @@ export default function AdminLayout({
                 <Bars3Icon className="h-6 w-6" />
               </button>
               <Image
-                src="/website-assets/logo-dark-500.png"
+                src="/assets/Dark transparent logo.png"
                 alt="AETech"
                 width={120}
                 height={30}
                 className="h-8 w-auto dark:hidden"
               />
               <Image
-                src="/website-assets/logo-white-500.png"
+                src="/assets/Light transparent logo.png"
                 alt="AETech"
                 width={120}
                 height={30}

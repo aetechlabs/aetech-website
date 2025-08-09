@@ -5,6 +5,7 @@ import { motion } from 'framer-motion';
 import Image from 'next/image';
 import Link from 'next/link';
 import BlogHeader from '../components/BlogHeader';
+import Footer from '@/components/Footer';
 import { 
   MapPinIcon,
   PhoneIcon,
@@ -135,7 +136,7 @@ export default function ContactPage() {
   ];
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-50 via-white to-red-50 dark:from-black dark:via-gray-900 dark:to-red-950">
+    <div className="min-h-screen bg-white dark:bg-gray-900">
       {/* Header Navigation */}
       <BlogHeader currentPage="contact" />
 
@@ -151,7 +152,7 @@ export default function ContactPage() {
             priority
           />
           {/* Dark overlay for better text readability */}
-          <div className="absolute inset-0 bg-gradient-to-br from-black/70 via-black/60 to-red-900/70"></div>
+          <div className="absolute inset-0 bg-black/70"></div>
         </div>
         
         <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -167,7 +168,7 @@ export default function ContactPage() {
               animate={{ opacity: 1, scale: 1 }}
               transition={{ duration: 0.8, delay: 0.2 }}
             >
-              <span className="bg-gradient-to-r from-red-400 via-orange-400 to-yellow-400 bg-clip-text text-transparent">
+              <span className="text-red-400">
                 Get In
               </span>
               <br />
@@ -204,7 +205,7 @@ export default function ContactPage() {
                 transition={{ duration: 0.6, delay: 0.8 + index * 0.1 }}
                 className="bg-white dark:bg-gray-800 rounded-2xl p-6 shadow-xl border border-gray-100 dark:border-gray-700 text-center group hover:shadow-2xl transition-all duration-300"
               >
-                <div className="text-red-600 dark:text-red-400 mb-4 flex justify-center group-hover:scale-110 transition-transform duration-300">
+                <div className="text-red-400 dark:text-red-300 mb-4 flex justify-center group-hover:scale-110 transition-transform duration-300">
                   {info.icon}
                 </div>
                 <h3 className="text-lg font-bold text-gray-900 dark:text-white mb-3">
@@ -246,8 +247,8 @@ export default function ContactPage() {
               )}
 
               {submitStatus === 'error' && (
-                <div className="mb-6 p-4 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-xl">
-                  <span className="text-red-800 dark:text-red-200">
+                <div className="mb-6 p-4 bg-red-50 dark:bg-red-900/10 border border-red-100 dark:border-red-700 rounded-xl">
+                  <span className="text-red-400 dark:text-red-300">
                     There was an error sending your message. Please try again.
                   </span>
                 </div>
@@ -265,7 +266,7 @@ export default function ContactPage() {
                       required
                       value={formData.name}
                       onChange={(e) => setFormData(prev => ({ ...prev, name: e.target.value }))}
-                      className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-xl bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-red-500 focus:border-transparent transition-all"
+                      className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-xl bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-red-300 focus:border-transparent transition-all"
                       placeholder="Your Full Name"
                     />
                   </div>
@@ -279,7 +280,7 @@ export default function ContactPage() {
                       required
                       value={formData.email}
                       onChange={(e) => setFormData(prev => ({ ...prev, email: e.target.value }))}
-                      className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-xl bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-red-500 focus:border-transparent transition-all"
+                      className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-xl bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-red-300 focus:border-transparent transition-all"
                       placeholder="your.email@company.com"
                     />
                   </div>
@@ -295,7 +296,7 @@ export default function ContactPage() {
                       id="phone"
                       value={formData.phone}
                       onChange={(e) => setFormData(prev => ({ ...prev, phone: e.target.value }))}
-                      className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-xl bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-red-500 focus:border-transparent transition-all"
+                      className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-xl bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-red-300 focus:border-transparent transition-all"
                       placeholder="+1 (555) 123-4567"
                     />
                   </div>
@@ -308,7 +309,7 @@ export default function ContactPage() {
                       id="country"
                       value={formData.country}
                       onChange={(e) => setFormData(prev => ({ ...prev, country: e.target.value }))}
-                      className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-xl bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-red-500 focus:border-transparent transition-all"
+                      className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-xl bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-red-300 focus:border-transparent transition-all"
                       placeholder="Nigeria"
                     />
                   </div>
@@ -323,7 +324,7 @@ export default function ContactPage() {
                     id="company"
                     value={formData.company}
                     onChange={(e) => setFormData(prev => ({ ...prev, company: e.target.value }))}
-                    className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-xl bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-red-500 focus:border-transparent transition-all"
+                    className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-xl bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-red-300 focus:border-transparent transition-all"
                     placeholder="Your Company Name"
                   />
                 </div>
@@ -337,7 +338,7 @@ export default function ContactPage() {
                       id="projectType"
                       value={formData.projectType}
                       onChange={(e) => setFormData(prev => ({ ...prev, projectType: e.target.value }))}
-                      className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-xl bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-red-500 focus:border-transparent transition-all"
+                      className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-xl bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-red-300 focus:border-transparent transition-all"
                     >
                       <option value="">Select Project Type</option>
                       {services.map((service) => (
@@ -353,7 +354,7 @@ export default function ContactPage() {
                       id="timeline"
                       value={formData.timeline}
                       onChange={(e) => setFormData(prev => ({ ...prev, timeline: e.target.value }))}
-                      className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-xl bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-red-500 focus:border-transparent transition-all"
+                      className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-xl bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-red-300 focus:border-transparent transition-all"
                     >
                       <option value="">Select Timeline</option>
                       <option value="ASAP">ASAP (Rush Project)</option>
@@ -379,7 +380,7 @@ export default function ContactPage() {
                         id="currency"
                         value={formData.currency}
                         onChange={(e) => setFormData(prev => ({ ...prev, currency: e.target.value, budget: '' }))}
-                        className="w-full px-3 py-3 border border-gray-300 dark:border-gray-600 rounded-xl bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-red-500 focus:border-transparent transition-all text-sm"
+                        className="w-full px-3 py-3 border border-gray-300 dark:border-gray-600 rounded-xl bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-red-300 focus:border-transparent transition-all text-sm"
                       >
                         {currencies.map((currency) => (
                           <option key={currency.code} value={currency.code}>
@@ -396,7 +397,7 @@ export default function ContactPage() {
                         id="budget"
                         value={formData.budget}
                         onChange={(e) => setFormData(prev => ({ ...prev, budget: e.target.value }))}
-                        className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-xl bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-red-500 focus:border-transparent transition-all"
+                        className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-xl bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-red-300 focus:border-transparent transition-all"
                       >
                         <option value="">Select Budget Range</option>
                         {budgetRanges[formData.currency as keyof typeof budgetRanges]?.map((range) => (
@@ -420,7 +421,7 @@ export default function ContactPage() {
                     required
                     value={formData.subject}
                     onChange={(e) => setFormData(prev => ({ ...prev, subject: e.target.value }))}
-                    className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-xl bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-red-500 focus:border-transparent transition-all"
+                    className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-xl bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-red-300 focus:border-transparent transition-all"
                     placeholder="Brief subject of your inquiry"
                   />
                 </div>
@@ -435,7 +436,7 @@ export default function ContactPage() {
                     rows={6}
                     value={formData.message}
                     onChange={(e) => setFormData(prev => ({ ...prev, message: e.target.value }))}
-                    className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-xl bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-red-500 focus:border-transparent transition-all"
+                    className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-xl bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-red-300 focus:border-transparent transition-all"
                     placeholder="Tell us about your project, requirements, and how we can help..."
                   />
                 </div>
@@ -443,7 +444,7 @@ export default function ContactPage() {
                 <button
                   type="submit"
                   disabled={isSubmitting}
-                  className="w-full bg-gradient-to-r from-red-500 to-red-600 hover:from-red-600 hover:to-red-700 disabled:from-gray-400 disabled:to-gray-500 text-white px-8 py-4 rounded-xl font-medium transition-all duration-200 transform hover:scale-[1.02] disabled:hover:scale-100 shadow-lg"
+                  className="w-full bg-red-400 hover:bg-red-400 disabled:bg-gray-400 text-white px-8 py-4 rounded-xl font-medium transition-all duration-200 transform hover:scale-[1.02] disabled:hover:scale-100 shadow-lg"
                 >
                   {isSubmitting ? 'Sending Message...' : 'Send Message'}
                 </button>
@@ -461,13 +462,13 @@ export default function ContactPage() {
               {/* Services */}
               <div className="bg-white dark:bg-gray-800 rounded-2xl p-8 shadow-xl border border-gray-100 dark:border-gray-700">
                 <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-6 flex items-center">
-                  <BuildingOfficeIcon className="w-6 h-6 text-red-600 dark:text-red-400 mr-3" />
+                  <BuildingOfficeIcon className="w-6 h-6 text-red-400 dark:text-red-400 mr-3" />
                   Our Services
                 </h3>
                 <div className="grid grid-cols-2 gap-3">
                   {services.map((service, index) => (
                     <div key={index} className="flex items-center space-x-2">
-                      <div className="w-2 h-2 bg-red-600 dark:bg-red-400 rounded-full"></div>
+                      <div className="w-2 h-2 bg-red-400 dark:bg-red-400 rounded-full"></div>
                       <span className="text-sm text-gray-600 dark:text-gray-300">{service}</span>
                     </div>
                   ))}
@@ -477,7 +478,7 @@ export default function ContactPage() {
               {/* Why Choose Us */}
               <div className="bg-white dark:bg-gray-800 rounded-2xl p-8 shadow-xl border border-gray-100 dark:border-gray-700">
                 <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-6 flex items-center">
-                  <GlobeAltIcon className="w-6 h-6 text-red-600 dark:text-red-400 mr-3" />
+                  <GlobeAltIcon className="w-6 h-6 text-red-400 dark:text-red-400 mr-3" />
                   Why Choose AETech Labs?
                 </h3>
                 <ul className="space-y-4">
@@ -505,7 +506,7 @@ export default function ContactPage() {
               </div>
 
               {/* Quick Links */}
-              <div className="bg-gradient-to-r from-red-500 to-orange-500 rounded-2xl p-8 text-white">
+              <div className="bg-red-400 rounded-2xl p-8 text-white">
                 <h3 className="text-2xl font-bold mb-6">Ready to Get Started?</h3>
                 <p className="mb-6 opacity-90">
                   Explore our work and learn more about how we can help your business grow.
@@ -531,6 +532,8 @@ export default function ContactPage() {
           </motion.section>
         </div>
       </div>
+
+      <Footer />
     </div>
   );
 }

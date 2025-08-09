@@ -4,6 +4,7 @@ import { motion } from 'framer-motion';
 import Image from 'next/image';
 import Link from 'next/link';
 import BlogHeader from '../components/BlogHeader';
+import Footer from '@/components/Footer';
 import { 
   RocketLaunchIcon,
   UsersIcon,
@@ -38,7 +39,7 @@ export default function AboutPage() {
   ];
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-50 via-white to-red-50 dark:from-black dark:via-gray-900 dark:to-red-950">
+    <div className="min-h-screen bg-white dark:bg-gray-900">
       {/* Header Navigation */}
       <BlogHeader currentPage="about" />
 
@@ -54,7 +55,7 @@ export default function AboutPage() {
             priority
           />
           {/* Dark overlay for better text readability */}
-          <div className="absolute inset-0 bg-gradient-to-br from-black/70 via-black/60 to-red-900/70"></div>
+          <div className="absolute inset-0 bg-black/70"></div>
         </div>
         
         <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -71,7 +72,7 @@ export default function AboutPage() {
               className="mb-8"
             >
               <Image
-                src="/website-assets/logo-banner-white.png"
+                src="/assets/Light transparent logo.png"
                 alt="AETech Research Labs Limited"
                 width={400}
                 height={120}
@@ -85,7 +86,7 @@ export default function AboutPage() {
               animate={{ opacity: 1, scale: 1 }}
               transition={{ duration: 0.8, delay: 0.3 }}
             >
-              <span className="bg-gradient-to-r from-red-400 via-orange-400 to-yellow-400 bg-clip-text text-transparent">
+              <span className="text-red-400">
                 About
               </span>
               <br />
@@ -116,7 +117,7 @@ export default function AboutPage() {
           <div className="grid lg:grid-cols-2 gap-12">
             <div className="bg-white dark:bg-gray-800 rounded-2xl p-8 shadow-xl border border-gray-100 dark:border-gray-700">
               <div className="flex items-center mb-6">
-                <BeakerIcon className="w-8 h-8 text-red-600 dark:text-red-400 mr-3" />
+                <BeakerIcon className="w-8 h-8 text-red-400 dark:text-red-300 mr-3" />
                 <h2 className="text-3xl font-bold text-gray-900 dark:text-white">Our Vision</h2>
               </div>
               <p className="text-lg text-gray-600 dark:text-gray-300 leading-relaxed">
@@ -126,7 +127,7 @@ export default function AboutPage() {
             
             <div className="bg-white dark:bg-gray-800 rounded-2xl p-8 shadow-xl border border-gray-100 dark:border-gray-700">
               <div className="flex items-center mb-6">
-                <RocketLaunchIcon className="w-8 h-8 text-red-600 dark:text-red-400 mr-3" />
+                <RocketLaunchIcon className="w-8 h-8 text-red-400 dark:text-red-300 mr-3" />
                 <h2 className="text-3xl font-bold text-gray-900 dark:text-white">Our Mission</h2>
               </div>
               <p className="text-lg text-gray-600 dark:text-gray-300 leading-relaxed">
@@ -155,7 +156,7 @@ export default function AboutPage() {
                 transition={{ duration: 0.6, delay: 1.2 + index * 0.1 }}
                 className="bg-white dark:bg-gray-800 rounded-2xl p-6 shadow-xl border border-gray-100 dark:border-gray-700 text-center group hover:shadow-2xl transition-all duration-300"
               >
-                <div className="text-red-600 dark:text-red-400 mb-4 flex justify-center group-hover:scale-110 transition-transform duration-300">
+                <div className="text-red-400 dark:text-red-300 mb-4 flex justify-center group-hover:scale-110 transition-transform duration-300">
                   {value.icon}
                 </div>
                 <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-3">
@@ -176,7 +177,7 @@ export default function AboutPage() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 1.4 }}
-          className="text-center bg-gradient-to-r from-red-500 to-orange-500 rounded-2xl p-12 text-white"
+          className="text-center bg-red-400 rounded-2xl p-12 text-white"
         >
           <h2 className="text-4xl font-bold mb-6">Ready to Innovate Together?</h2>
           <p className="text-xl mb-8 opacity-90">
@@ -185,19 +186,21 @@ export default function AboutPage() {
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Link 
               href="/contact"
-              className="bg-white text-red-600 px-8 py-4 rounded-xl font-medium hover:bg-gray-100 transition-colors shadow-lg"
+              className="bg-white text-red-400 px-8 py-4 rounded-xl font-medium hover:bg-gray-100 transition-colors shadow-lg"
             >
               Get in Touch
             </Link>
             <Link 
               href="/blog"
-              className="border-2 border-white text-white px-8 py-4 rounded-xl font-medium hover:bg-white hover:text-red-600 transition-colors"
+              className="border-2 border-white text-white px-8 py-4 rounded-xl font-medium hover:bg-white hover:text-red-400 transition-colors"
             >
               Read Our Blog
             </Link>
           </div>
         </motion.section>
       </div>
+
+      <Footer />
     </div>
   );
 }

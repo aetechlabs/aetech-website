@@ -2,10 +2,13 @@
 
 import { useState } from 'react'
 import { motion } from 'framer-motion'
+import Image from 'next/image'
+import Link from 'next/link'
 import BootcampEnrollmentForm from '@/components/BootcampEnrollmentForm'
 import FloatingParticles from '@/components/FloatingParticles'
 import GradientText from '@/components/GradientText'
 import UrgencyBanner from '@/components/UrgencyBanner'
+import Footer from '@/components/Footer'
 import { 
   AcademicCapIcon,
   CalendarDaysIcon,
@@ -595,6 +598,8 @@ export default function BootcampPage() {
           </div>
         </div>
       </section>
+
+      <Footer />
 
       {/* Enrollment Form Modal */}
       <BootcampEnrollmentForm 
