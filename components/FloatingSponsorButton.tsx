@@ -2,7 +2,7 @@
 
 import { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import Link from 'next/link'
+import SponsorshipModal from './SponsorshipModal'
 import { 
   HeartIcon,
   XMarkIcon
@@ -11,6 +11,7 @@ import {
 export default function FloatingSponsorButton() {
   const [isVisible, setIsVisible] = useState(true)
   const [isHovered, setIsHovered] = useState(false)
+  const [isModalOpen, setIsModalOpen] = useState(false)
 
   if (!isVisible) return null
 
@@ -39,7 +40,7 @@ export default function FloatingSponsorButton() {
         </button>
 
         {/* Main button */}
-        <Link href="/contact">
+        <button onClick={() => setIsModalOpen(true)}>
           <motion.div
             whileHover={{ scale: 1.1 }}
             whileTap={{ scale: 0.9 }}
@@ -88,7 +89,7 @@ export default function FloatingSponsorButton() {
               )}
             </AnimatePresence>
           </motion.div>
-        </Link>
+        </button>
 
         {/* Floating notification dot */}
         <motion.div
@@ -139,6 +140,12 @@ export default function FloatingSponsorButton() {
           <div className="absolute top-full left-4 w-0 h-0 border-l-4 border-r-4 border-t-4 border-transparent border-t-white dark:border-t-gray-800"></div>
         </motion.div>
       </motion.div>
+
+      {/* Sponsorship Modal */}
+      <SponsorshipModal 
+        isOpen={isModalOpen} 
+        onClose={() => setIsModalOpen(false)} 
+      />
     </AnimatePresence>
   )
 }
