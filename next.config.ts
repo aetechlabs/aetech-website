@@ -33,9 +33,7 @@ const nextConfig: NextConfig = {
     ];
   },
   // Disable static optimization and force dynamic rendering
-  experimental: {
-    serverComponentsExternalPackages: [],
-  },
+  serverExternalPackages: [],
   // Disable build-time caching
   generateBuildId: async () => {
     return 'no-cache-' + Date.now();

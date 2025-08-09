@@ -15,6 +15,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL('https://aetechlabs.com'),
   title: "AETech Research Labs Limited - Engineering Tomorrow's Solutions",
   description: "Innovation-driven technology company committed to researching, developing, and deploying advanced solutions across software engineering, artificial intelligence, data systems, and integrated technologies.",
   keywords: "AETech, Research Labs, Software Development, AI Solutions, Data Engineering, IT Consulting, Technology Advisory, Innovation, Africa",
@@ -40,6 +41,12 @@ export const metadata: Metadata = {
         alt: 'AETech Research Labs Limited Logo'
       }
     ]
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "AETech Research Labs Limited",
+    description: "Engineering Tomorrow's Solutions - Advanced technology solutions for businesses across Africa and beyond",
+    images: ['/logo.png'],
   },
 };
 
