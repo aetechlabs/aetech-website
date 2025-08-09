@@ -693,6 +693,78 @@ export default function BootcampPage() {
         </div>
       </section>
 
+      {/* Student Resources */}
+      <section className="py-20 bg-gray-50 dark:bg-gray-800">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8 }}
+            viewport={{ once: true }}
+            className="text-center mb-12"
+          >
+            <h2 className="text-4xl font-bold text-gray-900 dark:text-gray-100 mb-4">
+              Student Resources
+            </h2>
+            <p className="text-xl text-gray-600 dark:text-gray-300">
+              Essential documents and materials for your bootcamp journey
+            </p>
+          </motion.div>
+
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.2 }}
+            viewport={{ once: true }}
+            className="grid md:grid-cols-2 gap-6"
+          >
+            {/* Schedule PDF Download */}
+            <div className="bg-white dark:bg-gray-900 rounded-xl p-6 shadow-lg hover:shadow-xl transition-all duration-300">
+              <div className="flex items-center mb-4">
+                <div className="h-12 w-12 bg-[#c1272d] rounded-lg flex items-center justify-center mr-4">
+                  <span className="text-white text-2xl">📄</span>
+                </div>
+                <div>
+                  <h3 className="text-xl font-bold text-gray-900 dark:text-gray-100">Class Schedule</h3>
+                  <p className="text-gray-600 dark:text-gray-400">Detailed weekly schedule</p>
+                </div>
+              </div>
+              <p className="text-gray-700 dark:text-gray-300 mb-4">
+                Download the complete bootcamp schedule with detailed timings, course activities, and assessment dates.
+              </p>
+              <a
+                href="/documents/schedule.pdf"
+                download="AETech-Bootcamp-Schedule.pdf"
+                className="inline-flex items-center bg-[#c1272d] text-white px-6 py-3 rounded-lg font-medium hover:bg-red-700 transition-colors duration-300"
+              >
+                <span className="mr-2">📥</span>
+                Download Schedule PDF
+              </a>
+            </div>
+
+            {/* Coming Soon - More Resources */}
+            <div className="bg-white dark:bg-gray-900 rounded-xl p-6 shadow-lg">
+              <div className="flex items-center mb-4">
+                <div className="h-12 w-12 bg-gray-400 rounded-lg flex items-center justify-center mr-4">
+                  <span className="text-white text-2xl">📚</span>
+                </div>
+                <div>
+                  <h3 className="text-xl font-bold text-gray-900 dark:text-gray-100">More Resources</h3>
+                  <p className="text-gray-600 dark:text-gray-400">Additional materials</p>
+                </div>
+              </div>
+              <p className="text-gray-700 dark:text-gray-300 mb-4">
+                Course materials, project templates, and study guides will be available here soon.
+              </p>
+              <div className="inline-flex items-center bg-gray-300 dark:bg-gray-600 text-gray-600 dark:text-gray-300 px-6 py-3 rounded-lg font-medium cursor-not-allowed">
+                <span className="mr-2">⏳</span>
+                Coming Soon
+              </div>
+            </div>
+          </motion.div>
+        </div>
+      </section>
+
       {/* FAQs */}
       <section className="py-20 bg-white dark:bg-gray-900">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
