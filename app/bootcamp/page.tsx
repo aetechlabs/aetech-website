@@ -5,14 +5,10 @@ import { motion } from 'framer-motion'
 import Image from 'next/image'
 import Link from 'next/link'
 import BootcampEnrollmentForm from '@/components/BootcampEnrollmentForm'
-import FloatingParticles from '@/components/FloatingParticles'
-import GradientText from '@/components/GradientText'
+import Navigation from '@/app/components/Navigation'
 import UrgencyBanner from '@/components/UrgencyBanner'
 import Footer from '@/components/Footer'
 import { 
-  AcademicCapIcon,
-  CalendarDaysIcon,
-  ComputerDesktopIcon,
   UserGroupIcon,
   CheckCircleIcon,
   ChartBarIcon,
@@ -27,7 +23,10 @@ import {
   MapPinIcon,
   CurrencyDollarIcon,
   ChevronDownIcon,
-  ChevronUpIcon
+  ChevronUpIcon,
+  CalendarDaysIcon,
+  AcademicCapIcon,
+  ComputerDesktopIcon
 } from '@heroicons/react/24/outline'
 
 export default function BootcampPage() {
@@ -39,31 +38,31 @@ export default function BootcampPage() {
       icon: ChartBarIcon,
       title: "Data Science",
       description: "Learn data analysis, visualization, and insights extraction using Python and modern tools.",
-      color: "bg-blue-500"
+      color: "bg-gray-600"
     },
     {
       icon: CpuChipIcon,
       title: "AI & Machine Learning",
       description: "Explore artificial intelligence, machine learning algorithms, and practical applications.",
-      color: "bg-purple-500"
+      color: "bg-gray-500"
     },
     {
       icon: PaintBrushIcon,
       title: "Graphic Design with Canva",
       description: "Master visual design principles and create stunning graphics using Canva.",
-      color: "bg-pink-500"
+      color: "bg-gray-600"
     },
     {
       icon: LightBulbIcon,
       title: "Creative Programming",
       description: "Discover creative coding, interactive art, and visual programming concepts.",
-      color: "bg-yellow-500"
+      color: "bg-gray-700"
     },
     {
       icon: GlobeAltIcon,
       title: "Beginner Web Development",
       description: "Build responsive websites using HTML, CSS, and modern web technologies.",
-      color: "bg-green-500"
+      color: "bg-gray-800"
     }
   ]
 
@@ -148,23 +147,21 @@ export default function BootcampPage() {
 
   return (
     <div className="min-h-screen bg-white dark:bg-gray-900">
+      {/* Navigation */}
+      <Navigation />
+      
       {/* Hero Section */}
-      <section className="relative overflow-hidden">
-        {/* Video Background */}
-        <div className="absolute inset-0 z-0">
-          <video
-            autoPlay
-            muted
-            loop
-            playsInline
-            className="w-full h-full object-cover"
-          >
-            <source src="/videos/students-in-a-computer-lab.mp4" type="video/mp4" />
-          </video>
-          {/* Dark overlay for better text readability */}
-          <div className="absolute inset-0 bg-gradient-to-br from-[#c1272d]/80 via-red-600/80 to-red-800/80"></div>
-          {/* Floating Particles */}
-          <FloatingParticles count={25} className="text-white/20" />
+      <section className="relative overflow-hidden bg-gray-50 dark:bg-gray-800">
+        {/* Subtle Background Pattern */}
+        <div className="absolute inset-0 opacity-5">
+          <svg className="w-full h-full" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+            <defs>
+              <pattern id="grid" width="10" height="10" patternUnits="userSpaceOnUse">
+                <path d="M 10 0 L 0 0 0 10" fill="none" stroke="currentColor" strokeWidth="1"/>
+              </pattern>
+            </defs>
+            <rect width="100%" height="100%" fill="url(#grid)" className="text-gray-900 dark:text-gray-100" />
+          </svg>
         </div>
         
         {/* Content */}
@@ -173,13 +170,13 @@ export default function BootcampPage() {
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8 }}
-            className="text-center text-white"
+            className="text-center"
           >
-            <h1 className="text-5xl lg:text-7xl font-bold mb-6 leading-tight">
-              AETech DevStarter
-              <span className="block text-yellow-300">Bootcamp</span>
+            <h1 className="text-5xl lg:text-7xl font-bold mb-6 leading-tight text-gray-900 dark:text-gray-100">
+              AETech 
+              <span className="block text-[#c1272d]">DevStars Bootcamp</span>
             </h1>
-            <p className="text-2xl lg:text-3xl mb-8 text-red-100 font-light">
+            <p className="text-2xl lg:text-3xl mb-8 text-gray-600 dark:text-gray-300 font-light">
               3 Weeks. 5 Skills. Endless Possibilities.
             </p>
             <motion.div
@@ -188,38 +185,12 @@ export default function BootcampPage() {
               transition={{ duration: 0.8, delay: 0.3 }}
             >
               <button 
-                className="bg-yellow-400 hover:bg-yellow-500 text-gray-900 font-bold py-4 px-8 rounded-full text-lg transition-all duration-300 transform hover:scale-105 shadow-2xl"
+                className="bg-[#c1272d] hover:bg-red-700 text-white font-bold py-4 px-8 rounded-lg text-lg transition-all duration-300 shadow-lg hover:shadow-xl"
                 onClick={() => setShowEnrollmentForm(true)}
               >
                 🚀 Enroll Now
               </button>
             </motion.div>
-          </motion.div>
-        </div>
-        
-        {/* Decorative floating elements */}
-        <div className="absolute top-20 left-10 opacity-30 animate-bounce">
-          <motion.div
-            animate={{ y: [0, -20, 0] }}
-            transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
-          >
-            <ComputerDesktopIcon className="h-16 w-16 text-white" />
-          </motion.div>
-        </div>
-        <div className="absolute bottom-20 right-10 opacity-30">
-          <motion.div
-            animate={{ y: [0, 20, 0], rotate: [0, 10, 0] }}
-            transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
-          >
-            <AcademicCapIcon className="h-20 w-20 text-white" />
-          </motion.div>
-        </div>
-        <div className="absolute top-1/2 right-20 opacity-20">
-          <motion.div
-            animate={{ x: [0, 10, 0], rotate: [0, -5, 0] }}
-            transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}
-          >
-            <CalendarDaysIcon className="h-12 w-12 text-white" />
           </motion.div>
         </div>
       </section>
@@ -321,8 +292,8 @@ export default function BootcampPage() {
                   <div className="flex items-center justify-between">
                     <div className="flex items-center space-x-4">
                       <div className={`w-3 h-3 rounded-full ${
-                        item.type === 'mandatory' ? 'bg-red-500' :
-                        item.type === 'optional' ? 'bg-yellow-500' : 'bg-green-500'
+                        item.type === 'mandatory' ? 'bg-gray-600' :
+                        item.type === 'optional' ? 'bg-gray-500' : 'bg-gray-400'
                       }`}></div>
                       <h3 className="text-lg font-semibold text-gray-900 dark:text-gray-100">
                         {item.day}
@@ -689,7 +660,7 @@ export default function BootcampPage() {
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.2 }}
             viewport={{ once: true }}
-            className="bg-gradient-to-r from-blue-50 to-indigo-50 dark:from-blue-900/20 dark:to-indigo-900/20 rounded-xl p-6 shadow-lg"
+            className="bg-gray-50 dark:bg-gray-800 rounded-xl p-6 shadow-lg border border-gray-200 dark:border-gray-700"
           >
             <div className="flex items-center mb-6">
               <HandRaisedIcon className="h-8 w-8 text-[#c1272d] mr-3" />
@@ -702,7 +673,7 @@ export default function BootcampPage() {
             <div className="grid md:grid-cols-2 gap-6">
               <div className="bg-white dark:bg-gray-800 rounded-lg p-4">
                 <div className="flex items-center mb-3">
-                  <div className="w-3 h-3 bg-blue-500 rounded-full mr-3"></div>
+                  <div className="w-3 h-3 bg-gray-500 rounded-full mr-3"></div>
                   <span className="font-semibold text-gray-900 dark:text-gray-100">Monday Q&A Sessions</span>
                 </div>
                 <p className="text-sm text-gray-600 dark:text-gray-400 mb-2">9:00am – 11:00am</p>
@@ -711,7 +682,7 @@ export default function BootcampPage() {
               
               <div className="bg-white dark:bg-gray-800 rounded-lg p-4">
                 <div className="flex items-center mb-3">
-                  <div className="w-3 h-3 bg-green-500 rounded-full mr-3"></div>
+                  <div className="w-3 h-3 bg-gray-400 rounded-full mr-3"></div>
                   <span className="font-semibold text-gray-900 dark:text-gray-100">Wednesday Clinics</span>
                 </div>
                 <p className="text-sm text-gray-600 dark:text-gray-400 mb-2">9:00am – 11:00am</p>
