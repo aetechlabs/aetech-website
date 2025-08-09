@@ -207,3 +207,28 @@ enum VolunteerStatus {
   ACTIVE
   INACTIVE
 }
+
+model Sponsor {
+  id          String      @id @default(auto()) @map("_id") @db.ObjectId
+  name        String
+  description String?
+  logoUrl     String?
+  websiteUrl  String?
+  tier        SponsorTier @default(BRONZE)
+  isActive    Boolean     @default(true)
+  order       Int         @default(0)
+  contactName String?
+  contactEmail String?
+  startDate   DateTime?
+  endDate     DateTime?
+  createdAt   DateTime    @default(now())
+  updatedAt   DateTime    @updatedAt
+}
+
+enum SponsorTier {
+  PLATINUM
+  GOLD
+  SILVER
+  BRONZE
+  COMMUNITY
+}

@@ -174,6 +174,7 @@ export default function ContactForm() {
             <option value="research-development">Research & Development</option>
             <option value="training">Training & Capacity Building</option>
             <option value="startup-advisory">Technology Advisory for Startups</option>
+            <option value="sponsorship">Sponsorship & Partnership</option>
             <option value="general">General Inquiry</option>
           </select>
         </div>

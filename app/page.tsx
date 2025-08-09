@@ -6,6 +6,8 @@ import Footer from "@/components/Footer";
 import FloatingParticles from "@/components/FloatingParticles";
 import BootcampBanner from "@/components/BootcampBanner";
 import FloatingBootcampButton from "@/components/FloatingBootcampButton";
+import FloatingSponsorButton from "@/components/FloatingSponsorButton";
+import SponsorsSection from "@/components/SponsorsSection";
 import Image from "next/image";
 import Link from "next/link";
 import { motion } from "framer-motion";
@@ -798,6 +800,9 @@ export default function Home() {
         </div>
       </section>
 
+      {/* Sponsors Section */}
+      <SponsorsSection />
+
       {/* Footer */}
       <Footer />
 
@@ -806,6 +811,9 @@ export default function Home() {
       
       {/* Floating Bootcamp Button - Shows after 5 seconds */}
       <FloatingBootcampButton />
+      
+      {/* Floating Sponsor Button - Shows after 8 seconds */}
+      <FloatingSponsorButton />
     </div>
   );
 }
