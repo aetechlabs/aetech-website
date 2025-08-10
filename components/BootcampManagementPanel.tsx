@@ -13,7 +13,9 @@ import {
   ShareIcon,
   DocumentArrowDownIcon,
   PaperAirplaneIcon,
-  InformationCircleIcon
+  InformationCircleIcon,
+  ChevronLeftIcon,
+  ChevronRightIcon
 } from '@heroicons/react/24/outline'
 
 interface BootcampSettings {
@@ -225,6 +227,10 @@ export default function BootcampManagementPanel() {
   const [selectedEnrollment, setSelectedEnrollment] = useState<any>(null)
   const [approvedStudents, setApprovedStudents] = useState<any[]>([])
   const [uploadingOfferFor, setUploadingOfferFor] = useState<string | null>(null)
+  const [currentPage, setCurrentPage] = useState(1)
+  const [totalPages, setTotalPages] = useState(1)
+  const [totalStudents, setTotalStudents] = useState(0)
+  const [pageSize, setPageSize] = useState(10) // Students per page
 
   useEffect(() => {
     fetchSettings()
@@ -246,12 +252,15 @@ export default function BootcampManagementPanel() {
     }
   }
 
-  const fetchApprovedStudents = async () => {
+  const fetchApprovedStudents = async (page: number = 1) => {
     try {
-      const response = await fetch('/api/bootcamp?status=APPROVED')
+      const response = await fetch(`/api/bootcamp?status=APPROVED&page=${page}&limit=${pageSize}`)
       const result = await response.json()
       if (result.success) {
         setApprovedStudents(result.data.enrollments || [])
+        setTotalPages(result.data.pagination?.totalPages || 1)
+        setTotalStudents(result.data.pagination?.total || 0)
+        setCurrentPage(page)
       }
     } catch (error) {
       console.error('Error fetching approved students:', error)
@@ -293,7 +302,7 @@ export default function BootcampManagementPanel() {
       })
 
       if (response.ok) {
-        await fetchApprovedStudents()
+        await fetchApprovedStudents(currentPage)
       }
     } catch (error) {
       console.error('Error uploading offer letter:', error)
@@ -462,12 +471,12 @@ export default function BootcampManagementPanel() {
           </div>
 
           <div className="space-y-4">
-            {approvedStudents.length > 0 && (
+            {totalStudents > 0 && (
               <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 mb-6">
                 <div className="bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-800 rounded-lg p-3">
                   <div className="text-center">
-                    <p className="text-2xl font-bold text-green-600 dark:text-green-400">{approvedStudents.length}</p>
-                    <p className="text-xs text-green-700 dark:text-green-300">Approved Students</p>
+                    <p className="text-2xl font-bold text-green-600 dark:text-green-400">{totalStudents}</p>
+                    <p className="text-xs text-green-700 dark:text-green-300">Total Approved Students</p>
                   </div>
                 </div>
                 <div className="bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 rounded-lg p-3">
@@ -619,6 +628,101 @@ export default function BootcampManagementPanel() {
                 </div>
               </div>
             )}
+            
+            {/* Pagination Controls */}
+            {totalStudents > 0 && (
+              <div className="flex flex-col sm:flex-row items-center justify-between gap-4 mt-6 p-4 bg-gray-50 dark:bg-gray-900/50 rounded-lg border border-gray-200 dark:border-gray-700">
+                <div className="flex items-center gap-4">
+                  <div className="text-sm text-gray-600 dark:text-gray-400">
+                    Showing {((currentPage - 1) * pageSize) + 1} to {Math.min(currentPage * pageSize, totalStudents)} of {totalStudents} approved students
+                  </div>
+                  
+                  <div className="flex items-center gap-2">
+                    <label className="text-sm text-gray-600 dark:text-gray-400">
+                      Show:
+                    </label>
+                    <select
+                      value={pageSize}
+                      onChange={(e) => {
+                        const newPageSize = parseInt(e.target.value)
+                        setPageSize(newPageSize)
+                        setCurrentPage(1)
+                        // Fetch with new page size
+                        fetch(`/api/bootcamp?status=APPROVED&page=1&limit=${newPageSize}`)
+                          .then(res => res.json())
+                          .then(result => {
+                            if (result.success) {
+                              setApprovedStudents(result.data.enrollments || [])
+                              setTotalPages(result.data.pagination?.totalPages || 1)
+                              setTotalStudents(result.data.pagination?.total || 0)
+                              setCurrentPage(1)
+                            }
+                          })
+                          .catch(error => console.error('Error fetching approved students:', error))
+                      }}
+                      className="px-2 py-1 text-sm border border-gray-300 rounded-md bg-white dark:bg-gray-800 dark:border-gray-600 dark:text-gray-300"
+                    >
+                      <option value={5}>5</option>
+                      <option value={10}>10</option>
+                      <option value={20}>20</option>
+                      <option value={50}>50</option>
+                    </select>
+                    <span className="text-sm text-gray-600 dark:text-gray-400">per page</span>
+                  </div>
+                </div>
+                
+                {totalPages > 1 && (
+                  <div className="flex items-center gap-2">
+                    <button
+                      onClick={() => fetchApprovedStudents(currentPage - 1)}
+                      disabled={currentPage <= 1}
+                      className="inline-flex items-center px-3 py-2 text-sm font-medium text-gray-500 bg-white border border-gray-300 rounded-md hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed dark:bg-gray-800 dark:border-gray-600 dark:text-gray-400 dark:hover:bg-gray-700"
+                    >
+                      <ChevronLeftIcon className="h-4 w-4 mr-1" />
+                      Previous
+                    </button>
+                    
+                    <div className="flex items-center gap-1">
+                      {Array.from({ length: Math.min(5, totalPages) }, (_, i) => {
+                        let pageNum;
+                        if (totalPages <= 5) {
+                          pageNum = i + 1;
+                        } else if (currentPage <= 3) {
+                          pageNum = i + 1;
+                        } else if (currentPage >= totalPages - 2) {
+                          pageNum = totalPages - 4 + i;
+                        } else {
+                          pageNum = currentPage - 2 + i;
+                        }
+                        
+                        return (
+                          <button
+                            key={pageNum}
+                            onClick={() => fetchApprovedStudents(pageNum)}
+                            className={`px-3 py-2 text-sm font-medium rounded-md ${
+                              currentPage === pageNum
+                                ? 'bg-red-600 text-white'
+                                : 'text-gray-500 bg-white border border-gray-300 hover:bg-gray-50 dark:bg-gray-800 dark:border-gray-600 dark:text-gray-400 dark:hover:bg-gray-700'
+                            }`}
+                          >
+                            {pageNum}
+                          </button>
+                        );
+                      })}
+                    </div>
+                    
+                    <button
+                      onClick={() => fetchApprovedStudents(currentPage + 1)}
+                      disabled={currentPage >= totalPages}
+                      className="inline-flex items-center px-3 py-2 text-sm font-medium text-gray-500 bg-white border border-gray-300 rounded-md hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed dark:bg-gray-800 dark:border-gray-600 dark:text-gray-400 dark:hover:bg-gray-700"
+                    >
+                      Next
+                      <ChevronRightIcon className="h-4 w-4 ml-1" />
+                    </button>
+                  </div>
+                )}
+              </div>
+            )}
           </div>
         </motion.div>
 
@@ -724,8 +828,8 @@ export default function BootcampManagementPanel() {
         onClose={() => setShowSendModal(false)}
         enrollment={selectedEnrollment}
         onDocumentsSent={() => {
-          // Refresh enrollment data if needed
-          console.log('Documents sent successfully')
+          // Refresh current page data
+          fetchApprovedStudents(currentPage)
         }}
       />
     </div>
