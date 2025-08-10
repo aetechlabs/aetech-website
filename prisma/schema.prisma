@@ -172,6 +172,32 @@ model BootcampEnrollment {
   motivation          String
   heardAbout          String?
   status              EnrollmentStatus @default(PENDING)
+  
+  // New fields for enhanced management
+  adminNotes          String?
+  assignedCourse      String?
+  approvalDate        DateTime?
+  scheduleUrl         String? // Cloudinary URL for timetable
+  offerLetterUrl      String? // Cloudinary URL for offer letter
+  offerLetterSent     Boolean @default(false)
+  scheduleSent        Boolean @default(false)
+  socialMediaInstructionsSent Boolean @default(false)
+  
+  createdAt           DateTime @default(now())
+  updatedAt           DateTime @updatedAt
+}
+
+// New model for bootcamp management settings
+model BootcampSettings {
+  id                  String   @id @default(auto()) @map("_id") @db.ObjectId
+  currentScheduleUrl  String? // Current timetable URL
+  templateOfferLetterUrl String? // Template offer letter URL
+  batchName           String?
+  batchStartDate      DateTime?
+  batchEndDate        DateTime?
+  maxEnrollments      Int?
+  socialMediaInstructions String? // Custom instructions for social media
+  
   createdAt           DateTime @default(now())
   updatedAt           DateTime @updatedAt
 }

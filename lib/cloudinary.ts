@@ -9,6 +9,41 @@ cloudinary.config({
 
 export { cloudinary };
 
+// Upload any file to Cloudinary (for bootcamp documents)
+export const uploadToCloudinary = async (
+  buffer: Buffer,
+  options: {
+    folder?: string;
+    public_id?: string;
+    resource_type?: 'auto' | 'image' | 'video' | 'raw';
+    transformation?: any;
+  } = {}
+): Promise<any> => {
+  return new Promise((resolve, reject) => {
+    const uploadOptions = {
+      resource_type: options.resource_type || 'auto' as const,
+      folder: options.folder || 'aetech-uploads',
+      public_id: options.public_id,
+      transformation: options.transformation,
+      type: 'upload', // Make sure it's publicly accessible
+      access_mode: 'public' // Ensure public access
+    };
+
+    const uploadStream = cloudinary.uploader.upload_stream(
+      uploadOptions,
+      (error, result) => {
+        if (error) {
+          reject(error);
+        } else {
+          resolve(result);
+        }
+      }
+    );
+
+    uploadStream.end(buffer);
+  });
+};
+
 // Upload image to Cloudinary
 export const uploadImage = async (
   buffer: Buffer,

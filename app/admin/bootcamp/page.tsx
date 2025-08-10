@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from 'react'
 import { motion } from 'framer-motion'
+import BootcampManagementPanel from '@/components/BootcampManagementPanel'
 import {
   UserGroupIcon,
   FunnelIcon,
@@ -15,7 +16,9 @@ import {
   EnvelopeIcon,
   PhoneIcon,
   AcademicCapIcon,
-  ComputerDesktopIcon
+  ComputerDesktopIcon,
+  PaperAirplaneIcon,
+  DocumentTextIcon
 } from '@heroicons/react/24/outline'
 
 interface BootcampEnrollment {
@@ -75,6 +78,11 @@ export default function BootcampManagement() {
     notes: '',
     selectedCourse: ''
   })
+  
+  // New state for view management and send documents
+  const [activeTab, setActiveTab] = useState<'enrollments' | 'management'>('enrollments')
+  const [showSendDocumentsModal, setShowSendDocumentsModal] = useState(false)
+  const [selectedEnrollmentForDocs, setSelectedEnrollmentForDocs] = useState<BootcampEnrollment | null>(null)
 
   useEffect(() => {
     fetchEnrollments()
@@ -155,6 +163,18 @@ export default function BootcampManagement() {
     )
   }
 
+  const handleSendDocuments = (enrollment: BootcampEnrollment) => {
+    setSelectedEnrollmentForDocs(enrollment)
+    setShowSendDocumentsModal(true)
+  }
+
+  const handleDocumentsSent = () => {
+    // Refresh the enrollments to update any status indicators
+    fetchEnrollments()
+    setShowSendDocumentsModal(false)
+    setSelectedEnrollmentForDocs(null)
+  }
+
   const getStatusIcon = (status: string) => {
     switch (status) {
       case 'APPROVED': return <CheckCircleIcon className="h-5 w-5 text-green-600" />
@@ -213,9 +233,46 @@ export default function BootcampManagement() {
         </div>
       </motion.div>
 
-      {/* Statistics Cards */}
-      {stats && (
-        <div className="grid grid-cols-2 lg:grid-cols-5 gap-3 sm:gap-4 lg:gap-6">
+      {/* Tab Navigation */}
+      <div className="bg-white rounded-lg shadow-sm border border-gray-200">
+        <div className="flex">
+          <button
+            onClick={() => setActiveTab('enrollments')}
+            className={`flex-1 px-6 py-3 text-sm font-medium rounded-l-lg transition-colors ${
+              activeTab === 'enrollments'
+                ? 'bg-red-600 text-white'
+                : 'text-gray-600 hover:text-gray-900 hover:bg-gray-50'
+            }`}
+          >
+            <div className="flex items-center justify-center space-x-2">
+              <UserGroupIcon className="h-5 w-5" />
+              <span>Enrollments</span>
+            </div>
+          </button>
+          <button
+            onClick={() => setActiveTab('management')}
+            className={`flex-1 px-6 py-3 text-sm font-medium rounded-r-lg transition-colors ${
+              activeTab === 'management'
+                ? 'bg-red-600 text-white'
+                : 'text-gray-600 hover:text-gray-900 hover:bg-gray-50'
+            }`}
+          >
+            <div className="flex items-center justify-center space-x-2">
+              <DocumentTextIcon className="h-5 w-5" />
+              <span>Management</span>
+            </div>
+          </button>
+        </div>
+      </div>
+
+      {/* Tab Content */}
+      {activeTab === 'management' ? (
+        <BootcampManagementPanel />
+      ) : (
+        <>
+          {/* Statistics Cards */}
+          {stats && (
+            <div className="grid grid-cols-2 lg:grid-cols-5 gap-3 sm:gap-4 lg:gap-6">
           <motion.div
             className="bg-white rounded-xl shadow-sm p-4 sm:p-6 border border-gray-100"
             initial={{ opacity: 0, y: 20 }}
@@ -770,6 +827,8 @@ export default function BootcampManagement() {
             </motion.div>
           </div>
         </div>
+      )}
+        </>
       )}
     </div>
   )

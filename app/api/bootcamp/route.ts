@@ -27,7 +27,8 @@ export async function GET(request: NextRequest) {
     const where: any = {}
     
     if (status && status !== 'all') {
-      where.status = status
+      // Convert status to uppercase to match Prisma enum
+      where.status = status.toUpperCase()
     }
     
     if (search) {

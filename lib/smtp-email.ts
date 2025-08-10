@@ -27,6 +27,12 @@ interface EmailOptions {
   text?: string;
   fromName?: string;
   fromEmail?: string;
+  attachments?: Array<{
+    filename: string;
+    path?: string;
+    content?: Buffer;
+    contentType?: string;
+  }>;
 }
 
 export const sendEmailSMTP = async ({
@@ -35,7 +41,8 @@ export const sendEmailSMTP = async ({
   html,
   text,
   fromName = process.env.ZEPTOMAIL_SENDER_NAME || 'AETech',
-  fromEmail = process.env.ZEPTOMAIL_SENDER || 'noreply@aetechlabs.com'
+  fromEmail = process.env.ZEPTOMAIL_SENDER || 'noreply@aetechlabs.com',
+  attachments
 }: EmailOptions) => {
   try {
     const transporter = createTransporter();
@@ -46,6 +53,7 @@ export const sendEmailSMTP = async ({
       subject,
       html,
       text: text || html.replace(/<[^>]*>/g, ''), // Strip HTML for text version
+      attachments: attachments || []
     };
 
     console.log('📧 Sending email via SMTP:', {
@@ -53,7 +61,8 @@ export const sendEmailSMTP = async ({
       from: mailOptions.from,
       subject: mailOptions.subject,
       host: process.env.ZEPTOMAIL_SMTP_HOST,
-      port: process.env.ZEPTOMAIL_SMTP_PORT
+      port: process.env.ZEPTOMAIL_SMTP_PORT,
+      attachments: attachments?.length || 0
     });
 
     const result = await transporter.sendMail(mailOptions);
