@@ -12,7 +12,8 @@ import {
   CogIcon,
   ShareIcon,
   DocumentArrowDownIcon,
-  PaperAirplaneIcon
+  PaperAirplaneIcon,
+  InformationCircleIcon
 } from '@heroicons/react/24/outline'
 
 interface BootcampSettings {
@@ -436,19 +437,58 @@ export default function BootcampManagementPanel() {
           transition={{ delay: 0.2 }}
           className="bg-white dark:bg-gray-800 rounded-2xl p-6 shadow-lg border border-gray-200 dark:border-gray-700"
         >
-          <div className="flex items-center mb-6">
-            <DocumentTextIcon className="h-8 w-8 text-green-500 mr-3" />
-            <div>
-              <h2 className="text-xl font-bold text-gray-900 dark:text-white">
+          <div className="flex items-start sm:items-center mb-4 sm:mb-6">
+            <DocumentTextIcon className="h-6 w-6 sm:h-8 sm:w-8 text-green-500 mr-3 flex-shrink-0 mt-1 sm:mt-0" />
+            <div className="min-w-0 flex-1">
+              <h2 className="text-lg sm:text-xl font-bold text-gray-900 dark:text-white">
                 Individual Offer Letters
               </h2>
-              <p className="text-gray-600 dark:text-gray-400">
+              <p className="text-sm sm:text-base text-gray-600 dark:text-gray-400 mb-3">
                 Upload custom offer letters for approved students
               </p>
+              <div className="p-3 bg-blue-50 dark:bg-blue-900/20 rounded-lg border border-blue-200 dark:border-blue-800">
+                <div className="flex items-start">
+                  <InformationCircleIcon className="h-4 w-4 sm:h-5 sm:w-5 text-blue-600 dark:text-blue-400 mr-2 flex-shrink-0 mt-0.5" />
+                  <div className="text-xs sm:text-sm text-blue-700 dark:text-blue-300">
+                    <p className="font-medium mb-1">Who appears here?</p>
+                    <p>Only students with <span className="font-semibold">APPROVED</span> status show in this list.</p>
+                    <p className="mt-1">
+                      <span className="font-medium">To review applications:</span> Go to <span className="font-semibold">Admin → Bootcamp</span> to approve student applications first.
+                    </p>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
 
           <div className="space-y-4">
+            {approvedStudents.length > 0 && (
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 mb-6">
+                <div className="bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-800 rounded-lg p-3">
+                  <div className="text-center">
+                    <p className="text-2xl font-bold text-green-600 dark:text-green-400">{approvedStudents.length}</p>
+                    <p className="text-xs text-green-700 dark:text-green-300">Approved Students</p>
+                  </div>
+                </div>
+                <div className="bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 rounded-lg p-3">
+                  <div className="text-center">
+                    <p className="text-2xl font-bold text-blue-600 dark:text-blue-400">
+                      {approvedStudents.filter(s => s.offerLetterUrl).length}
+                    </p>
+                    <p className="text-xs text-blue-700 dark:text-blue-300">Offer Letters Uploaded</p>
+                  </div>
+                </div>
+                <div className="bg-orange-50 dark:bg-orange-900/20 border border-orange-200 dark:border-orange-800 rounded-lg p-3">
+                  <div className="text-center">
+                    <p className="text-2xl font-bold text-orange-600 dark:text-orange-400">
+                      {approvedStudents.filter(s => !s.offerLetterUrl).length}
+                    </p>
+                    <p className="text-xs text-orange-700 dark:text-orange-300">Pending Upload</p>
+                  </div>
+                </div>
+              </div>
+            )}
+            
             {approvedStudents.length > 0 ? (
               <div className="space-y-3">
                 {approvedStudents.map((student) => (
@@ -456,9 +496,9 @@ export default function BootcampManagementPanel() {
                     key={student.id}
                     className="p-4 border border-gray-200 dark:border-gray-600 rounded-lg"
                   >
-                    <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
-                      <div className="flex-1 min-w-0">
-                        <h3 className="font-semibold text-gray-900 dark:text-white truncate">
+                    <div className="flex flex-col lg:flex-row lg:items-start lg:justify-between gap-4">
+                      <div className="flex-1 min-w-0 lg:max-w-md">
+                        <h3 className="font-semibold text-gray-900 dark:text-white truncate text-base">
                           {student.firstName} {student.lastName}
                         </h3>
                         <p className="text-sm text-gray-600 dark:text-gray-400 truncate">
@@ -471,12 +511,12 @@ export default function BootcampManagementPanel() {
                         )}
                       </div>
                       
-                      <div className="flex flex-col sm:flex-row sm:items-center gap-3 sm:gap-3">
+                      <div className="flex flex-col lg:flex-row lg:items-center gap-3 lg:gap-4 lg:min-w-0 lg:flex-shrink-0">
                         {student.offerLetterUrl ? (
-                          <div className="flex items-center justify-between sm:justify-start sm:space-x-2 p-2 bg-green-50 dark:bg-green-900/20 rounded-md">
+                          <div className="flex items-center justify-between lg:justify-start lg:space-x-2 p-2 bg-green-50 dark:bg-green-900/20 rounded-md lg:min-w-max">
                             <div className="flex items-center space-x-2">
-                              <CheckCircleIcon className="h-4 w-4 sm:h-5 sm:w-5 text-green-600 flex-shrink-0" />
-                              <span className="text-sm text-green-600 dark:text-green-400">
+                              <CheckCircleIcon className="h-4 w-4 text-green-600 flex-shrink-0" />
+                              <span className="text-sm text-green-600 dark:text-green-400 whitespace-nowrap">
                                 Uploaded
                               </span>
                             </div>
@@ -484,22 +524,23 @@ export default function BootcampManagementPanel() {
                               href={student.offerLetterUrl}
                               target="_blank"
                               rel="noopener noreferrer"
-                              className="text-blue-600 hover:text-blue-800 dark:text-blue-400 p-1"
-                              title="Download offer letter"
+                              className="text-blue-600 hover:text-blue-800 dark:text-blue-400 p-1 flex-shrink-0"
+                              title={`Download offer letter for ${student.firstName}`}
                             >
-                              <DocumentArrowDownIcon className="h-4 w-4 sm:h-5 sm:w-5" />
+                              <DocumentArrowDownIcon className="h-4 w-4" />
                             </a>
                           </div>
                         ) : (
-                          <div className="p-2 bg-yellow-50 dark:bg-yellow-900/20 rounded-md">
-                            <span className="text-sm text-yellow-600 dark:text-yellow-400">
-                              No offer letter
+                          <div className="p-2 bg-yellow-50 dark:bg-yellow-900/20 rounded-md lg:min-w-max">
+                            <span className="text-sm text-yellow-600 dark:text-yellow-400 whitespace-nowrap">
+                              <span className="hidden lg:inline">No offer letter for {student.firstName}</span>
+                              <span className="lg:hidden">No offer letter</span>
                             </span>
                           </div>
                         )}
                         
-                        <div className="flex items-center gap-2 sm:gap-3">
-                          <div className="relative flex-1 sm:flex-none">
+                        <div className="flex items-center gap-2 lg:gap-3">
+                          <div className="relative flex-1 lg:flex-none">
                             <input
                               type="file"
                               id={`offer-${student.id}`}
@@ -513,20 +554,22 @@ export default function BootcampManagementPanel() {
                             />
                             <label
                               htmlFor={`offer-${student.id}`}
-                              className={`cursor-pointer inline-flex items-center justify-center px-3 py-2 text-sm border border-blue-600 text-blue-600 hover:bg-blue-50 dark:hover:bg-blue-900/20 rounded-md transition-colors w-full sm:w-auto ${
+                              className={`cursor-pointer inline-flex items-center justify-center px-3 py-2 text-sm border border-blue-600 text-blue-600 hover:bg-blue-50 dark:hover:bg-blue-900/20 rounded-md transition-colors w-full lg:w-auto lg:min-w-max ${
                                 uploadingOfferFor === student.id ? 'opacity-50 cursor-not-allowed' : ''
                               }`}
+                              title={`Upload offer letter for ${student.firstName} ${student.lastName}`}
                             >
                               {uploadingOfferFor === student.id ? (
                                 <>
                                   <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-blue-600 mr-2"></div>
-                                  Uploading...
+                                  <span className="hidden lg:inline whitespace-nowrap">Uploading for {student.firstName}...</span>
+                                  <span className="lg:hidden">Uploading...</span>
                                 </>
                               ) : (
                                 <>
-                                  <CloudArrowUpIcon className="h-4 w-4 mr-2 sm:mr-1" />
-                                  <span className="hidden sm:inline">Upload Letter</span>
-                                  <span className="sm:hidden">Upload</span>
+                                  <CloudArrowUpIcon className="h-4 w-4 mr-1 lg:mr-2 flex-shrink-0" />
+                                  <span className="hidden lg:inline whitespace-nowrap">Upload for {student.firstName}</span>
+                                  <span className="lg:hidden">Upload</span>
                                 </>
                               )}
                             </label>
@@ -538,11 +581,12 @@ export default function BootcampManagementPanel() {
                               setShowSendModal(true)
                             }}
                             disabled={!student.offerLetterUrl && !settings?.currentScheduleUrl}
-                            className="inline-flex items-center justify-center px-3 py-2 bg-red-600 text-white text-sm rounded-md hover:bg-red-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors min-w-0"
-                            title="Send documents"
+                            className="inline-flex items-center justify-center px-3 py-2 bg-red-600 text-white text-sm rounded-md hover:bg-red-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors w-full lg:w-auto lg:min-w-max"
+                            title={`Send documents to ${student.firstName} ${student.lastName}`}
                           >
-                            <PaperAirplaneIcon className="h-4 w-4" />
-                            <span className="ml-1 hidden sm:inline">Send</span>
+                            <PaperAirplaneIcon className="h-4 w-4 mr-1 lg:mr-2 flex-shrink-0" />
+                            <span className="hidden lg:inline whitespace-nowrap">Send to {student.firstName}</span>
+                            <span className="lg:hidden">Send</span>
                           </button>
                         </div>
                       </div>
@@ -552,13 +596,27 @@ export default function BootcampManagementPanel() {
               </div>
             ) : (
               <div className="p-6 text-center border-2 border-dashed border-gray-300 dark:border-gray-600 rounded-lg">
-                <DocumentTextIcon className="h-12 w-12 text-gray-400 mx-auto mb-3" />
-                <p className="text-gray-600 dark:text-gray-400">
+                <DocumentTextIcon className="h-10 w-10 sm:h-12 sm:w-12 text-gray-400 mx-auto mb-3" />
+                <p className="text-gray-600 dark:text-gray-400 font-medium mb-2">
                   No approved students yet
                 </p>
-                <p className="text-sm text-gray-500">
+                <p className="text-sm text-gray-500 mb-4">
                   Students will appear here once they are approved
                 </p>
+                <div className="max-w-sm mx-auto p-4 bg-yellow-50 dark:bg-yellow-900/20 rounded-lg border border-yellow-200 dark:border-yellow-800">
+                  <div className="flex items-start">
+                    <InformationCircleIcon className="h-4 w-4 text-yellow-600 dark:text-yellow-400 mr-2 flex-shrink-0 mt-0.5" />
+                    <div className="text-xs text-yellow-800 dark:text-yellow-200">
+                      <p className="font-medium mb-1">Next Steps:</p>
+                      <ol className="list-decimal list-inside space-y-1">
+                        <li>Go to <span className="font-semibold">Admin → Bootcamp</span></li>
+                        <li>Review pending applications</li>
+                        <li>Change status to <span className="font-semibold">APPROVED</span></li>
+                        <li>Return here to upload offer letters</li>
+                      </ol>
+                    </div>
+                  </div>
+                </div>
               </div>
             )}
           </div>
