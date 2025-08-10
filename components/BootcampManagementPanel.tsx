@@ -230,11 +230,12 @@ export default function BootcampManagementPanel() {
   const [currentPage, setCurrentPage] = useState(1)
   const [totalPages, setTotalPages] = useState(1)
   const [totalStudents, setTotalStudents] = useState(0)
-  const [pageSize, setPageSize] = useState(10) // Students per page
+  const [pageSize, setPageSize] = useState(50) // Students per page - increased to show all students by default
 
   useEffect(() => {
     fetchSettings()
-    fetchApprovedStudents()
+    // Initially fetch with a high limit to get all approved students
+    fetchApprovedStudents(1, 100)
   }, [])
 
   const fetchSettings = async () => {
@@ -252,15 +253,21 @@ export default function BootcampManagementPanel() {
     }
   }
 
-  const fetchApprovedStudents = async (page: number = 1) => {
+  const fetchApprovedStudents = async (page: number = 1, limit: number = pageSize) => {
     try {
-      const response = await fetch(`/api/bootcamp?status=APPROVED&page=${page}&limit=${pageSize}`)
+      // Use a higher limit initially to ensure we get all approved students
+      const actualLimit = limit || pageSize || 50
+      const url = `/api/bootcamp?status=APPROVED&page=${page}&limit=${actualLimit}`
+      console.log('Fetching approved students with URL:', url)
+      const response = await fetch(url)
       const result = await response.json()
+      console.log('API Response:', result)
       if (result.success) {
         setApprovedStudents(result.data.enrollments || [])
         setTotalPages(result.data.pagination?.totalPages || 1)
         setTotalStudents(result.data.pagination?.total || 0)
         setCurrentPage(page)
+        console.log('Approved students loaded:', result.data.enrollments?.length, 'Total:', result.data.pagination?.total)
       }
     } catch (error) {
       console.error('Error fetching approved students:', error)
@@ -647,18 +654,8 @@ export default function BootcampManagementPanel() {
                         const newPageSize = parseInt(e.target.value)
                         setPageSize(newPageSize)
                         setCurrentPage(1)
-                        // Fetch with new page size
-                        fetch(`/api/bootcamp?status=APPROVED&page=1&limit=${newPageSize}`)
-                          .then(res => res.json())
-                          .then(result => {
-                            if (result.success) {
-                              setApprovedStudents(result.data.enrollments || [])
-                              setTotalPages(result.data.pagination?.totalPages || 1)
-                              setTotalStudents(result.data.pagination?.total || 0)
-                              setCurrentPage(1)
-                            }
-                          })
-                          .catch(error => console.error('Error fetching approved students:', error))
+                        // Fetch with new page size using our updated function
+                        fetchApprovedStudents(1, newPageSize)
                       }}
                       className="px-2 py-1 text-sm border border-gray-300 rounded-md bg-white dark:bg-gray-800 dark:border-gray-600 dark:text-gray-300"
                     >
