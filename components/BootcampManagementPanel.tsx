@@ -87,67 +87,67 @@ function SendDocumentsModal({ isOpen, onClose, enrollment, onDocumentsSent }: Se
   if (!isOpen) return null
 
   return (
-    <div className="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+    <div className="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center p-2 sm:p-4">
       <motion.div
         initial={{ opacity: 0, scale: 0.95 }}
         animate={{ opacity: 1, scale: 1 }}
         exit={{ opacity: 0, scale: 0.95 }}
-        className="bg-white dark:bg-gray-900 rounded-2xl max-w-2xl w-full max-h-[90vh] overflow-y-auto"
+        className="bg-white dark:bg-gray-900 rounded-2xl max-w-2xl w-full max-h-[95vh] sm:max-h-[90vh] overflow-y-auto"
       >
-        <div className="p-6 border-b border-gray-200 dark:border-gray-700">
-          <div className="flex justify-between items-center">
-            <div>
-              <h3 className="text-xl font-bold text-gray-900 dark:text-white">
+        <div className="p-4 sm:p-6 border-b border-gray-200 dark:border-gray-700">
+          <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-2">
+            <div className="min-w-0 flex-1">
+              <h3 className="text-lg sm:text-xl font-bold text-gray-900 dark:text-white">
                 Send Documents
               </h3>
-              <p className="text-gray-600 dark:text-gray-400">
+              <p className="text-sm sm:text-base text-gray-600 dark:text-gray-400 truncate">
                 {enrollment?.firstName} {enrollment?.lastName} - {enrollment?.email}
               </p>
             </div>
             <button
               onClick={onClose}
-              className="text-gray-400 hover:text-gray-600 dark:hover:text-gray-300"
+              className="text-gray-400 hover:text-gray-600 dark:hover:text-gray-300 self-end sm:self-auto p-1"
             >
-              <XMarkIcon className="h-6 w-6" />
+              <XMarkIcon className="h-5 w-5 sm:h-6 sm:w-6" />
             </button>
           </div>
         </div>
 
-        <div className="p-6 space-y-6">
+        <div className="p-4 sm:p-6 space-y-4 sm:space-y-6">
           {/* Document Selection */}
           <div>
             <h4 className="font-semibold mb-4">Select Documents to Include:</h4>
             <div className="space-y-3">
-              <label className="flex items-center p-3 border border-gray-300 dark:border-gray-600 rounded-lg">
+              <label className="flex items-start sm:items-center p-3 border border-gray-300 dark:border-gray-600 rounded-lg cursor-pointer hover:bg-gray-50 dark:hover:bg-gray-800">
                 <input
                   type="checkbox"
                   checked={formData.includeSchedule}
                   onChange={(e) => setFormData(prev => ({ ...prev, includeSchedule: e.target.checked }))}
-                  className="mr-3 text-red-600 focus:ring-red-500"
+                  className="mt-1 sm:mt-0 mr-3 text-red-600 focus:ring-red-500 flex-shrink-0"
                 />
-                <div className="flex items-center">
-                  <CalendarDaysIcon className="h-5 w-5 mr-2 text-blue-500" />
-                  <div>
-                    <p className="font-medium">Bootcamp Schedule</p>
-                    <p className="text-sm text-gray-600 dark:text-gray-400">
+                <div className="flex items-start sm:items-center min-w-0 flex-1">
+                  <CalendarDaysIcon className="h-5 w-5 mr-2 text-blue-500 flex-shrink-0 mt-0.5 sm:mt-0" />
+                  <div className="min-w-0 flex-1">
+                    <p className="font-medium text-sm sm:text-base">Bootcamp Schedule</p>
+                    <p className="text-xs sm:text-sm text-gray-600 dark:text-gray-400">
                       {settings?.currentScheduleUrl ? 'Available' : 'Not uploaded yet'}
                     </p>
                   </div>
                 </div>
               </label>
 
-              <label className="flex items-center p-3 border border-gray-300 dark:border-gray-600 rounded-lg">
+              <label className="flex items-start sm:items-center p-3 border border-gray-300 dark:border-gray-600 rounded-lg cursor-pointer hover:bg-gray-50 dark:hover:bg-gray-800">
                 <input
                   type="checkbox"
                   checked={formData.includeOfferLetter}
                   onChange={(e) => setFormData(prev => ({ ...prev, includeOfferLetter: e.target.checked }))}
-                  className="mr-3 text-red-600 focus:ring-red-500"
+                  className="mt-1 sm:mt-0 mr-3 text-red-600 focus:ring-red-500 flex-shrink-0"
                 />
-                <div className="flex items-center">
-                  <DocumentTextIcon className="h-5 w-5 mr-2 text-green-500" />
-                  <div>
-                    <p className="font-medium">Offer Letter</p>
-                    <p className="text-sm text-gray-600 dark:text-gray-400">
+                <div className="flex items-start sm:items-center min-w-0 flex-1">
+                  <DocumentTextIcon className="h-5 w-5 mr-2 text-green-500 flex-shrink-0 mt-0.5 sm:mt-0" />
+                  <div className="min-w-0 flex-1">
+                    <p className="font-medium text-sm sm:text-base">Offer Letter</p>
+                    <p className="text-xs sm:text-sm text-gray-600 dark:text-gray-400">
                       {enrollment?.offerLetterUrl ? 'Available' : 'Not uploaded yet'}
                     </p>
                   </div>
@@ -166,7 +166,7 @@ function SendDocumentsModal({ isOpen, onClose, enrollment, onDocumentsSent }: Se
               onChange={(e) => setFormData(prev => ({ ...prev, customMessage: e.target.value }))}
               rows={3}
               placeholder="Add a personal message to include in the email..."
-              className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-transparent bg-white dark:bg-gray-800"
+              className="w-full px-3 py-2 sm:px-4 sm:py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-transparent bg-white dark:bg-gray-800 text-sm sm:text-base resize-none"
             />
           </div>
 
@@ -184,18 +184,18 @@ function SendDocumentsModal({ isOpen, onClose, enrollment, onDocumentsSent }: Se
           </div>
 
           {/* Action Buttons */}
-          <div className="flex justify-end space-x-3 pt-4">
+          <div className="flex flex-col sm:flex-row justify-end gap-3 sm:space-x-3 pt-4 border-t border-gray-200 dark:border-gray-700">
             <button
               onClick={onClose}
               disabled={sending}
-              className="px-6 py-2 border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors"
+              className="w-full sm:w-auto px-4 sm:px-6 py-2.5 sm:py-2 border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors text-sm sm:text-base order-2 sm:order-1"
             >
               Cancel
             </button>
             <button
               onClick={handleSendDocuments}
               disabled={sending || (!formData.includeSchedule && !formData.includeOfferLetter)}
-              className="px-6 py-2 bg-red-600 hover:bg-red-700 disabled:bg-gray-400 text-white rounded-lg transition-colors flex items-center"
+              className="w-full sm:w-auto px-4 sm:px-6 py-2.5 sm:py-2 bg-red-600 hover:bg-red-700 disabled:bg-gray-400 text-white rounded-lg transition-colors flex items-center justify-center text-sm sm:text-base order-1 sm:order-2"
             >
               {sending ? (
                 <>
@@ -327,12 +327,12 @@ export default function BootcampManagementPanel() {
 
   if (loading) {
     return (
-      <div className="p-8 max-w-6xl mx-auto">
+      <div className="p-4 sm:p-6 lg:p-8 max-w-6xl mx-auto">
         <div className="animate-pulse space-y-4">
-          <div className="h-8 bg-gray-200 dark:bg-gray-700 rounded w-1/3"></div>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div className="h-6 sm:h-8 bg-gray-200 dark:bg-gray-700 rounded w-1/2 sm:w-1/3"></div>
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6">
             {[1, 2, 3, 4].map(i => (
-              <div key={i} className="h-48 bg-gray-200 dark:bg-gray-700 rounded-lg"></div>
+              <div key={i} className="h-40 sm:h-48 bg-gray-200 dark:bg-gray-700 rounded-lg"></div>
             ))}
           </div>
         </div>
@@ -341,31 +341,31 @@ export default function BootcampManagementPanel() {
   }
 
   return (
-    <div className="p-8 max-w-6xl mx-auto">
-      <div className="mb-8">
-        <h1 className="text-3xl font-bold text-gray-900 dark:text-white mb-2">
+    <div className="p-4 sm:p-6 lg:p-8 max-w-6xl mx-auto">
+      <div className="mb-6 sm:mb-8">
+        <h1 className="text-2xl sm:text-3xl font-bold text-gray-900 dark:text-white mb-2">
           Bootcamp Management
         </h1>
-        <p className="text-gray-600 dark:text-gray-400">
+        <p className="text-sm sm:text-base text-gray-600 dark:text-gray-400">
           Manage schedules, offer letters, and document distribution
         </p>
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-8">
         {/* Schedule Management */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.1 }}
-          className="bg-white dark:bg-gray-800 rounded-2xl p-6 shadow-lg border border-gray-200 dark:border-gray-700"
+          className="bg-white dark:bg-gray-800 rounded-2xl p-4 sm:p-6 shadow-lg border border-gray-200 dark:border-gray-700"
         >
-          <div className="flex items-center mb-6">
-            <CalendarDaysIcon className="h-8 w-8 text-blue-500 mr-3" />
-            <div>
-              <h2 className="text-xl font-bold text-gray-900 dark:text-white">
+          <div className="flex items-start sm:items-center mb-4 sm:mb-6">
+            <CalendarDaysIcon className="h-6 w-6 sm:h-8 sm:w-8 text-blue-500 mr-3 flex-shrink-0 mt-1 sm:mt-0" />
+            <div className="min-w-0 flex-1">
+              <h2 className="text-lg sm:text-xl font-bold text-gray-900 dark:text-white">
                 Schedule Management
               </h2>
-              <p className="text-gray-600 dark:text-gray-400">
+              <p className="text-sm sm:text-base text-gray-600 dark:text-gray-400">
                 Upload and manage bootcamp timetables
               </p>
             </div>
@@ -456,75 +456,95 @@ export default function BootcampManagementPanel() {
                     key={student.id}
                     className="p-4 border border-gray-200 dark:border-gray-600 rounded-lg"
                   >
-                    <div className="flex items-center justify-between">
-                      <div className="flex-1">
-                        <h3 className="font-semibold text-gray-900 dark:text-white">
+                    <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+                      <div className="flex-1 min-w-0">
+                        <h3 className="font-semibold text-gray-900 dark:text-white truncate">
                           {student.firstName} {student.lastName}
                         </h3>
-                        <p className="text-sm text-gray-600 dark:text-gray-400">
+                        <p className="text-sm text-gray-600 dark:text-gray-400 truncate">
                           {student.email}
                         </p>
                         {student.assignedCourse && (
-                          <p className="text-sm text-blue-600 dark:text-blue-400">
+                          <p className="text-sm text-blue-600 dark:text-blue-400 truncate">
                             Course: {student.assignedCourse}
                           </p>
                         )}
                       </div>
                       
-                      <div className="flex items-center space-x-3">
+                      <div className="flex flex-col sm:flex-row sm:items-center gap-3 sm:gap-3">
                         {student.offerLetterUrl ? (
-                          <div className="flex items-center space-x-2">
-                            <CheckCircleIcon className="h-5 w-5 text-green-600" />
-                            <span className="text-sm text-green-600 dark:text-green-400">
-                              Uploaded
-                            </span>
+                          <div className="flex items-center justify-between sm:justify-start sm:space-x-2 p-2 bg-green-50 dark:bg-green-900/20 rounded-md">
+                            <div className="flex items-center space-x-2">
+                              <CheckCircleIcon className="h-4 w-4 sm:h-5 sm:w-5 text-green-600 flex-shrink-0" />
+                              <span className="text-sm text-green-600 dark:text-green-400">
+                                Uploaded
+                              </span>
+                            </div>
                             <a
                               href={student.offerLetterUrl}
                               target="_blank"
                               rel="noopener noreferrer"
-                              className="text-blue-600 hover:text-blue-800 dark:text-blue-400"
+                              className="text-blue-600 hover:text-blue-800 dark:text-blue-400 p-1"
+                              title="Download offer letter"
                             >
-                              <DocumentArrowDownIcon className="h-5 w-5" />
+                              <DocumentArrowDownIcon className="h-4 w-4 sm:h-5 sm:w-5" />
                             </a>
                           </div>
                         ) : (
-                          <span className="text-sm text-yellow-600 dark:text-yellow-400">
-                            No offer letter
-                          </span>
+                          <div className="p-2 bg-yellow-50 dark:bg-yellow-900/20 rounded-md">
+                            <span className="text-sm text-yellow-600 dark:text-yellow-400">
+                              No offer letter
+                            </span>
+                          </div>
                         )}
                         
-                        <div className="relative">
-                          <input
-                            type="file"
-                            id={`offer-${student.id}`}
-                            accept=".pdf,.doc,.docx"
-                            onChange={(e) => {
-                              const file = e.target.files?.[0]
-                              if (file) handleOfferLetterUpload(file, student.id)
+                        <div className="flex items-center gap-2 sm:gap-3">
+                          <div className="relative flex-1 sm:flex-none">
+                            <input
+                              type="file"
+                              id={`offer-${student.id}`}
+                              accept=".pdf,.doc,.docx"
+                              onChange={(e) => {
+                                const file = e.target.files?.[0]
+                                if (file) handleOfferLetterUpload(file, student.id)
+                              }}
+                              className="hidden"
+                              disabled={uploadingOfferFor === student.id}
+                            />
+                            <label
+                              htmlFor={`offer-${student.id}`}
+                              className={`cursor-pointer inline-flex items-center justify-center px-3 py-2 text-sm border border-blue-600 text-blue-600 hover:bg-blue-50 dark:hover:bg-blue-900/20 rounded-md transition-colors w-full sm:w-auto ${
+                                uploadingOfferFor === student.id ? 'opacity-50 cursor-not-allowed' : ''
+                              }`}
+                            >
+                              {uploadingOfferFor === student.id ? (
+                                <>
+                                  <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-blue-600 mr-2"></div>
+                                  Uploading...
+                                </>
+                              ) : (
+                                <>
+                                  <CloudArrowUpIcon className="h-4 w-4 mr-2 sm:mr-1" />
+                                  <span className="hidden sm:inline">Upload Letter</span>
+                                  <span className="sm:hidden">Upload</span>
+                                </>
+                              )}
+                            </label>
+                          </div>
+                          
+                          <button
+                            onClick={() => {
+                              setSelectedEnrollment(student)
+                              setShowSendModal(true)
                             }}
-                            className="hidden"
-                            disabled={uploadingOfferFor === student.id}
-                          />
-                          <label
-                            htmlFor={`offer-${student.id}`}
-                            className={`cursor-pointer px-3 py-1 text-sm border border-blue-600 text-blue-600 hover:bg-blue-50 dark:hover:bg-blue-900/20 rounded-md transition-colors ${
-                              uploadingOfferFor === student.id ? 'opacity-50 cursor-not-allowed' : ''
-                            }`}
+                            disabled={!student.offerLetterUrl && !settings?.currentScheduleUrl}
+                            className="inline-flex items-center justify-center px-3 py-2 bg-red-600 text-white text-sm rounded-md hover:bg-red-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors min-w-0"
+                            title="Send documents"
                           >
-                            {uploadingOfferFor === student.id ? 'Uploading...' : 'Upload Letter'}
-                          </label>
+                            <PaperAirplaneIcon className="h-4 w-4" />
+                            <span className="ml-1 hidden sm:inline">Send</span>
+                          </button>
                         </div>
-                        
-                        <button
-                          onClick={() => {
-                            setSelectedEnrollment(student)
-                            setShowSendModal(true)
-                          }}
-                          disabled={!student.offerLetterUrl && !settings?.currentScheduleUrl}
-                          className="px-3 py-1 bg-red-600 text-white text-sm rounded-md hover:bg-red-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
-                        >
-                          <PaperAirplaneIcon className="h-4 w-4" />
-                        </button>
                       </div>
                     </div>
                   </div>
@@ -571,18 +591,18 @@ export default function BootcampManagementPanel() {
                 defaultValue={settings?.batchName || ''}
                 onBlur={(e) => handleUpdateSettings({ batchName: e.target.value })}
                 placeholder="e.g., Summer 2025 Cohort"
-                className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-transparent bg-white dark:bg-gray-800"
+                className="w-full px-3 py-2 sm:px-4 sm:py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-transparent bg-white dark:bg-gray-800 text-sm sm:text-base"
               />
             </div>
 
-            <div className="grid grid-cols-2 gap-4">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div>
                 <label className="block text-sm font-medium mb-2">Start Date</label>
                 <input
                   type="date"
                   defaultValue={settings?.batchStartDate?.split('T')[0] || ''}
                   onBlur={(e) => handleUpdateSettings({ batchStartDate: e.target.value })}
-                  className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-transparent bg-white dark:bg-gray-800"
+                  className="w-full px-3 py-2 sm:px-4 sm:py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-transparent bg-white dark:bg-gray-800 text-sm sm:text-base"
                 />
               </div>
               <div>
@@ -591,7 +611,7 @@ export default function BootcampManagementPanel() {
                   type="date"
                   defaultValue={settings?.batchEndDate?.split('T')[0] || ''}
                   onBlur={(e) => handleUpdateSettings({ batchEndDate: e.target.value })}
-                  className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-transparent bg-white dark:bg-gray-800"
+                  className="w-full px-3 py-2 sm:px-4 sm:py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-transparent bg-white dark:bg-gray-800 text-sm sm:text-base"
                 />
               </div>
             </div>
