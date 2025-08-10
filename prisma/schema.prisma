@@ -270,3 +270,29 @@ enum SponsorTier {
   COMMUNITY
   CUSTOM
 }
+
+model Banner {
+  id                String      @id @default(auto()) @map("_id") @db.ObjectId
+  type              BannerType
+  title             String
+  message           String
+  isActive          Boolean     @default(true)
+  priority          Int         @default(1) // Higher number = higher priority
+  startDate         DateTime?   // When to start showing banner
+  endDate           DateTime?   // When to stop showing banner
+  backgroundColor   String      @default("#c1272d")
+  textColor         String      @default("#ffffff")
+  linkUrl           String?     // Optional call-to-action link
+  linkText          String?     // Text for the CTA button
+  showCountdown     Boolean     @default(false)
+  countdownDeadline DateTime?   // Deadline for countdown timer
+  createdAt         DateTime    @default(now())
+  updatedAt         DateTime    @updatedAt
+}
+
+enum BannerType {
+  TOP_ANNOUNCEMENT  // TopAnnouncementBanner
+  BOOTCAMP         // BootcampBanner
+  URGENCY          // UrgencyBanner
+  GENERAL          // Generic banner
+}

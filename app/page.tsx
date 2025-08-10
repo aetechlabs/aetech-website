@@ -5,6 +5,8 @@ import ContactForm from "./components/ContactForm";
 import Footer from "@/components/Footer";
 import FloatingParticles from "@/components/FloatingParticles";
 import BootcampBanner from "@/components/BootcampBanner";
+import DynamicBanner from "@/components/DynamicBanner";
+import ClientOnlyBanner from "@/components/ClientOnlyBanner";
 import FloatingBootcampButton from "@/components/FloatingBootcampButton";
 import FloatingSponsorButton from "@/components/FloatingSponsorButton";
 import SponsorsSection from "@/components/SponsorsSection";
@@ -21,6 +23,9 @@ export default function Home() {
   };
   return (
     <div className="font-sans min-h-screen bg-white dark:bg-black text-black dark:text-white">
+      {/* Top Announcement Banners */}
+      <ClientOnlyBanner type="TOP_ANNOUNCEMENT" position="top" />
+      
       <Navigation />
 
       {/* Hero Section */}
@@ -806,8 +811,10 @@ export default function Home() {
       {/* Footer */}
       <Footer />
 
-      {/* Bootcamp Banner - Shows after 3 seconds */}
-      <BootcampBanner delay={3000} autoShow={true} />
+      {/* Dynamic Banners - Replaces static BootcampBanner */}
+      <ClientOnlyBanner type="BOOTCAMP" delay={3000} autoShow={true} />
+      <ClientOnlyBanner type="URGENCY" delay={5000} autoShow={true} />
+      <ClientOnlyBanner type="GENERAL" delay={7000} autoShow={true} />
       
       {/* Floating Bootcamp Button - Shows after 5 seconds */}
       <FloatingBootcampButton />
