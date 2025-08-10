@@ -121,7 +121,7 @@ export default function SponsorsAdminPage() {
       GOLD: 'bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-300',
       SILVER: 'bg-gray-100 text-gray-700 dark:bg-gray-700 dark:text-gray-400',
       BRONZE: 'bg-orange-100 text-orange-800 dark:bg-orange-900 dark:text-orange-300',
-      COMMUNITY: 'bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-300'
+      COMMUNITY: 'bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-300'
     }
     return badges[tier as keyof typeof badges] || badges.COMMUNITY
   }
@@ -327,7 +327,7 @@ export default function SponsorsAdminPage() {
                               setEditingSponsor(sponsor)
                               setShowForm(true)
                             }}
-                            className="text-blue-600 hover:text-blue-700 p-1 rounded"
+                            className="text-[#c1272d] hover:text-red-700 p-1 rounded"
                             title="Edit"
                           >
                             <PencilIcon className="h-4 w-4" />

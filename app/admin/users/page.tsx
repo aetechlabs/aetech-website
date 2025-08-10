@@ -64,7 +64,7 @@ export default function UsersManagement() {
   const getRoleColor = (role: User['role']) => {
     const colors = {
       USER: 'bg-gray-100 text-gray-800 dark:bg-gray-900/30 dark:text-gray-400',
-      AUTHOR: 'bg-blue-100 text-blue-800 dark:bg-blue-900/30 dark:text-blue-400',
+      AUTHOR: 'bg-red-100 text-red-800 dark:bg-red-900/30 dark:text-red-400',
       ADMIN: 'bg-red-100 text-red-800 dark:bg-red-900/30 dark:text-red-400',
     };
     return colors[role];

@@ -180,7 +180,7 @@ export default function AdminDashboard() {
       value: stats?.posts.total || 0,
       subtitle: `${stats?.posts.published || 0} published, ${stats?.posts.drafts || 0} drafts`,
       icon: DocumentTextIcon,
-      color: 'from-blue-500 to-blue-600',
+      color: 'from-red-600 to-[#c1272d]',
       href: '/admin/posts'
     },
     {

@@ -354,7 +354,7 @@ export default function EmailMarketingPage() {
               ? 'bg-green-50 dark:bg-green-900/20 text-green-700 dark:text-green-400 border border-green-200 dark:border-green-800'
               : message.type === 'error'
               ? 'bg-red-50 dark:bg-red-900/20 text-red-700 dark:text-red-400 border border-red-200 dark:border-red-800'
-              : 'bg-blue-50 dark:bg-blue-900/20 text-blue-700 dark:text-blue-400 border border-blue-200 dark:border-blue-800'
+              : 'bg-red-50 dark:bg-red-900/20 text-[#c1272d] dark:text-red-400 border border-red-200 dark:border-red-800'
           }`}
         >
           {message.type === 'success' && <CheckCircleIcon className="h-5 w-5" />}
@@ -396,12 +396,12 @@ export default function EmailMarketingPage() {
             <div className="space-y-6">
               {/* Stats Cards */}
               <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
-                <div className="bg-blue-50 dark:bg-blue-900/20 p-4 rounded-lg border border-blue-200 dark:border-blue-800">
+                <div className="bg-red-50 dark:bg-red-900/20 p-4 rounded-lg border border-red-200 dark:border-red-800">
                   <div className="flex items-center">
-                    <UserGroupIcon className="h-8 w-8 text-blue-600 dark:text-blue-400" />
+                    <UserGroupIcon className="h-8 w-8 text-[#c1272d] dark:text-red-400" />
                     <div className="ml-3">
-                      <p className="text-sm font-medium text-blue-700 dark:text-blue-300">Total Users</p>
-                      <p className="text-2xl font-bold text-blue-900 dark:text-blue-100">{stats.totalUsers}</p>
+                      <p className="text-sm font-medium text-red-700 dark:text-red-300">Total Users</p>
+                      <p className="text-2xl font-bold text-red-900 dark:text-red-100">{stats.totalUsers}</p>
                     </div>
                   </div>
                 </div>
@@ -537,10 +537,10 @@ Jane Smith <jane@example.com>`}
                           rows={8}
                           className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#c1272d] focus:border-transparent dark:bg-gray-700 dark:text-gray-100 font-mono text-sm"
                         />
-                        <div className="bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 rounded-lg p-3">
+                        <div className="bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-lg p-3">
                           <div className="flex">
-                            <InformationCircleIcon className="h-5 w-5 text-blue-600 dark:text-blue-400 mr-2 mt-0.5" />
-                            <div className="text-sm text-blue-700 dark:text-blue-300">
+                            <InformationCircleIcon className="h-5 w-5 text-[#c1272d] dark:text-red-400 mr-2 mt-0.5" />
+                            <div className="text-sm text-red-700 dark:text-red-300">
                               <p className="font-medium">Bulk Import Tips:</p>
                               <ul className="mt-1 space-y-1">
                                 <li>• One email per line or comma-separated</li>
@@ -763,10 +763,10 @@ Jane Smith <jane@example.com>`}
                 </div>
               </div>
 
-              <div className="bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 rounded-lg p-4">
+              <div className="bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-lg p-4">
                 <div className="flex">
-                  <InformationCircleIcon className="h-5 w-5 text-blue-600 dark:text-blue-400 mr-2 mt-0.5" />
-                  <div className="text-sm text-blue-700 dark:text-blue-300">
+                  <InformationCircleIcon className="h-5 w-5 text-[#c1272d] dark:text-red-400 mr-2 mt-0.5" />
+                  <div className="text-sm text-red-700 dark:text-red-300">
                     <p className="font-medium">Email alias setup:</p>
                     <ul className="mt-1 space-y-1">
                       <li>• All aliases use the same ZeptoMail configuration</li>

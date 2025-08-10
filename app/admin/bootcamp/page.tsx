@@ -69,6 +69,9 @@ export default function BootcampManagement() {
   const [statusFilter, setStatusFilter] = useState<string>('all')
   const [searchTerm, setSearchTerm] = useState('')
   const [currentPage, setCurrentPage] = useState(1)
+  const [itemsPerPage, setItemsPerPage] = useState(10)
+  const [totalPages, setTotalPages] = useState(1)
+  const [totalItems, setTotalItems] = useState(0)
   const [updating, setUpdating] = useState<string | null>(null)
   const [showStatusModal, setShowStatusModal] = useState(false)
   const [currentEnrollmentForUpdate, setCurrentEnrollmentForUpdate] = useState<BootcampEnrollment | null>(null)
@@ -84,16 +87,21 @@ export default function BootcampManagement() {
   const [showSendDocumentsModal, setShowSendDocumentsModal] = useState(false)
   const [selectedEnrollmentForDocs, setSelectedEnrollmentForDocs] = useState<BootcampEnrollment | null>(null)
 
+  // Reset to first page when filters change
+  useEffect(() => {
+    setCurrentPage(1)
+  }, [statusFilter, searchTerm, itemsPerPage])
+
   useEffect(() => {
     fetchEnrollments()
-  }, [statusFilter, searchTerm, currentPage])
+  }, [statusFilter, searchTerm, currentPage, itemsPerPage])
 
   const fetchEnrollments = async () => {
     try {
       setLoading(true)
       const params = new URLSearchParams({
         page: currentPage.toString(),
-        limit: '10',
+        limit: itemsPerPage.toString(),
         ...(statusFilter !== 'all' && { status: statusFilter }),
         ...(searchTerm && { search: searchTerm })
       })
@@ -104,6 +112,8 @@ export default function BootcampManagement() {
       if (result.success) {
         setEnrollments(result.data.enrollments)
         setStats(result.data.stats)
+        setTotalPages(result.data.pagination.totalPages)
+        setTotalItems(result.data.pagination.total)
       }
     } catch (error) {
       console.error('Error fetching enrollments:', error)
@@ -180,7 +190,7 @@ export default function BootcampManagement() {
       case 'APPROVED': return <CheckCircleIcon className="h-5 w-5 text-green-600" />
       case 'REJECTED': return <XCircleIcon className="h-5 w-5 text-red-600" />
       case 'WAITLISTED': return <ExclamationTriangleIcon className="h-5 w-5 text-yellow-600" />
-      default: return <ClockIcon className="h-5 w-5 text-blue-600" />
+      default: return <ClockIcon className="h-5 w-5 text-[#c1272d]" />
     }
   }
 
@@ -189,7 +199,7 @@ export default function BootcampManagement() {
       case 'APPROVED': return 'bg-green-100 text-green-800 border-green-200'
       case 'REJECTED': return 'bg-red-100 text-red-800 border-red-200'
       case 'WAITLISTED': return 'bg-yellow-100 text-yellow-800 border-yellow-200'
-      default: return 'bg-blue-100 text-blue-800 border-blue-200'
+      default: return 'bg-red-100 text-red-800 border-red-200'
     }
   }
 
@@ -215,19 +225,19 @@ export default function BootcampManagement() {
     <div className="space-y-8">
       {/* Header */}
       <motion.div 
-        className="bg-gradient-to-r from-[#c1272d] to-red-600 rounded-2xl p-4 sm:p-6 lg:p-8 text-white"
+        className="bg-white dark:bg-gray-800 rounded-2xl p-4 sm:p-6 lg:p-8 shadow-sm border border-gray-200 dark:border-gray-700"
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5 }}
       >
         <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between">
           <div>
-            <h1 className="text-xl sm:text-2xl lg:text-3xl font-bold mb-2">Bootcamp Enrollments</h1>
-            <p className="text-red-100 text-sm sm:text-base">Manage DevStarter Bootcamp applications</p>
+            <h1 className="text-xl sm:text-2xl lg:text-3xl font-bold mb-2 text-gray-900 dark:text-gray-100">Bootcamp Enrollments</h1>
+            <p className="text-gray-600 dark:text-gray-400 text-sm sm:text-base">Manage DevStarter Bootcamp applications</p>
           </div>
           <div className="hidden lg:flex items-center space-x-4 mt-4 sm:mt-0">
-            <div className="bg-white/10 backdrop-blur-sm rounded-lg p-4">
-              <UserGroupIcon className="h-8 w-8" />
+            <div className="bg-red-50 dark:bg-red-900/20 rounded-lg p-4">
+              <UserGroupIcon className="h-8 w-8 text-[#c1272d] dark:text-red-400" />
             </div>
           </div>
         </div>
@@ -240,8 +250,8 @@ export default function BootcampManagement() {
             onClick={() => setActiveTab('enrollments')}
             className={`flex-1 px-6 py-3 text-sm font-medium rounded-l-lg transition-colors ${
               activeTab === 'enrollments'
-                ? 'bg-red-600 text-white'
-                : 'text-gray-600 hover:text-gray-900 hover:bg-gray-50'
+                ? 'bg-[#c1272d] dark:bg-red-600 text-white'
+                : 'text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-700'
             }`}
           >
             <div className="flex items-center justify-center space-x-2">
@@ -253,8 +263,8 @@ export default function BootcampManagement() {
             onClick={() => setActiveTab('management')}
             className={`flex-1 px-6 py-3 text-sm font-medium rounded-r-lg transition-colors ${
               activeTab === 'management'
-                ? 'bg-red-600 text-white'
-                : 'text-gray-600 hover:text-gray-900 hover:bg-gray-50'
+                ? 'bg-[#c1272d] dark:bg-red-600 text-white'
+                : 'text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-700'
             }`}
           >
             <div className="flex items-center justify-center space-x-2">
@@ -285,8 +295,15 @@ export default function BootcampManagement() {
               </div>
             </div>
             <div>
-              <h3 className="text-lg sm:text-2xl font-bold text-gray-900">{stats.total}</h3>
-              <p className="text-gray-600 text-xs sm:text-sm">Total Applications</p>
+              <h3 className="text-lg sm:text-2xl font-bold text-gray-900">
+                {itemsPerPage >= 1000 ? totalItems : enrollments.length}
+                {itemsPerPage < 1000 && totalItems !== enrollments.length && (
+                  <span className="text-sm text-gray-500 ml-1">/ {totalItems}</span>
+                )}
+              </h3>
+              <p className="text-gray-600 text-xs sm:text-sm">
+                {itemsPerPage >= 1000 ? 'All Applications' : 'Showing Applications'}
+              </p>
             </div>
           </motion.div>
 
@@ -297,7 +314,7 @@ export default function BootcampManagement() {
             transition={{ duration: 0.5, delay: 0.1 }}
           >
             <div className="flex items-center justify-between mb-4">
-              <div className="p-2 sm:p-3 rounded-lg bg-gradient-to-r from-blue-500 to-blue-600">
+              <div className="p-2 sm:p-3 rounded-lg bg-gradient-to-r from-red-600 to-[#c1272d]">
                 <ClockIcon className="h-5 w-5 sm:h-6 sm:w-6 text-white" />
               </div>
             </div>
@@ -369,13 +386,31 @@ export default function BootcampManagement() {
               <select
                 value={statusFilter}
                 onChange={(e) => setStatusFilter(e.target.value)}
-                className="border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-[#c1272d] focus:border-transparent min-w-0 flex-1 sm:flex-none"
+                className="border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-red-500 focus:border-transparent min-w-0 flex-1 sm:flex-none"
               >
                 <option value="all">All Status</option>
                 <option value="PENDING">Pending</option>
                 <option value="APPROVED">Approved</option>
                 <option value="REJECTED">Rejected</option>
                 <option value="WAITLISTED">Waitlisted</option>
+              </select>
+            </div>
+
+            <div className="flex items-center gap-2">
+              <span className="text-sm text-gray-600">Show:</span>
+              <select
+                value={itemsPerPage}
+                onChange={(e) => {
+                  setItemsPerPage(parseInt(e.target.value))
+                  setCurrentPage(1)
+                }}
+                className="border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-red-500 focus:border-transparent min-w-0"
+              >
+                <option value={10}>10 per page</option>
+                <option value={25}>25 per page</option>
+                <option value={50}>50 per page</option>
+                <option value={100}>100 per page</option>
+                <option value={1000}>Show All</option>
               </select>
             </div>
           </div>
@@ -387,7 +422,7 @@ export default function BootcampManagement() {
               placeholder="Search by name, email, or phone..."
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
-              className="pl-10 pr-4 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-[#c1272d] focus:border-transparent w-full md:w-80"
+              className="pl-10 pr-4 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-red-500 focus:border-transparent w-full md:w-80"
             />
           </div>
         </div>
@@ -496,7 +531,7 @@ export default function BootcampManagement() {
             >
               <div className="flex items-start justify-between mb-4">
                 <div className="flex items-center space-x-3">
-                  <div className="w-10 h-10 bg-gradient-to-r from-[#c1272d] to-red-600 rounded-full flex items-center justify-center text-white font-medium text-sm">
+                  <div className="w-10 h-10 bg-gradient-to-r from-red-600 to-[#c1272d] rounded-full flex items-center justify-center text-white font-medium text-sm">
                     {enrollment.firstName.charAt(0)}{enrollment.lastName.charAt(0)}
                   </div>
                   <div className="min-w-0 flex-1">
@@ -568,6 +603,82 @@ export default function BootcampManagement() {
             <UserGroupIcon className="h-12 w-12 text-gray-400 mx-auto mb-4" />
             <h3 className="text-lg font-semibold text-gray-900 mb-2">No enrollments found</h3>
             <p className="text-gray-600">No bootcamp applications match your current filters.</p>
+          </div>
+        )}
+
+        {/* Pagination Controls */}
+        {totalItems > 0 && itemsPerPage < 1000 && (
+          <div className="bg-white border-t border-gray-200 px-4 py-3 sm:px-6">
+            <div className="flex flex-col sm:flex-row items-center justify-between">
+              <div className="flex items-center text-sm text-gray-700 mb-4 sm:mb-0">
+                <span>
+                  Showing <span className="font-medium">{(currentPage - 1) * itemsPerPage + 1}</span> to{' '}
+                  <span className="font-medium">
+                    {Math.min(currentPage * itemsPerPage, totalItems)}
+                  </span>{' '}
+                  of <span className="font-medium">{totalItems}</span> results
+                </span>
+              </div>
+              
+              <div className="flex items-center space-x-2">
+                <button
+                  onClick={() => setCurrentPage(Math.max(1, currentPage - 1))}
+                  disabled={currentPage === 1}
+                  className="relative inline-flex items-center px-3 py-2 text-sm font-medium text-gray-500 bg-white border border-gray-300 rounded-md hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed"
+                >
+                  Previous
+                </button>
+                
+                <div className="flex items-center space-x-1">
+                  {/* Show page numbers */}
+                  {[...Array(Math.min(5, totalPages))].map((_, index) => {
+                    let pageNum;
+                    if (totalPages <= 5) {
+                      pageNum = index + 1;
+                    } else if (currentPage <= 3) {
+                      pageNum = index + 1;
+                    } else if (currentPage >= totalPages - 2) {
+                      pageNum = totalPages - 4 + index;
+                    } else {
+                      pageNum = currentPage - 2 + index;
+                    }
+                    
+                    return (
+                      <button
+                        key={pageNum}
+                        onClick={() => setCurrentPage(pageNum)}
+                        className={`relative inline-flex items-center px-3 py-2 text-sm font-medium border rounded-md ${
+                          currentPage === pageNum
+                            ? 'z-10 bg-[#c1272d] border-[#c1272d] text-white'
+                            : 'bg-white border-gray-300 text-gray-500 hover:bg-gray-50'
+                        }`}
+                      >
+                        {pageNum}
+                      </button>
+                    );
+                  })}
+                </div>
+                
+                <button
+                  onClick={() => setCurrentPage(Math.min(totalPages, currentPage + 1))}
+                  disabled={currentPage === totalPages}
+                  className="relative inline-flex items-center px-3 py-2 text-sm font-medium text-gray-500 bg-white border border-gray-300 rounded-md hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed"
+                >
+                  Next
+                </button>
+              </div>
+            </div>
+          </div>
+        )}
+
+        {/* Show All Info */}
+        {itemsPerPage >= 1000 && totalItems > 0 && (
+          <div className="bg-red-50 border-t border-red-200 px-4 py-3 sm:px-6">
+            <div className="flex items-center justify-center">
+              <div className="flex items-center text-sm text-red-700">
+                <span className="font-medium">Showing all {totalItems} applications</span>
+              </div>
+            </div>
           </div>
         )}
       </div>
@@ -690,7 +801,7 @@ export default function BootcampManagement() {
                     {selectedEnrollment.coursesInterested.map((course, idx) => (
                       <span
                         key={idx}
-                        className="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-blue-100 text-blue-800"
+                        className="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-red-100 text-red-800"
                       >
                         {course}
                       </span>
@@ -817,7 +928,7 @@ export default function BootcampManagement() {
                       statusUpdateData.status === 'APPROVED' ? 'bg-green-600 hover:bg-green-700' :
                       statusUpdateData.status === 'REJECTED' ? 'bg-red-600 hover:bg-red-700' :
                       statusUpdateData.status === 'WAITLISTED' ? 'bg-yellow-600 hover:bg-yellow-700' :
-                      'bg-blue-600 hover:bg-blue-700'
+                      'bg-[#c1272d] hover:bg-red-700'
                     } disabled:opacity-50`}
                   >
                     {updating ? 'Updating...' : `Confirm ${statusUpdateData.status}`}
