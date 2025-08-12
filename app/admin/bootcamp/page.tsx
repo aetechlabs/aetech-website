@@ -3,6 +3,7 @@
 import { useEffect, useState } from 'react'
 import { motion } from 'framer-motion'
 import BootcampManagementPanel from '@/components/BootcampManagementPanel'
+import AttendanceManagement from '@/components/AttendanceManagement'
 import {
   UserGroupIcon,
   FunnelIcon,
@@ -23,7 +24,8 @@ import {
   VideoCameraIcon,
   LinkIcon,
   UsersIcon,
-  UserIcon
+  UserIcon,
+  QuestionMarkCircleIcon
 } from '@heroicons/react/24/outline'
 
 interface BootcampEnrollment {
@@ -40,6 +42,7 @@ interface BootcampEnrollment {
   motivation: string
   heardAbout: string
   status: 'PENDING' | 'APPROVED' | 'REJECTED' | 'WAITLISTED'
+  assignedCourse?: string
   createdAt: string
   updatedAt: string
 }
@@ -191,7 +194,7 @@ export default function BootcampManagement() {
   })
   
   // New state for view management and send documents
-  const [activeTab, setActiveTab] = useState<'enrollments' | 'management' | 'messaging'>('enrollments')
+  const [activeTab, setActiveTab] = useState<'enrollments' | 'management' | 'messaging' | 'attendance'>('enrollments')
   const [showSendDocumentsModal, setShowSendDocumentsModal] = useState(false)
   const [selectedEnrollmentForDocs, setSelectedEnrollmentForDocs] = useState<BootcampEnrollment | null>(null)
 
@@ -304,6 +307,33 @@ export default function BootcampManagement() {
       statusUpdateData.notes,
       statusUpdateData.selectedCourse
     )
+  }
+
+  const fixExistingCourses = async () => {
+    try {
+      setLoading(true)
+      const response = await fetch('/api/bootcamp/fix-courses', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        }
+      })
+
+      const result = await response.json()
+
+      if (result.success) {
+        alert(`✅ Success! Updated ${result.updates.length} students with assigned courses.`)
+        // Refresh the enrollment data
+        fetchEnrollments()
+      } else {
+        alert('❌ Failed to update courses: ' + result.error)
+      }
+    } catch (error) {
+      console.error('Error fixing courses:', error)
+      alert('❌ Error fixing courses. Please try again.')
+    } finally {
+      setLoading(false)
+    }
   }
 
   const handleSendDocuments = (enrollment: BootcampEnrollment) => {
@@ -527,11 +557,26 @@ export default function BootcampManagement() {
               <span className="truncate">Messaging</span>
             </div>
           </button>
+          <button
+            onClick={() => setActiveTab('attendance')}
+            className={`flex-1 px-3 sm:px-6 py-3 sm:py-4 text-xs sm:text-sm font-medium transition-colors border-t sm:border-t-0 sm:border-l border-gray-200 ${
+              activeTab === 'attendance'
+                ? 'bg-[#c1272d] dark:bg-red-600 text-white'
+                : 'text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-700'
+            }`}
+          >
+            <div className="flex items-center justify-center space-x-1 sm:space-x-2">
+              <QuestionMarkCircleIcon className="h-4 w-4 sm:h-5 sm:w-5 flex-shrink-0" />
+              <span className="truncate">Attendance</span>
+            </div>
+          </button>
         </div>
       </div>
 
       {/* Tab Content */}
-      {activeTab === 'messaging' ? (
+      {activeTab === 'attendance' ? (
+        <AttendanceManagement />
+      ) : activeTab === 'messaging' ? (
         <div className="space-y-6">
           {/* Messaging Header */}
           <div className="bg-white rounded-xl shadow-sm p-4 sm:p-6 border border-gray-100">
@@ -726,6 +771,15 @@ export default function BootcampManagement() {
                 <option value="REJECTED">Rejected</option>
                 <option value="WAITLISTED">Waitlisted</option>
               </select>
+              
+              <button
+                onClick={fixExistingCourses}
+                disabled={loading}
+                className="px-3 py-2 bg-blue-600 text-white rounded-lg text-sm font-medium hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors whitespace-nowrap"
+                title="Assign courses to approved students who don't have one"
+              >
+                {loading ? 'Fixing...' : 'Fix Courses'}
+              </button>
             </div>
 
             <div className="flex items-center gap-2">
@@ -762,27 +816,30 @@ export default function BootcampManagement() {
 
       {/* Enrollments - Desktop Table */}
       <div className="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden">
-        <div className="hidden lg:block">
+        <div className="hidden xl:block">
           <div className="overflow-x-auto">
             <table className="w-full">
               <thead className="bg-gray-50 border-b border-gray-200">
                 <tr>
-                  <th className="px-6 py-3 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
+                  <th className="px-4 py-3 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
                     Applicant
                   </th>
-                  <th className="px-6 py-3 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
+                  <th className="px-4 py-3 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
                     Contact
                   </th>
-                  <th className="px-6 py-3 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
+                  <th className="px-4 py-3 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
                     Courses Interested
                   </th>
-                  <th className="px-6 py-3 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
+                  <th className="px-4 py-3 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
+                    Approved Course
+                  </th>
+                  <th className="px-4 py-3 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
                     Status
                   </th>
-                  <th className="px-6 py-3 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
+                  <th className="px-4 py-3 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
                     Applied
                   </th>
-                  <th className="px-6 py-3 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
+                  <th className="px-4 py-3 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
                     Actions
                   </th>
                 </tr>
@@ -796,7 +853,7 @@ export default function BootcampManagement() {
                     transition={{ duration: 0.3, delay: index * 0.05 }}
                     className="hover:bg-gray-50"
                   >
-                    <td className="px-6 py-4 whitespace-nowrap">
+                    <td className="px-4 py-4 whitespace-nowrap">
                       <div>
                         <div className="text-sm font-semibold text-gray-900">
                           {enrollment.firstName} {enrollment.lastName}
@@ -806,11 +863,11 @@ export default function BootcampManagement() {
                         </div>
                       </div>
                     </td>
-                    <td className="px-6 py-4 whitespace-nowrap">
+                    <td className="px-4 py-4 whitespace-nowrap">
                       <div className="text-sm text-gray-900">{enrollment.email}</div>
                       <div className="text-sm text-gray-500">{enrollment.phone}</div>
                     </td>
-                    <td className="px-6 py-4">
+                    <td className="px-4 py-4">
                       <div className="flex flex-wrap gap-1">
                         {enrollment.coursesInterested.slice(0, 2).map((course, idx) => (
                           <span
@@ -827,16 +884,28 @@ export default function BootcampManagement() {
                         )}
                       </div>
                     </td>
-                    <td className="px-6 py-4 whitespace-nowrap">
+                    <td className="px-4 py-4 whitespace-nowrap">
+                      {enrollment.assignedCourse ? (
+                        <span className="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-green-100 text-green-800 border border-green-200">
+                          <AcademicCapIcon className="h-3 w-3 mr-1" />
+                          {enrollment.assignedCourse}
+                        </span>
+                      ) : (
+                        <span className="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-gray-100 text-gray-500">
+                          Not assigned
+                        </span>
+                      )}
+                    </td>
+                    <td className="px-4 py-4 whitespace-nowrap">
                       <div className={`inline-flex items-center gap-1 px-2 py-1 rounded-full text-xs font-semibold border ${getStatusColor(enrollment.status)}`}>
                         {getStatusIcon(enrollment.status)}
                         {enrollment.status}
                       </div>
                     </td>
-                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                    <td className="px-4 py-4 whitespace-nowrap text-sm text-gray-500">
                       {formatDate(enrollment.createdAt)}
                     </td>
-                    <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
+                    <td className="px-4 py-4 whitespace-nowrap text-sm font-medium">
                       <button
                         onClick={() => setSelectedEnrollment(enrollment)}
                         className="text-[#c1272d] hover:text-red-700 mr-3"
@@ -852,7 +921,7 @@ export default function BootcampManagement() {
         </div>
 
         {/* Enrollments - Mobile Cards */}
-        <div className="lg:hidden divide-y divide-gray-200">
+        <div className="xl:hidden divide-y divide-gray-200">
           {enrollments.map((enrollment, index) => (
             <motion.div
               key={enrollment.id}
@@ -910,6 +979,21 @@ export default function BootcampManagement() {
                       </span>
                     )}
                   </div>
+                </div>
+
+                {/* Approved Course Section */}
+                <div>
+                  <p className="text-xs text-gray-500 mb-2">Approved Course:</p>
+                  {enrollment.assignedCourse ? (
+                    <span className="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-green-100 text-green-800 border border-green-200">
+                      <AcademicCapIcon className="h-3 w-3 mr-1" />
+                      {enrollment.assignedCourse}
+                    </span>
+                  ) : (
+                    <span className="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-gray-100 text-gray-500">
+                      Not assigned
+                    </span>
+                  )}
                 </div>
 
                 <div className="flex items-center justify-between pt-2">

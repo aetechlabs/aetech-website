@@ -135,12 +135,21 @@ export async function PATCH(request: NextRequest) {
       )
     }
 
+    // Prepare update data
+    const updateData: any = { 
+      status,
+      updatedAt: new Date()
+    }
+
+    // If approving a student, set the assigned course
+    if (status === 'APPROVED' && selectedCourse) {
+      updateData.assignedCourse = selectedCourse
+      updateData.approvalDate = new Date()
+    }
+
     const updatedEnrollment = await prisma.bootcampEnrollment.update({
       where: { id: enrollmentId },
-      data: { 
-        status,
-        updatedAt: new Date()
-      }
+      data: updateData
     })
 
     // Send email notification based on status

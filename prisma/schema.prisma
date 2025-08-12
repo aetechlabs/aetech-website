@@ -296,3 +296,43 @@ enum BannerType {
   URGENCY          // UrgencyBanner
   GENERAL          // Generic banner
 }
+
+// Attendance tracking models
+model AttendanceSession {
+  id              String   @id @default(auto()) @map("_id") @db.ObjectId
+  title           String   // e.g., "Day 1 - JavaScript Fundamentals"
+  description     String?  // Optional description of the session
+  course          String?  // The specific course this session is for (made optional for migration)
+  question        String   // The attendance question
+  correctAnswer   String   // The correct answer (case insensitive)
+  meetingDate     DateTime // Date of the meeting
+  expiresAt       DateTime // When students can no longer submit
+  isActive        Boolean  @default(true)
+  emailSent       Boolean  @default(false)
+  
+  // Relations
+  responses       AttendanceResponse[]
+  
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+  
+  @@map("attendance_sessions")
+}
+
+model AttendanceResponse {
+  id              String   @id @default(auto()) @map("_id") @db.ObjectId
+  sessionId       String   @db.ObjectId
+  studentEmail    String   // Student's email
+  studentName     String   // Student's full name
+  submittedAnswer String   // Their submitted answer
+  isCorrect       Boolean  // Whether answer matches
+  submittedAt     DateTime @default(now())
+  ipAddress       String?  // Track IP for security
+  
+  // Relations
+  session         AttendanceSession @relation(fields: [sessionId], references: [id], onDelete: Cascade)
+  
+  // Ensure one response per student per session
+  @@unique([sessionId, studentEmail])
+  @@map("attendance_responses")
+}

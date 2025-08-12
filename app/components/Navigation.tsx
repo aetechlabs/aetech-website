@@ -24,7 +24,7 @@ export default function Navigation() {
       setActiveSection('blog');
     } else if (pathname === '/volunteer') {
       setActiveSection('volunteer');
-    } else {
+    }else {
       setActiveSection('home');
     }
   }, [pathname]);
