@@ -18,7 +18,12 @@ import {
   AcademicCapIcon,
   ComputerDesktopIcon,
   PaperAirplaneIcon,
-  DocumentTextIcon
+  DocumentTextIcon,
+  ChatBubbleLeftRightIcon,
+  VideoCameraIcon,
+  LinkIcon,
+  UsersIcon,
+  UserIcon
 } from '@heroicons/react/24/outline'
 
 interface BootcampEnrollment {
@@ -61,6 +66,109 @@ interface ApiResponse {
   }
 }
 
+interface MessageTemplate {
+  id: string
+  name: string
+  subject: string
+  content: string
+}
+
+const messageTemplates: MessageTemplate[] = [
+  {
+    id: 'orientation',
+    name: 'Orientation Meeting',
+    subject: 'DevStarter Bootcamp - Orientation Meeting Today',
+    content: `Hi {firstName},
+
+Congratulations on being accepted to the DevStarter Bootcamp! 
+
+We have an orientation meeting scheduled for today. Please join us using the details below:
+
+📅 Date: {date}
+🕒 Time: {time}
+📹 Zoom Link: {zoomLink}
+🆔 Meeting ID: {meetingId}
+🔑 Passcode: {passcode}
+
+Important: Please join our Discord server as soon as possible for ongoing communication and support:
+🎮 Discord Invite: {discordLink}
+
+What to expect:
+• Introduction to the bootcamp structure
+• Meet your instructors and fellow students
+• Technical setup guidance
+• Q&A session
+
+Please ensure you have:
+✓ A stable internet connection
+✓ A working microphone and camera
+✓ A quiet environment for the meeting
+
+If you have any questions or cannot attend, please reply to this email immediately.
+
+Looking forward to seeing you there!
+
+Best regards,
+AETech Team`
+  },
+  {
+    id: 'schedule',
+    name: 'Weekly Schedule',
+    subject: 'DevStarter Bootcamp - Weekly Schedule',
+    content: `Hi {firstName},
+
+Here's your schedule for this week:
+
+📅 Weekly Schedule:
+{weeklySchedule}
+
+📹 Class Links:
+{classLinks}
+
+🎮 Discord: {discordLink}
+
+Important Notes:
+• Please be punctual for all sessions
+• Join our Discord for announcements and peer interaction
+• Bring any questions you have to our sessions
+
+Best regards,
+AETech Team`
+  },
+  {
+    id: 'discord',
+    name: 'Discord Invitation',
+    subject: 'Join Our Discord Community - DevStarter Bootcamp',
+    content: `Hi {firstName},
+
+Welcome to the DevStarter Bootcamp community!
+
+Please join our Discord server immediately for:
+• Real-time communication with instructors
+• Peer collaboration and networking
+• Important announcements and updates
+• Technical support
+
+🎮 Discord Invite: {discordLink}
+
+Make sure to:
+1. Set your display name as: {firstName} {lastName}
+2. Read the rules in #general-rules
+3. Introduce yourself in #introductions
+
+See you there!
+
+Best regards,
+AETech Team`
+  },
+  {
+    id: 'custom',
+    name: 'Custom Message',
+    subject: '',
+    content: ''
+  }
+]
+
 export default function BootcampManagement() {
   const [enrollments, setEnrollments] = useState<BootcampEnrollment[]>([])
   const [stats, setStats] = useState<EnrollmentStats | null>(null)
@@ -83,9 +191,28 @@ export default function BootcampManagement() {
   })
   
   // New state for view management and send documents
-  const [activeTab, setActiveTab] = useState<'enrollments' | 'management'>('enrollments')
+  const [activeTab, setActiveTab] = useState<'enrollments' | 'management' | 'messaging'>('enrollments')
   const [showSendDocumentsModal, setShowSendDocumentsModal] = useState(false)
   const [selectedEnrollmentForDocs, setSelectedEnrollmentForDocs] = useState<BootcampEnrollment | null>(null)
+
+  // Messaging state
+  const [approvedStudents, setApprovedStudents] = useState<BootcampEnrollment[]>([])
+  const [showMessageModal, setShowMessageModal] = useState(false)
+  const [messageRecipients, setMessageRecipients] = useState<string[]>([]) // 'all' or specific IDs
+  const [messageData, setMessageData] = useState({
+    template: 'orientation',
+    subject: '',
+    content: '',
+    zoomLink: '',
+    meetingId: '',
+    passcode: '',
+    discordLink: '',
+    date: new Date().toISOString().split('T')[0],
+    time: '10:00',
+    weeklySchedule: '',
+    classLinks: ''
+  })
+  const [sendingMessage, setSendingMessage] = useState(false)
 
   // Reset to first page when filters change
   useEffect(() => {
@@ -95,6 +222,12 @@ export default function BootcampManagement() {
   useEffect(() => {
     fetchEnrollments()
   }, [statusFilter, searchTerm, currentPage, itemsPerPage])
+
+  useEffect(() => {
+    if (activeTab === 'messaging') {
+      fetchApprovedStudents()
+    }
+  }, [activeTab])
 
   const fetchEnrollments = async () => {
     try {
@@ -185,6 +318,115 @@ export default function BootcampManagement() {
     setSelectedEnrollmentForDocs(null)
   }
 
+  const fetchApprovedStudents = async () => {
+    try {
+      const response = await fetch('/api/bootcamp?status=APPROVED&limit=1000')
+      const result: ApiResponse = await response.json()
+      
+      if (result.success) {
+        setApprovedStudents(result.data.enrollments)
+      }
+    } catch (error) {
+      console.error('Error fetching approved students:', error)
+    }
+  }
+
+  const handleMessageStudents = (type: 'all' | 'individual', studentId?: string) => {
+    if (type === 'all') {
+      setMessageRecipients(['all'])
+    } else if (studentId) {
+      setMessageRecipients([studentId])
+    }
+    setShowMessageModal(true)
+  }
+
+  const handleTemplateChange = (templateId: string) => {
+    const template = messageTemplates.find(t => t.id === templateId)
+    if (template) {
+      setMessageData(prev => ({
+        ...prev,
+        template: templateId,
+        subject: template.subject,
+        content: template.content
+      }))
+    }
+  }
+
+  const replacePlaceholders = (text: string, student: BootcampEnrollment) => {
+    return text
+      .replace(/{firstName}/g, student.firstName)
+      .replace(/{lastName}/g, student.lastName)
+      .replace(/{email}/g, student.email)
+      .replace(/{date}/g, new Date(messageData.date).toLocaleDateString('en-US', { 
+        weekday: 'long', 
+        year: 'numeric', 
+        month: 'long', 
+        day: 'numeric' 
+      }))
+      .replace(/{time}/g, messageData.time)
+      .replace(/{zoomLink}/g, messageData.zoomLink)
+      .replace(/{meetingId}/g, messageData.meetingId)
+      .replace(/{passcode}/g, messageData.passcode)
+      .replace(/{discordLink}/g, messageData.discordLink)
+      .replace(/{weeklySchedule}/g, messageData.weeklySchedule)
+      .replace(/{classLinks}/g, messageData.classLinks)
+  }
+
+  const sendMessage = async () => {
+    try {
+      setSendingMessage(true)
+      
+      const recipients = messageRecipients.includes('all') 
+        ? approvedStudents 
+        : approvedStudents.filter(student => messageRecipients.includes(student.id))
+
+      for (const student of recipients) {
+        const personalizedSubject = replacePlaceholders(messageData.subject, student)
+        const personalizedContent = replacePlaceholders(messageData.content, student)
+
+        const response = await fetch('/api/send-message', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            to: student.email,
+            subject: personalizedSubject,
+            content: personalizedContent,
+            studentName: `${student.firstName} ${student.lastName}`
+          })
+        })
+
+        if (!response.ok) {
+          throw new Error(`Failed to send message to ${student.email}`)
+        }
+      }
+
+      alert(`Message sent successfully to ${recipients.length} student(s)!`)
+      setShowMessageModal(false)
+      setMessageData({
+        template: 'orientation',
+        subject: '',
+        content: '',
+        zoomLink: '',
+        meetingId: '',
+        passcode: '',
+        discordLink: '',
+        date: new Date().toISOString().split('T')[0],
+        time: '10:00',
+        weeklySchedule: '',
+        classLinks: ''
+      })
+      setMessageRecipients([])
+      
+    } catch (error) {
+      console.error('Error sending message:', error)
+      alert('Failed to send message. Please try again.')
+    } finally {
+      setSendingMessage(false)
+    }
+  }
+
   const getStatusIcon = (status: string) => {
     switch (status) {
       case 'APPROVED': return <CheckCircleIcon className="h-5 w-5 text-green-600" />
@@ -244,39 +486,129 @@ export default function BootcampManagement() {
       </motion.div>
 
       {/* Tab Navigation */}
-      <div className="bg-white rounded-lg shadow-sm border border-gray-200">
-        <div className="flex">
+      <div className="bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden">
+        <div className="flex flex-col sm:flex-row">
           <button
             onClick={() => setActiveTab('enrollments')}
-            className={`flex-1 px-6 py-3 text-sm font-medium rounded-l-lg transition-colors ${
+            className={`flex-1 px-3 sm:px-6 py-3 sm:py-4 text-xs sm:text-sm font-medium transition-colors ${
               activeTab === 'enrollments'
                 ? 'bg-[#c1272d] dark:bg-red-600 text-white'
                 : 'text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-700'
             }`}
           >
-            <div className="flex items-center justify-center space-x-2">
-              <UserGroupIcon className="h-5 w-5" />
-              <span>Enrollments</span>
+            <div className="flex items-center justify-center space-x-1 sm:space-x-2">
+              <UserGroupIcon className="h-4 w-4 sm:h-5 sm:w-5 flex-shrink-0" />
+              <span className="truncate">Enrollments</span>
             </div>
           </button>
           <button
             onClick={() => setActiveTab('management')}
-            className={`flex-1 px-6 py-3 text-sm font-medium rounded-r-lg transition-colors ${
+            className={`flex-1 px-3 sm:px-6 py-3 sm:py-4 text-xs sm:text-sm font-medium transition-colors border-t sm:border-t-0 sm:border-l border-gray-200 ${
               activeTab === 'management'
                 ? 'bg-[#c1272d] dark:bg-red-600 text-white'
                 : 'text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-700'
             }`}
           >
-            <div className="flex items-center justify-center space-x-2">
-              <DocumentTextIcon className="h-5 w-5" />
-              <span>Management</span>
+            <div className="flex items-center justify-center space-x-1 sm:space-x-2">
+              <DocumentTextIcon className="h-4 w-4 sm:h-5 sm:w-5 flex-shrink-0" />
+              <span className="truncate">Management</span>
+            </div>
+          </button>
+          <button
+            onClick={() => setActiveTab('messaging')}
+            className={`flex-1 px-3 sm:px-6 py-3 sm:py-4 text-xs sm:text-sm font-medium transition-colors border-t sm:border-t-0 sm:border-l border-gray-200 ${
+              activeTab === 'messaging'
+                ? 'bg-[#c1272d] dark:bg-red-600 text-white'
+                : 'text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-700'
+            }`}
+          >
+            <div className="flex items-center justify-center space-x-1 sm:space-x-2">
+              <ChatBubbleLeftRightIcon className="h-4 w-4 sm:h-5 sm:w-5 flex-shrink-0" />
+              <span className="truncate">Messaging</span>
             </div>
           </button>
         </div>
       </div>
 
       {/* Tab Content */}
-      {activeTab === 'management' ? (
+      {activeTab === 'messaging' ? (
+        <div className="space-y-6">
+          {/* Messaging Header */}
+          <div className="bg-white rounded-xl shadow-sm p-4 sm:p-6 border border-gray-100">
+            <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-4">
+              <div className="mb-4 sm:mb-0">
+                <h2 className="text-lg sm:text-xl font-bold text-gray-900">Student Messaging</h2>
+                <p className="text-sm sm:text-base text-gray-600">Send messages to approved students</p>
+              </div>
+              <div className="flex items-center space-x-4">
+                <div className="text-center">
+                  <div className="text-xl sm:text-2xl font-bold text-[#c1272d]">{approvedStudents.length}</div>
+                  <div className="text-xs sm:text-sm text-gray-500">Approved Students</div>
+                </div>
+              </div>
+            </div>
+            
+            <div className="flex flex-col sm:flex-row gap-3 sm:gap-4">
+              <button
+                onClick={() => handleMessageStudents('all')}
+                className="flex items-center justify-center space-x-2 px-4 py-2 bg-[#c1272d] text-white rounded-lg hover:bg-red-700 transition-colors w-full sm:w-auto"
+              >
+                <UsersIcon className="h-5 w-5" />
+                <span>Message All Students</span>
+              </button>
+            </div>
+          </div>
+
+          {/* Approved Students List for Individual Messaging */}
+          <div className="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden">
+            <div className="px-4 sm:px-6 py-4 border-b border-gray-200">
+              <h3 className="text-base sm:text-lg font-semibold text-gray-900">Approved Students</h3>
+              <p className="text-xs sm:text-sm text-gray-500">Click on a student to send them an individual message</p>
+            </div>
+            
+            <div className="divide-y divide-gray-200">
+              {approvedStudents.map((student) => (
+                <div
+                  key={student.id}
+                  className="px-4 sm:px-6 py-4 hover:bg-gray-50 transition-colors cursor-pointer"
+                  onClick={() => handleMessageStudents('individual', student.id)}
+                >
+                  <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between space-y-3 sm:space-y-0">
+                    <div className="flex items-center space-x-3">
+                      <div className="w-8 h-8 sm:w-10 sm:h-10 bg-gradient-to-r from-red-600 to-[#c1272d] rounded-full flex items-center justify-center text-white font-medium text-xs sm:text-sm">
+                        {student.firstName.charAt(0)}{student.lastName.charAt(0)}
+                      </div>
+                      <div className="flex-1 min-w-0">
+                        <div className="font-semibold text-gray-900 text-sm sm:text-base">
+                          {student.firstName} {student.lastName}
+                        </div>
+                        <div className="text-xs sm:text-sm text-gray-500 truncate">{student.email}</div>
+                      </div>
+                    </div>
+                    <div className="flex items-center justify-between sm:justify-end space-x-2 pl-11 sm:pl-0">
+                      <span className="text-xs sm:text-sm text-gray-500 flex-1 sm:flex-none">
+                        {student.coursesInterested.slice(0, 1).join(', ')}
+                        {student.coursesInterested.length > 1 && ` +${student.coursesInterested.length - 1} more`}
+                      </span>
+                      <button className="p-2 text-[#c1272d] hover:bg-red-50 rounded-lg transition-colors">
+                        <ChatBubbleLeftRightIcon className="h-4 w-4 sm:h-5 sm:w-5" />
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              ))}
+              
+              {approvedStudents.length === 0 && (
+                <div className="px-4 sm:px-6 py-12 text-center">
+                  <UserGroupIcon className="h-10 w-10 sm:h-12 sm:w-12 text-gray-400 mx-auto mb-4" />
+                  <h3 className="text-base sm:text-lg font-semibold text-gray-900 mb-2">No Approved Students</h3>
+                  <p className="text-sm sm:text-base text-gray-600">Approve some students first to start messaging them.</p>
+                </div>
+              )}
+            </div>
+          </div>
+        </div>
+      ) : activeTab === 'management' ? (
         <BootcampManagementPanel />
       ) : (
         <>
@@ -940,6 +1272,257 @@ export default function BootcampManagement() {
         </div>
       )}
         </>
+      )}
+
+      {/* Message Modal */}
+      {showMessageModal && (
+        <div className="fixed inset-0 z-50 overflow-y-auto">
+          <div className="flex min-h-screen items-center justify-center p-2 sm:p-4">
+            <div className="fixed inset-0 bg-black/60 backdrop-blur-sm" onClick={() => setShowMessageModal(false)}></div>
+            
+            <motion.div
+              initial={{ opacity: 0, scale: 0.95 }}
+              animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0, scale: 0.95 }}
+              className="relative bg-white rounded-xl shadow-2xl w-full max-w-4xl max-h-[95vh] sm:max-h-[90vh] overflow-y-auto"
+            >
+              {/* Modal Header */}
+              <div className="sticky top-0 bg-white border-b border-gray-200 p-4 sm:p-6 rounded-t-xl">
+                <div className="flex items-start sm:items-center justify-between">
+                  <div className="flex-1 min-w-0">
+                    <h2 className="text-lg sm:text-2xl font-bold text-gray-900">Send Message</h2>
+                    <p className="text-sm sm:text-base text-gray-600 mt-1">
+                      {messageRecipients.includes('all') 
+                        ? `Sending to all ${approvedStudents.length} approved students`
+                        : `Sending to ${messageRecipients.length} selected student(s)`
+                      }
+                    </p>
+                  </div>
+                  <button
+                    onClick={() => setShowMessageModal(false)}
+                    className="p-2 rounded-full hover:bg-gray-100 transition-colors ml-2 flex-shrink-0"
+                  >
+                    <XCircleIcon className="h-5 w-5 sm:h-6 sm:w-6 text-gray-500" />
+                  </button>
+                </div>
+              </div>
+
+              {/* Modal Content */}
+              <div className="p-4 sm:p-6 space-y-4 sm:space-y-6">
+                {/* Template Selection */}
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                    Message Template
+                  </label>
+                  <select
+                    value={messageData.template}
+                    onChange={(e) => handleTemplateChange(e.target.value)}
+                    className="w-full px-3 py-2 text-sm sm:text-base border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-transparent"
+                  >
+                    {messageTemplates.map((template) => (
+                      <option key={template.id} value={template.id}>
+                        {template.name}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+
+                {/* Dynamic Fields Based on Template */}
+                {messageData.template === 'orientation' && (
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div className="sm:col-span-2">
+                      <label className="block text-sm font-medium text-gray-700 mb-2">
+                        <VideoCameraIcon className="h-4 w-4 inline mr-1" />
+                        Zoom Link
+                      </label>
+                      <input
+                        type="url"
+                        value={messageData.zoomLink}
+                        onChange={(e) => setMessageData(prev => ({ ...prev, zoomLink: e.target.value }))}
+                        className="w-full px-3 py-2 text-sm sm:text-base border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-transparent"
+                        placeholder="https://zoom.us/j/..."
+                      />
+                    </div>
+                    <div>
+                      <label className="block text-sm font-medium text-gray-700 mb-2">
+                        Meeting ID
+                      </label>
+                      <input
+                        type="text"
+                        value={messageData.meetingId}
+                        onChange={(e) => setMessageData(prev => ({ ...prev, meetingId: e.target.value }))}
+                        className="w-full px-3 py-2 text-sm sm:text-base border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-transparent"
+                        placeholder="123 456 789"
+                      />
+                    </div>
+                    <div>
+                      <label className="block text-sm font-medium text-gray-700 mb-2">
+                        Passcode
+                      </label>
+                      <input
+                        type="text"
+                        value={messageData.passcode}
+                        onChange={(e) => setMessageData(prev => ({ ...prev, passcode: e.target.value }))}
+                        className="w-full px-3 py-2 text-sm sm:text-base border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-transparent"
+                        placeholder="123456"
+                      />
+                    </div>
+                    <div>
+                      <label className="block text-sm font-medium text-gray-700 mb-2">
+                        <CalendarDaysIcon className="h-4 w-4 inline mr-1" />
+                        Date
+                      </label>
+                      <input
+                        type="date"
+                        value={messageData.date}
+                        onChange={(e) => setMessageData(prev => ({ ...prev, date: e.target.value }))}
+                        className="w-full px-3 py-2 text-sm sm:text-base border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-transparent"
+                      />
+                    </div>
+                    <div>
+                      <label className="block text-sm font-medium text-gray-700 mb-2">
+                        Time
+                      </label>
+                      <input
+                        type="time"
+                        value={messageData.time}
+                        onChange={(e) => setMessageData(prev => ({ ...prev, time: e.target.value }))}
+                        className="w-full px-3 py-2 text-sm sm:text-base border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-transparent"
+                      />
+                    </div>
+                    <div className="sm:col-span-2">
+                      <label className="block text-sm font-medium text-gray-700 mb-2">
+                        <LinkIcon className="h-4 w-4 inline mr-1" />
+                        Discord Link
+                      </label>
+                      <input
+                        type="url"
+                        value={messageData.discordLink}
+                        onChange={(e) => setMessageData(prev => ({ ...prev, discordLink: e.target.value }))}
+                        className="w-full px-3 py-2 text-sm sm:text-base border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-transparent"
+                        placeholder="https://discord.gg/..."
+                      />
+                    </div>
+                  </div>
+                )}
+
+                {messageData.template === 'schedule' && (
+                  <div className="space-y-4">
+                    <div>
+                      <label className="block text-sm font-medium text-gray-700 mb-2">
+                        Weekly Schedule
+                      </label>
+                      <textarea
+                        value={messageData.weeklySchedule}
+                        onChange={(e) => setMessageData(prev => ({ ...prev, weeklySchedule: e.target.value }))}
+                        rows={4}
+                        className="w-full px-3 py-2 text-sm sm:text-base border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-transparent"
+                        placeholder="Monday 10:00 AM - JavaScript Fundamentals&#10;Tuesday 10:00 AM - React Basics&#10;..."
+                      />
+                    </div>
+                    <div>
+                      <label className="block text-sm font-medium text-gray-700 mb-2">
+                        Class Links
+                      </label>
+                      <textarea
+                        value={messageData.classLinks}
+                        onChange={(e) => setMessageData(prev => ({ ...prev, classLinks: e.target.value }))}
+                        rows={3}
+                        className="w-full px-3 py-2 text-sm sm:text-base border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-transparent"
+                        placeholder="JavaScript: https://zoom.us/j/123&#10;React: https://zoom.us/j/456&#10;..."
+                      />
+                    </div>
+                    <div>
+                      <label className="block text-sm font-medium text-gray-700 mb-2">
+                        Discord Link
+                      </label>
+                      <input
+                        type="url"
+                        value={messageData.discordLink}
+                        onChange={(e) => setMessageData(prev => ({ ...prev, discordLink: e.target.value }))}
+                        className="w-full px-3 py-2 text-sm sm:text-base border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-transparent"
+                        placeholder="https://discord.gg/..."
+                      />
+                    </div>
+                  </div>
+                )}
+
+                {messageData.template === 'discord' && (
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-2">
+                      Discord Link
+                    </label>
+                    <input
+                      type="url"
+                      value={messageData.discordLink}
+                      onChange={(e) => setMessageData(prev => ({ ...prev, discordLink: e.target.value }))}
+                      className="w-full px-3 py-2 text-sm sm:text-base border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-transparent"
+                      placeholder="https://discord.gg/..."
+                    />
+                  </div>
+                )}
+
+                {/* Subject */}
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                    Subject
+                  </label>
+                  <input
+                    type="text"
+                    value={messageData.subject}
+                    onChange={(e) => setMessageData(prev => ({ ...prev, subject: e.target.value }))}
+                    className="w-full px-3 py-2 text-sm sm:text-base border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-transparent"
+                    placeholder="Email subject..."
+                  />
+                </div>
+
+                {/* Message Content */}
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                    Message Content
+                  </label>
+                  <textarea
+                    value={messageData.content}
+                    onChange={(e) => setMessageData(prev => ({ ...prev, content: e.target.value }))}
+                    rows={8}
+                    className="w-full px-3 py-2 text-sm border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-transparent font-mono"
+                    placeholder="Your message content..."
+                  />
+                  <p className="text-xs text-gray-500 mt-1">
+                    Use placeholders: {'{firstName}'}, {'{lastName}'}, {'{email}'}, {'{date}'}, {'{time}'}, {'{zoomLink}'}, {'{meetingId}'}, {'{passcode}'}, {'{discordLink}'}, {'{weeklySchedule}'}, {'{classLinks}'}
+                  </p>
+                </div>
+
+                {/* Modal Actions */}
+                <div className="flex flex-col sm:flex-row justify-end space-y-3 sm:space-y-0 sm:space-x-4 pt-4 sm:pt-6 border-t border-gray-200">
+                  <button
+                    onClick={() => setShowMessageModal(false)}
+                    className="w-full sm:w-auto px-6 py-2 text-gray-600 hover:text-gray-900 transition-colors"
+                  >
+                    Cancel
+                  </button>
+                  <button
+                    onClick={sendMessage}
+                    disabled={sendingMessage || !messageData.subject || !messageData.content}
+                    className="w-full sm:w-auto flex items-center justify-center space-x-2 px-6 py-2 bg-[#c1272d] text-white rounded-lg hover:bg-red-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                  >
+                    {sendingMessage ? (
+                      <>
+                        <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white"></div>
+                        <span>Sending...</span>
+                      </>
+                    ) : (
+                      <>
+                        <PaperAirplaneIcon className="h-4 w-4" />
+                        <span>Send Message</span>
+                      </>
+                    )}
+                  </button>
+                </div>
+              </div>
+            </motion.div>
+          </div>
+        </div>
       )}
     </div>
   )
