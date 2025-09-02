@@ -6,7 +6,6 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { motion, AnimatePresence } from 'framer-motion';
 import ThemeToggle from '../../components/ThemeToggle';
-import TopAnnouncementBanner from '../../components/TopAnnouncementBanner';
 
 export default function Navigation() {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -33,21 +32,19 @@ export default function Navigation() {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 10);
       
-      // Only update active section based on scroll position if we're on the home page
-      if (pathname === '/') {
-        const sections = ['home', 'services'];
-        const scrollPos = window.scrollY + 100;
-        
-        for (const section of sections) {
-          const element = document.getElementById(section);
-          if (element) {
-            const offsetTop = element.offsetTop;
-            const height = element.offsetHeight;
-            
-            if (scrollPos >= offsetTop && scrollPos < offsetTop + height) {
-              setActiveSection(section);
-              break;
-            }
+      // Update active section based on scroll position
+      const sections = ['home', 'about', 'services', 'contact'];
+      const scrollPos = window.scrollY + 100;
+      
+      for (const section of sections) {
+        const element = document.getElementById(section);
+        if (element) {
+          const offsetTop = element.offsetTop;
+          const height = element.offsetHeight;
+          
+          if (scrollPos >= offsetTop && scrollPos < offsetTop + height) {
+            setActiveSection(section);
+            break;
           }
         }
       }
@@ -89,20 +86,15 @@ export default function Navigation() {
   ];
 
   return (
-    <>
-      {/* Top Announcement Banner */}
-      {/* <TopAnnouncementBanner /> */}
-      
-      <motion.nav 
-        initial={{ y: -100 }}
-        animate={{ y: 0 }}
-        className={`fixed w-full z-50 transition-all duration-500 ${
-          isScrolled 
-            ? 'bg-white/95 dark:bg-black/95 backdrop-blur-md shadow-lg border-b border-gray-200/20 dark:border-gray-700/20 top-0' 
-            : 'bg-transparent top-14'
-        }`}
-        style={{ top: isScrolled ? '0' : '56px' }} // Adjust for banner height
-      >
+    <motion.nav 
+      initial={{ y: -100 }}
+      animate={{ y: 0 }}
+      className={`fixed top-0 w-full z-50 transition-all duration-500 ${
+        isScrolled 
+          ? 'bg-white/95 dark:bg-black/95 backdrop-blur-md shadow-lg border-b border-gray-200/20 dark:border-gray-700/20' 
+          : 'bg-transparent'
+      }`}
+    >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-16">
           <div className="flex items-center">
@@ -114,7 +106,7 @@ export default function Navigation() {
               className="h-8 w-auto dark:hidden"
             />
             <Image
-              src="/assets/Light transparent logo.png"
+              src="/website-assets/logo-dark-500.png"
               alt="AETech Logo"
               width={120}
               height={40}
@@ -248,7 +240,6 @@ export default function Navigation() {
         </AnimatePresence>
       </div>
     </motion.nav>
-    </>
   );
 }
     
