@@ -25,6 +25,8 @@ export default function Home() {
     <div className="font-sans min-h-screen bg-white dark:bg-black text-black dark:text-white">
       {/* Top Announcement Banners */}
 {/*       <ClientOnlyBanner type="TOP_ANNOUNCEMENT" position="top" /> */}
+
+        
       
       <Navigation />
 
