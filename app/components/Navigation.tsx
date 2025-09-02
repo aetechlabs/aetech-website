@@ -91,7 +91,7 @@ export default function Navigation() {
   return (
     <>
       {/* Top Announcement Banner */}
-      <TopAnnouncementBanner />
+      {/* <TopAnnouncementBanner /> */}
       
       <motion.nav 
         initial={{ y: -100 }}
