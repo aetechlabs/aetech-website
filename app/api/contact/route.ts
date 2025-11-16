@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { sendEmail } from '@/lib/email';
+import { sendEmail, sendConfirmationEmail } from '@/lib/email';
 
 export async function POST(request: NextRequest) {
   try {
@@ -57,6 +57,12 @@ export async function POST(request: NextRequest) {
       console.error('Failed to send contact email');
     }
 
+    // Send confirmation email to user
+    const confirmationSent = await sendConfirmationEmail(email, name);
+    if (!confirmationSent) {
+      console.error('Failed to send confirmation email');
+    }
+
     // Log the contact form submission
     console.log('Contact form submission:', {
       name,
@@ -71,7 +77,8 @@ export async function POST(request: NextRequest) {
       currency,
       timeline,
       timestamp: new Date().toISOString(),
-      emailSent
+      emailSent,
+      confirmationSent
     });
 
     return NextResponse.json(

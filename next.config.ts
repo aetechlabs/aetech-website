@@ -11,10 +11,10 @@ const nextConfig: NextConfig = {
     ],
   },
   // Disable caching and storage
-  async headers() {
+   async headers() {
     return [
       {
-        source: '/(.*)',
+        source: '/v1/api/:path*',
         headers: [
           {
             key: 'Cache-Control',
