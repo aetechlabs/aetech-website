@@ -1,13 +1,25 @@
 'use client';
 
-import Navigation from "./components/Navigation";
 import ContactForm from "./components/ContactForm";
-import Footer from "@/components/Footer";
 import FloatingParticles from "@/components/FloatingParticles";
 import SponsorsSection from "@/components/SponsorsSection";
 import Image from "next/image";
 import Link from "next/link";
 import { motion } from "framer-motion";
+import { 
+  CodeBracketIcon, 
+  ComputerDesktopIcon, 
+  CircleStackIcon, 
+  CloudIcon, 
+  ShieldCheckIcon, 
+  BookOpenIcon,
+  BeakerIcon,
+  GlobeAltIcon,
+  CurrencyDollarIcon,
+  BuildingOfficeIcon,
+  SparklesIcon,
+  CheckCircleIcon
+} from '@heroicons/react/24/outline';
 
 export default function Home() {
   const scrollToSection = (sectionId: string) => {
@@ -18,11 +30,8 @@ export default function Home() {
   };
   return (
     <div className="font-sans min-h-screen bg-white dark:bg-black text-black dark:text-white">
-      
-      <Navigation />
-
       {/* Hero Section */}
-      <section id="home" className="relative pt-16 min-h-screen flex items-center overflow-hidden">
+      <section id="home" className="relative pt-16 min-h-screen flex items-center overflow-hidden bg-gradient-to-br from-gray-900 via-black to-gray-900">
         {/* Video Background with Enhanced Overlay */}
         <div className="absolute inset-0 z-0">
           <video
@@ -30,14 +39,14 @@ export default function Home() {
             muted
             loop
             playsInline
-            className="w-full h-full object-cover"
+            className="w-full h-full object-cover opacity-40"
           >
             <source src="/videos/person-typing-keyboard.mp4" type="video/mp4" />
           </video>
           {/* Gradient overlay for modern look */}
-          <div className="absolute inset-0 bg-gradient-to-br from-black/70 via-black/60 to-red-900/50 dark:from-black/80 dark:via-black/70 dark:to-red-900/60"></div>
+          <div className="absolute inset-0 bg-gradient-to-br from-black/60 via-transparent to-red-900/30"></div>
           {/* Floating Particles */}
-          <FloatingParticles count={30} className="text-white/30" />
+          <FloatingParticles count={30} className="text-white/20" />
         </div>
         
         {/* Content with Modern Design */}
@@ -105,10 +114,9 @@ export default function Home() {
                 whileHover={{ scale: 1.05, y: -2 }}
                 whileTap={{ scale: 0.95 }}
                 onClick={() => scrollToSection('services')}
-                className="group relative bg-gradient-to-r from-red-500 to-red-600 hover:from-red-600 hover:to-red-700 text-white px-10 py-4 rounded-xl font-semibold transition-all duration-300 shadow-xl hover:shadow-2xl w-full sm:w-auto"
+                className="bg-red-50 dark:bg-red-900/30 text-red-600 dark:text-red-400 px-10 py-4 rounded-xl font-semibold transition-all duration-300 shadow-lg hover:shadow-xl hover:bg-red-100 dark:hover:bg-red-900/40 w-full sm:w-auto"
               >
-                <span className="relative z-10">Explore Our Services</span>
-                <div className="absolute inset-0 rounded-xl bg-white/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                Explore Our Services →
               </motion.button>
               <motion.button
                 whileHover={{ scale: 1.05, y: -2 }}
@@ -118,32 +126,6 @@ export default function Home() {
               >
                 Get in Touch
               </motion.button>
-            </motion.div>
-
-            {/* Stats/Highlights */}
-            <motion.div
-              initial={{ opacity: 0, y: 30 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 1.0 }}
-              className="mt-16 grid grid-cols-2 md:grid-cols-4 gap-6 max-w-4xl mx-auto"
-            >
-              {[
-                { label: 'Solutions Delivered', value: '50+' },
-                { label: 'Enterprise Clients', value: '20+' },
-                { label: 'Research Projects', value: '15+' },
-                { label: 'Innovation Awards', value: '5+' }
-              ].map((stat, index) => (
-                <motion.div
-                  key={stat.label}
-                  initial={{ opacity: 0, scale: 0.8 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  transition={{ duration: 0.4, delay: 1.2 + index * 0.1 }}
-                  className="bg-white/10 backdrop-blur-md rounded-lg p-4 border border-white/20"
-                >
-                  <div className="text-3xl font-bold text-red-400 mb-1">{stat.value}</div>
-                  <div className="text-sm text-gray-300">{stat.label}</div>
-                </motion.div>
-              ))}
             </motion.div>
           </motion.div>
         </div>
@@ -186,29 +168,29 @@ export default function Home() {
               whileInView={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.8 }}
               viewport={{ once: true }}
-              className="bg-gray-50 dark:bg-gray-900 rounded-xl p-8 shadow-lg"
+              className="bg-gradient-to-br from-gray-50 to-white dark:from-gray-900 dark:to-gray-800 rounded-2xl p-8 shadow-lg border-2 border-gray-200 dark:border-gray-700 hover:border-red-400 dark:hover:border-red-400 transition-all"
             >
               <div className="flex items-center mb-6">
-                <div className="h-8 w-8 bg-[#c1272d] rounded-lg flex items-center justify-center mr-3">
-                  <span className="text-white text-lg">🌟</span>
+                <div className="bg-red-500 rounded-xl p-3 mr-4">
+                  <SparklesIcon className="w-8 h-8 text-white" />
                 </div>
                 <h3 className="text-2xl font-bold text-gray-900 dark:text-gray-100">Our Vision</h3>
               </div>
-              <p className="text-gray-700 dark:text-gray-300 text-lg leading-relaxed mb-6">
-                To become a leading force in technological innovation, creating impactful solutions that transform 
-                industries and empower communities across Africa and the world.
+              <p className="text-gray-700 dark:text-gray-300 text-lg leading-relaxed mb-8">
+                To become Africa's leading technology innovation hub, creating transformative solutions that 
+                empower businesses, advance industries, and improve lives across the continent and beyond.
               </p>
               
-              <div className="border-t border-gray-200 dark:border-gray-700 pt-6">
+              <div className="bg-white dark:bg-gray-800 rounded-xl p-6 border-2 border-gray-200 dark:border-gray-700">
                 <div className="flex items-center mb-4">
-                  <div className="h-6 w-6 bg-blue-500 rounded flex items-center justify-center mr-3">
-                    <span className="text-white text-sm">🎯</span>
+                  <div className="bg-red-500 rounded-lg p-2 mr-3">
+                    <CheckCircleIcon className="w-6 h-6 text-white" />
                   </div>
                   <h4 className="text-lg font-bold text-gray-900 dark:text-gray-100">Our Mission</h4>
                 </div>
-                <p className="text-gray-600 dark:text-gray-400">
-                  To research, develop, and deploy advanced technologies that solve real-world problems, 
-                  drive business growth, and shape the future of digital transformation.
+                <p className="text-gray-600 dark:text-gray-400 leading-relaxed">
+                  To research, develop, and deploy cutting-edge technology solutions that solve real-world problems, 
+                  accelerate digital transformation, and create sustainable value for our clients and communities.
                 </p>
               </div>
             </motion.div>
@@ -219,38 +201,59 @@ export default function Home() {
               whileInView={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.8 }}
               viewport={{ once: true }}
-              className="bg-gray-50 dark:bg-gray-900 rounded-xl p-8 shadow-lg"
+              className="bg-gradient-to-br from-gray-50 to-white dark:from-gray-900 dark:to-gray-800 rounded-2xl p-8 shadow-lg border-2 border-gray-200 dark:border-gray-700 hover:border-red-400 dark:hover:border-red-400 transition-all"
             >
               <div className="flex items-center mb-6">
-                <div className="h-8 w-8 bg-[#c1272d] rounded-lg flex items-center justify-center mr-3">
-                  <span className="text-white text-lg">🏢</span>
+                <div className="bg-red-500 rounded-xl p-3 mr-4">
+                  <BuildingOfficeIcon className="w-8 h-8 text-white" />
                 </div>
                 <h3 className="text-2xl font-bold text-gray-900 dark:text-gray-100">Company Overview</h3>
               </div>
               
               <div className="space-y-4">
-                <div className="bg-white dark:bg-gray-800 rounded-lg p-4 border-l-4 border-[#c1272d]">
-                  <h4 className="font-semibold text-gray-900 dark:text-gray-100 mb-2">Established Excellence</h4>
-                  <p className="text-sm text-gray-600 dark:text-gray-400">
-                    Registered as Advanced Engineering Technology Research Labs Limited (RC 8627078), 
-                    we operate at the forefront of technological innovation.
-                  </p>
+                <div className="bg-white dark:bg-gray-800 rounded-xl p-5 border-2 border-gray-200 dark:border-gray-700 hover:shadow-md transition-all">
+                  <div className="flex items-start mb-3">
+                    <div className="bg-red-50 dark:bg-red-900/20 rounded-lg p-2 mr-3">
+                      <ShieldCheckIcon className="w-5 h-5 text-red-600 dark:text-red-400" />
+                    </div>
+                    <div>
+                      <h4 className="font-bold text-gray-900 dark:text-gray-100 mb-2">Established Excellence</h4>
+                      <p className="text-sm text-gray-600 dark:text-gray-400">
+                        Registered as Advanced Engineering Technology Research Labs Limited (RC 8627078), 
+                        we operate at the forefront of technological innovation with proven expertise.
+                      </p>
+                    </div>
+                  </div>
                 </div>
                 
-                <div className="bg-white dark:bg-gray-800 rounded-lg p-4 border-l-4 border-blue-500">
-                  <h4 className="font-semibold text-gray-900 dark:text-gray-100 mb-2">Research Focus</h4>
-                  <p className="text-sm text-gray-600 dark:text-gray-400">
-                    Specializing in AI, machine learning, data systems, and emerging technologies 
-                    with applications across various industries.
-                  </p>
+                <div className="bg-white dark:bg-gray-800 rounded-xl p-5 border-2 border-gray-200 dark:border-gray-700 hover:shadow-md transition-all">
+                  <div className="flex items-start mb-3">
+                    <div className="bg-red-50 dark:bg-red-900/20 rounded-lg p-2 mr-3">
+                      <BeakerIcon className="w-5 h-5 text-red-600 dark:text-red-400" />
+                    </div>
+                    <div>
+                      <h4 className="font-bold text-gray-900 dark:text-gray-100 mb-2">Research & Innovation</h4>
+                      <p className="text-sm text-gray-600 dark:text-gray-400">
+                        Pioneering breakthroughs in AI, machine learning, data engineering, and emerging technologies 
+                        with practical applications across diverse industries.
+                      </p>
+                    </div>
+                  </div>
                 </div>
 
-                <div className="bg-white dark:bg-gray-800 rounded-lg p-4 border-l-4 border-green-500">
-                  <h4 className="font-semibold text-gray-900 dark:text-gray-100 mb-2">Global Impact</h4>
-                  <p className="text-sm text-gray-600 dark:text-gray-400">
-                    Creating solutions that address challenges in African and global markets 
-                    with focus on sustainability and social impact.
-                  </p>
+                <div className="bg-white dark:bg-gray-800 rounded-xl p-5 border-2 border-gray-200 dark:border-gray-700 hover:shadow-md transition-all">
+                  <div className="flex items-start mb-3">
+                    <div className="bg-red-50 dark:bg-red-900/20 rounded-lg p-2 mr-3">
+                      <GlobeAltIcon className="w-5 h-5 text-red-600 dark:text-red-400" />
+                    </div>
+                    <div>
+                      <h4 className="font-bold text-gray-900 dark:text-gray-100 mb-2">Pan-African Impact</h4>
+                      <p className="text-sm text-gray-600 dark:text-gray-400">
+                        Building scalable solutions that address unique African challenges while maintaining 
+                        global standards for sustainability, accessibility, and social impact.
+                      </p>
+                    </div>
+                  </div>
                 </div>
               </div>
             </motion.div>
@@ -258,8 +261,79 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Core Values Section */}
-      <section className="py-20 bg-gray-50 dark:bg-gray-800">
+      {/* Why Choose AETech - Modern Design */}
+      <section className="relative py-24 bg-gradient-to-br from-red-50 to-white dark:from-gray-900 dark:to-black overflow-hidden">
+        <div className="absolute inset-0 opacity-5">
+          <div className="absolute inset-0" style={{
+            backgroundImage: 'radial-gradient(circle at 2px 2px, currentColor 1px, transparent 0)',
+            backgroundSize: '40px 40px'
+          }}></div>
+        </div>
+
+        <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8 }}
+            viewport={{ once: true }}
+            className="text-center mb-16"
+          >
+            <h2 className="text-5xl font-bold mb-6">
+              Why <span className="bg-gradient-to-r from-red-500 to-red-600 bg-clip-text text-transparent">Choose AETech</span>
+            </h2>
+            <p className="text-xl text-gray-600 dark:text-gray-400 max-w-3xl mx-auto">
+              We combine cutting-edge technology with deep industry expertise to deliver exceptional results
+            </p>
+          </motion.div>
+
+          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+            {[
+              {
+                icon: <CodeBracketIcon className="w-8 h-8" />,
+                title: 'Expert Team',
+                description: 'Skilled professionals with proven track records in cutting-edge technologies',
+                color: 'from-blue-500 to-blue-600'
+              },
+              {
+                icon: <ShieldCheckIcon className="w-8 h-8" />,
+                title: 'Secure & Reliable',
+                description: 'Enterprise-grade security and 99.9% uptime guarantee for all solutions',
+                color: 'from-green-500 to-green-600'
+              },
+              {
+                icon: <CloudIcon className="w-8 h-8" />,
+                title: 'Scalable Solutions',
+                description: 'Future-proof architecture that grows seamlessly with your business',
+                color: 'from-purple-500 to-purple-600'
+              },
+              {
+                icon: <SparklesIcon className="w-8 h-8" />,
+                title: 'Innovation Driven',
+                description: 'Leveraging AI and emerging tech to keep you ahead of the curve',
+                color: 'from-red-500 to-red-600'
+              }
+            ].map((item, index) => (
+              <motion.div
+                key={item.title}
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6, delay: index * 0.1 }}
+                viewport={{ once: true }}
+                className="group relative bg-white dark:bg-gray-900 rounded-2xl p-8 shadow-lg hover:shadow-2xl transition-all duration-300 border-2 border-gray-100 dark:border-gray-800 hover:border-red-400 dark:hover:border-red-400"
+              >
+                <div className={`inline-flex p-4 rounded-xl bg-gradient-to-br ${item.color} text-white mb-6 group-hover:scale-110 transition-transform duration-300`}>
+                  {item.icon}
+                </div>
+                <h3 className="text-xl font-bold text-gray-900 dark:text-gray-100 mb-3">{item.title}</h3>
+                <p className="text-gray-600 dark:text-gray-400 leading-relaxed">{item.description}</p>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Our Expertise - Modern Grid Section */}
+      <section className="relative py-24 bg-white dark:bg-black">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
@@ -268,327 +342,173 @@ export default function Home() {
             viewport={{ once: true }}
             className="text-center mb-16"
           >
-            <h2 className="text-4xl font-bold text-gray-900 dark:text-gray-100 mb-4">Core Values</h2>
-            <p className="text-xl text-gray-600 dark:text-gray-300">
-              The principles that guide everything we do at AETech
-            </p>
-          </motion.div>
-
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12">
-            {[
-              {
-                icon: "💡",
-                title: "Innovation",
-                subtitle: "Creative Problem Solving",
-                description: "We push boundaries and challenge conventional thinking to develop groundbreaking solutions that address complex technological challenges.",
-                color: "bg-yellow-500"
-              },
-              {
-                icon: "🤝",
-                title: "Integrity",
-                subtitle: "Ethical Excellence",
-                description: "We uphold the highest standards of honesty, transparency, and ethical conduct in all our relationships and business practices.",
-                color: "bg-blue-500"
-              },
-              {
-                icon: "🎯",
-                title: "Excellence",
-                subtitle: "Quality Commitment",
-                description: "We pursue perfection in research, engineering, and delivery, ensuring every solution meets the highest standards of quality and performance.",
-                color: "bg-green-500"
-              },
-              {
-                icon: "🌍",
-                title: "Collaboration",
-                subtitle: "Collective Success",
-                description: "We believe in the power of teamwork, building strong partnerships and fostering collaborative environments to achieve impactful results.",
-                color: "bg-purple-500"
-              },
-              {
-                icon: "🚀",
-                title: "Impact",
-                subtitle: "Meaningful Change",
-                description: "We create solutions that make a real difference, positively transforming businesses, communities, and society as a whole.",
-                color: "bg-[#c1272d]"
-              },
-              {
-                icon: "🔬",
-                title: "Research",
-                subtitle: "Continuous Learning",
-                description: "We invest in ongoing research and development, staying at the cutting edge of technology and constantly expanding our knowledge base.",
-                color: "bg-indigo-500"
-              }
-            ].map((value, index) => (
-              <motion.div
-                key={value.title}
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.8, delay: index * 0.1 }}
-                viewport={{ once: true }}
-                className="bg-white dark:bg-gray-900 rounded-xl p-6 shadow-lg hover:shadow-xl transition-all duration-300 group"
-              >
-                <div className="text-center mb-6">
-                  <div className={`${value.color} rounded-full p-4 w-16 h-16 flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform duration-300`}>
-                    <span className="text-2xl">{value.icon}</span>
-                  </div>
-                  <h3 className="text-xl font-bold text-gray-900 dark:text-gray-100 mb-1">{value.title}</h3>
-                  <p className="text-sm font-medium text-gray-500 dark:text-gray-400">{value.subtitle}</p>
-                </div>
-                <p className="text-gray-600 dark:text-gray-300 text-center leading-relaxed">
-                  {value.description}
-                </p>
-              </motion.div>
-            ))}
-          </div>
-
-          {/* Why Choose AETech */}
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.3 }}
-            viewport={{ once: true }}
-            className="bg-[#c1272d] rounded-xl p-8 shadow-lg text-white"
-          >
-            <div className="text-center mb-8">
-              <h3 className="text-3xl font-bold mb-4">Why Choose AETech?</h3>
-              <p className="text-red-100 text-lg">We combine technical expertise with a deep understanding of business needs</p>
-            </div>
-            
-            <div className="grid md:grid-cols-4 gap-6">
-              <div className="text-center">
-                <div className="bg-white/20 rounded-lg p-4 mb-3">
-                  <span className="text-3xl">⚡</span>
-                </div>
-                <h4 className="font-semibold mb-2">Rapid Development</h4>
-                <p className="text-sm text-red-100">Fast, efficient delivery without compromising quality</p>
-              </div>
-              
-              <div className="text-center">
-                <div className="bg-white/20 rounded-lg p-4 mb-3">
-                  <span className="text-3xl">🛡️</span>
-                </div>
-                <h4 className="font-semibold mb-2">Secure Solutions</h4>
-                <p className="text-sm text-red-100">Enterprise-grade security built into every solution</p>
-              </div>
-
-              <div className="text-center">
-                <div className="bg-white/20 rounded-lg p-4 mb-3">
-                  <span className="text-3xl">📈</span>
-                </div>
-                <h4 className="font-semibold mb-2">Scalable Systems</h4>
-                <p className="text-sm text-red-100">Future-proof solutions that grow with your business</p>
-              </div>
-
-              <div className="text-center">
-                <div className="bg-white/20 rounded-lg p-4 mb-3">
-                  <span className="text-3xl">🎓</span>
-                </div>
-                <h4 className="font-semibold mb-2">Expert Team</h4>
-                <p className="text-sm text-red-100">Skilled professionals with proven track records</p>
-              </div>
-            </div>
-          </motion.div>
-        </div>
-      </section>
-
-      {/* Our Expertise Grid Section */}
-      <section className="relative py-20 bg-gray-50 dark:bg-gray-800">
-        {/* Subtle Background Pattern */}
-        <div className="absolute inset-0 opacity-5">
-          <svg className="w-full h-full" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
-            <defs>
-              <pattern id="expertise-grid" width="10" height="10" patternUnits="userSpaceOnUse">
-                <path d="M 10 0 L 0 0 0 10" fill="none" stroke="currentColor" strokeWidth="1"/>
-              </pattern>
-            </defs>
-            <rect width="100%" height="100%" fill="url(#expertise-grid)" className="text-gray-900 dark:text-gray-100" />
-          </svg>
-        </div>
-        
-        <div className="relative z-10 max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
-            viewport={{ once: true }}
-            className="text-center mb-16"
-          >
-            <h2 className="text-4xl font-bold text-gray-900 dark:text-gray-100 mb-4">
-              Our Expertise
+            <h2 className="text-5xl font-bold mb-6">
+              Our <span className="bg-gradient-to-r from-red-500 to-red-600 bg-clip-text text-transparent">Expertise</span>
             </h2>
-            <p className="text-xl text-gray-600 dark:text-gray-300">
-              Comprehensive technology solutions that drive innovation and growth
+            <p className="text-xl text-gray-600 dark:text-gray-400 max-w-3xl mx-auto">
+              Comprehensive technology capabilities across development, training, and innovation
             </p>
           </motion.div>
 
           <div className="grid lg:grid-cols-2 gap-8 mb-12">
-            {/* Technology Solutions */}
+            {/* Technical Stack */}
             <motion.div
               initial={{ opacity: 0, x: -30 }}
               whileInView={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.8 }}
               viewport={{ once: true }}
-              className="bg-white dark:bg-gray-900 rounded-xl p-6 shadow-lg"
+              className="bg-gradient-to-br from-gray-50 to-white dark:from-gray-900 dark:to-gray-800 rounded-2xl p-8 border-2 border-gray-200 dark:border-gray-700 hover:border-red-400 dark:hover:border-red-400 transition-all shadow-lg"
             >
               <div className="flex items-center mb-6">
-                <div className="h-8 w-8 bg-[#c1272d] rounded-lg flex items-center justify-center mr-3">
-                  <span className="text-white text-lg">🚀</span>
+                <div className="bg-red-50 dark:bg-red-900/20 rounded-xl p-3 mr-4">
+                  <CodeBracketIcon className="w-8 h-8 text-red-600 dark:text-red-400" />
                 </div>
                 <div>
-                  <h3 className="text-2xl font-bold text-gray-900 dark:text-gray-100">Technology Solutions</h3>
-                  <p className="text-[#c1272d] font-semibold">Development & Innovation</p>
+                  <h3 className="text-2xl font-bold text-gray-900 dark:text-gray-100">Technical Stack</h3>
+                  <p className="text-red-600 dark:text-red-400 font-semibold">Modern Development Tools</p>
                 </div>
               </div>
               
               <div className="space-y-4">
-                <div className="grid grid-cols-3 gap-4 text-sm font-semibold text-gray-700 dark:text-gray-300 border-b pb-2">
-                  <span>Service</span>
-                  <span>Technology</span>
-                  <span>Delivery</span>
-                </div>
-                
-                <div className="grid grid-cols-3 gap-4 text-sm py-2 border-b border-gray-100 dark:border-gray-700">
-                  <span className="font-medium text-gray-900 dark:text-gray-100">Web Development</span>
-                  <span className="text-gray-600 dark:text-gray-400">React, Next.js, Node.js</span>
-                  <span className="text-blue-600 dark:text-blue-400">2-6 weeks</span>
-                </div>
-                
-                <div className="grid grid-cols-3 gap-4 text-sm py-2 border-b border-gray-100 dark:border-gray-700">
-                  <span className="font-medium text-gray-900 dark:text-gray-100">Mobile Apps</span>
-                  <span className="text-gray-600 dark:text-gray-400">React Native, Flutter</span>
-                  <span className="text-blue-600 dark:text-blue-400">3-8 weeks</span>
-                </div>
-                
-                <div className="grid grid-cols-3 gap-4 text-sm py-2 border-b border-gray-100 dark:border-gray-700">
-                  <span className="font-medium text-gray-900 dark:text-gray-100">AI Solutions</span>
-                  <span className="text-gray-600 dark:text-gray-400">Python, TensorFlow, PyTorch</span>
-                  <span className="text-green-600 dark:text-green-400">4-12 weeks</span>
-                </div>
-                
-                <div className="grid grid-cols-3 gap-4 text-sm py-2 border-b border-gray-100 dark:border-gray-700">
-                  <span className="font-medium text-gray-900 dark:text-gray-100">Data Analytics</span>
-                  <span className="text-gray-600 dark:text-gray-400">SQL, Python, Power BI</span>
-                  <span className="text-orange-600 dark:text-orange-400">2-4 weeks</span>
-                </div>
-                
-                <div className="grid grid-cols-3 gap-4 text-sm py-2">
-                  <span className="font-medium text-gray-900 dark:text-gray-100">Cloud Solutions</span>
-                  <span className="text-gray-600 dark:text-gray-400">AWS, Azure, GCP</span>
-                  <span className="text-purple-600 dark:text-purple-400">1-3 weeks</span>
-                </div>
+                {[
+                  { name: 'Web Development', tech: 'React, Next.js, Node.js', time: '2-6 weeks', color: 'text-blue-600 dark:text-blue-400' },
+                  { name: 'Mobile Apps', tech: 'React Native, Flutter', time: '3-8 weeks', color: 'text-purple-600 dark:text-purple-400' },
+                  { name: 'AI Solutions', tech: 'Python, TensorFlow, PyTorch', time: '4-12 weeks', color: 'text-green-600 dark:text-green-400' },
+                  { name: 'Data Analytics', tech: 'SQL, Python, Power BI', time: '2-4 weeks', color: 'text-orange-600 dark:text-orange-400' },
+                  { name: 'Cloud Solutions', tech: 'AWS, Azure, GCP', time: '1-3 weeks', color: 'text-cyan-600 dark:text-cyan-400' }
+                ].map((item, index) => (
+                  <motion.div
+                    key={item.name}
+                    initial={{ opacity: 0, x: -20 }}
+                    whileInView={{ opacity: 1, x: 0 }}
+                    transition={{ delay: index * 0.1 }}
+                    viewport={{ once: true }}
+                    className="bg-white dark:bg-gray-800 rounded-xl p-4 hover:shadow-md transition-all"
+                  >
+                    <div className="flex justify-between items-start mb-2">
+                      <h4 className="font-bold text-gray-900 dark:text-gray-100">{item.name}</h4>
+                      <span className={`text-sm font-semibold px-3 py-1 rounded-full bg-gray-100 dark:bg-gray-700 ${item.color}`}>
+                        {item.time}
+                      </span>
+                    </div>
+                    <p className="text-sm text-gray-600 dark:text-gray-400">{item.tech}</p>
+                  </motion.div>
+                ))}
               </div>
             </motion.div>
 
-            {/* Training & Development */}
+            {/* Training Programs */}
             <motion.div
               initial={{ opacity: 0, x: 30 }}
               whileInView={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.8 }}
               viewport={{ once: true }}
-              className="bg-white dark:bg-gray-900 rounded-xl p-6 shadow-lg"
+              className="bg-gradient-to-br from-gray-50 to-white dark:from-gray-900 dark:to-gray-800 rounded-2xl p-8 border-2 border-gray-200 dark:border-gray-700 hover:border-red-400 dark:hover:border-red-400 transition-all shadow-lg"
             >
               <div className="flex items-center mb-6">
-                <div className="h-8 w-8 bg-[#c1272d] rounded-lg flex items-center justify-center mr-3">
-                  <span className="text-white text-lg">🎓</span>
+                <div className="bg-red-50 dark:bg-red-900/20 rounded-xl p-3 mr-4">
+                  <BookOpenIcon className="w-8 h-8 text-red-600 dark:text-red-400" />
                 </div>
                 <div>
-                  <h3 className="text-2xl font-bold text-gray-900 dark:text-gray-100">Training & Development</h3>
-                  <p className="text-[#c1272d] font-semibold">Skill Building Programs</p>
+                  <h3 className="text-2xl font-bold text-gray-900 dark:text-gray-100">Training Programs</h3>
+                  <p className="text-red-600 dark:text-red-400 font-semibold">Skill Building Excellence</p>
                 </div>
               </div>
               
               <div className="space-y-4">
-                <div className="grid grid-cols-3 gap-4 text-sm font-semibold text-gray-700 dark:text-gray-300 border-b pb-2">
-                  <span>Program</span>
-                  <span>Duration</span>
-                  <span>Level</span>
-                </div>
-                
-                <div className="grid grid-cols-3 gap-4 text-sm py-2 border-b border-gray-100 dark:border-gray-700">
-                  <span className="font-medium text-gray-900 dark:text-gray-100">DevStars Bootcamp</span>
-                  <span className="text-gray-600 dark:text-gray-400">3 weeks</span>
-                  <span className="text-green-600 dark:text-green-400">Beginner</span>
-                </div>
-                
-                <div className="grid grid-cols-3 gap-4 text-sm py-2 border-b border-gray-100 dark:border-gray-700">
-                  <span className="font-medium text-gray-900 dark:text-gray-100">Corporate Training</span>
-                  <span className="text-gray-600 dark:text-gray-400">1-4 weeks</span>
-                  <span className="text-blue-600 dark:text-blue-400">Intermediate</span>
-                </div>
-                
-                <div className="grid grid-cols-3 gap-4 text-sm py-2 border-b border-gray-100 dark:border-gray-700">
-                  <span className="font-medium text-gray-900 dark:text-gray-100">Tech Workshops</span>
-                  <span className="text-gray-600 dark:text-gray-400">1-3 days</span>
-                  <span className="text-yellow-600 dark:text-yellow-400">All Levels</span>
-                </div>
-                
-                <div className="grid grid-cols-3 gap-4 text-sm py-2 border-b border-gray-100 dark:border-gray-700">
-                  <span className="font-medium text-gray-900 dark:text-gray-100">Mentorship</span>
-                  <span className="text-gray-600 dark:text-gray-400">3-6 months</span>
-                  <span className="text-purple-600 dark:text-purple-400">Advanced</span>
-                </div>
-                
-                <div className="grid grid-cols-3 gap-4 text-sm py-2">
-                  <span className="font-medium text-gray-900 dark:text-gray-100">Certification Prep</span>
-                  <span className="text-gray-600 dark:text-gray-400">2-8 weeks</span>
-                  <span className="text-orange-600 dark:text-orange-400">Professional</span>
-                </div>
+                {[
+                  { name: 'DevStars Bootcamp', duration: '3 weeks', level: 'Beginner', color: 'text-green-600 dark:text-green-400' },
+                  { name: 'Corporate Training', duration: '1-4 weeks', level: 'Intermediate', color: 'text-blue-600 dark:text-blue-400' },
+                  { name: 'Tech Workshops', duration: '1-3 days', level: 'All Levels', color: 'text-yellow-600 dark:text-yellow-400' },
+                  { name: 'Mentorship', duration: '3-6 months', level: 'Advanced', color: 'text-purple-600 dark:text-purple-400' },
+                  { name: 'Certification Prep', duration: '2-8 weeks', level: 'Professional', color: 'text-orange-600 dark:text-orange-400' }
+                ].map((item, index) => (
+                  <motion.div
+                    key={item.name}
+                    initial={{ opacity: 0, x: 20 }}
+                    whileInView={{ opacity: 1, x: 0 }}
+                    transition={{ delay: index * 0.1 }}
+                    viewport={{ once: true }}
+                    className="bg-white dark:bg-gray-800 rounded-xl p-4 hover:shadow-md transition-all"
+                  >
+                    <div className="flex justify-between items-start mb-2">
+                      <h4 className="font-bold text-gray-900 dark:text-gray-100">{item.name}</h4>
+                      <span className={`text-sm font-semibold px-3 py-1 rounded-full bg-gray-100 dark:bg-gray-700 ${item.color}`}>
+                        {item.level}
+                      </span>
+                    </div>
+                    <p className="text-sm text-gray-600 dark:text-gray-400">{item.duration}</p>
+                  </motion.div>
+                ))}
               </div>
             </motion.div>
           </div>
 
-          {/* Research & Innovation Highlights */}
+          {/* Research & Innovation */}
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.2 }}
+            transition={{ duration: 0.8 }}
             viewport={{ once: true }}
-            className="bg-gray-100 dark:bg-gray-700 rounded-xl p-6 shadow-lg"
+            className="bg-gradient-to-br from-red-50 to-white dark:from-gray-900 dark:to-gray-800 rounded-2xl p-8 border-2 border-red-200 dark:border-red-900/50 shadow-lg"
           >
-            <div className="flex items-center mb-6">
-              <div className="h-8 w-8 bg-[#c1272d] rounded-lg flex items-center justify-center mr-3">
-                <span className="text-white text-lg">🔬</span>
+            <div className="flex items-center justify-center mb-8">
+              <div className="bg-red-50 dark:bg-red-900/20 rounded-xl p-3 mr-4">
+                <BeakerIcon className="w-8 h-8 text-red-600 dark:text-red-400" />
               </div>
-              <div>
+              <div className="text-center">
                 <h3 className="text-2xl font-bold text-gray-900 dark:text-gray-100">Research & Innovation</h3>
-                <p className="text-gray-600 dark:text-gray-400">Cutting-edge projects and breakthrough solutions</p>
+                <p className="text-gray-600 dark:text-gray-400">Pioneering breakthrough solutions</p>
               </div>
             </div>
             
             <div className="grid md:grid-cols-3 gap-6">
-              <div className="bg-white dark:bg-gray-800 rounded-lg p-4">
-                <div className="flex items-center mb-3">
-                  <div className="w-3 h-3 bg-blue-500 rounded-full mr-3"></div>
-                  <span className="font-semibold text-gray-900 dark:text-gray-100">AI for Agriculture</span>
-                </div>
-                <p className="text-sm text-gray-600 dark:text-gray-400 mb-2">Smart farming solutions</p>
-                <p className="text-sm text-gray-700 dark:text-gray-300">Precision agriculture using machine learning and IoT sensors</p>
-              </div>
-              
-              <div className="bg-white dark:bg-gray-800 rounded-lg p-4">
-                <div className="flex items-center mb-3">
-                  <div className="w-3 h-3 bg-green-500 rounded-full mr-3"></div>
-                  <span className="font-semibold text-gray-900 dark:text-gray-100">FinTech Innovation</span>
-                </div>
-                <p className="text-sm text-gray-600 dark:text-gray-400 mb-2">Digital payment systems</p>
-                <p className="text-sm text-gray-700 dark:text-gray-300">Blockchain-based solutions for financial inclusion</p>
-              </div>
-
-              <div className="bg-white dark:bg-gray-800 rounded-lg p-4">
-                <div className="flex items-center mb-3">
-                  <div className="w-3 h-3 bg-purple-500 rounded-full mr-3"></div>
-                  <span className="font-semibold text-gray-900 dark:text-gray-100">EdTech Platforms</span>
-                </div>
-                <p className="text-sm text-gray-600 dark:text-gray-400 mb-2">Learning management systems</p>
-                <p className="text-sm text-gray-700 dark:text-gray-300">Interactive platforms for remote and hybrid education</p>
-              </div>
+              {[
+                { 
+                  icon: <GlobeAltIcon className="w-6 h-6" />,
+                  title: 'AI for Agriculture',
+                  desc: 'Smart farming solutions',
+                  detail: 'Precision agriculture using ML & IoT',
+                  color: 'from-green-500 to-green-600'
+                },
+                { 
+                  icon: <CurrencyDollarIcon className="w-6 h-6" />,
+                  title: 'FinTech Innovation',
+                  desc: 'Digital payment systems',
+                  detail: 'Blockchain for financial inclusion',
+                  color: 'from-blue-500 to-blue-600'
+                },
+                { 
+                  icon: <BookOpenIcon className="w-6 h-6" />,
+                  title: 'EdTech Platforms',
+                  desc: 'Learning management systems',
+                  detail: 'Interactive remote education',
+                  color: 'from-purple-500 to-purple-600'
+                }
+              ].map((project, index) => (
+                <motion.div
+                  key={project.title}
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  transition={{ delay: index * 0.1 }}
+                  viewport={{ once: true }}
+                  className="bg-white dark:bg-gray-800 rounded-xl p-6 hover:shadow-lg transition-all"
+                >
+                  <div className={`inline-flex p-3 rounded-lg bg-gradient-to-br ${project.color} text-white mb-4`}>
+                    {project.icon}
+                  </div>
+                  <h4 className="font-bold text-gray-900 dark:text-gray-100 mb-2">{project.title}</h4>
+                  <p className="text-sm text-gray-600 dark:text-gray-400 mb-2">{project.desc}</p>
+                  <p className="text-xs text-gray-500 dark:text-gray-500">{project.detail}</p>
+                </motion.div>
+              ))}
             </div>
           </motion.div>
         </div>
       </section>
 
       {/* Services Section */}
-      <section id="services" className="relative py-24 bg-white dark:bg-gray-900">
+      <section id="services" className="relative py-24 bg-gradient-to-br from-gray-50 to-white dark:from-gray-900 dark:to-black">
         <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           {/* Section Header */}
           <motion.div
@@ -610,52 +530,40 @@ export default function Home() {
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 mb-16">
             {[
               {
-                icon: '💻',
+                icon: <CodeBracketIcon className="w-8 h-8" />,
                 title: 'Software Development',
                 description: 'Custom web and mobile applications built with cutting-edge technologies',
-                features: ['Web Applications', 'Mobile Apps', 'Enterprise Software', 'API Development'],
-                gradient: 'from-blue-500 to-cyan-500',
-                iconBg: 'bg-blue-500'
+                features: ['Web Applications', 'Mobile Apps', 'Enterprise Software', 'API Development']
               },
               {
-                icon: '🤖',
+                icon: <ComputerDesktopIcon className="w-8 h-8" />,
                 title: 'AI & Machine Learning',
                 description: 'Intelligent systems that automate processes and deliver insights',
-                features: ['Predictive Analytics', 'Computer Vision', 'NLP Solutions', 'ML Models'],
-                gradient: 'from-green-500 to-emerald-500',
-                iconBg: 'bg-green-500'
+                features: ['Predictive Analytics', 'Computer Vision', 'NLP Solutions', 'ML Models']
               },
               {
-                icon: '📊',
+                icon: <CircleStackIcon className="w-8 h-8" />,
                 title: 'Data Engineering',
                 description: 'Scalable data infrastructure and analytics solutions',
-                features: ['Data Pipelines', 'Database Design', 'Data Warehousing', 'Analytics'],
-                gradient: 'from-purple-500 to-pink-500',
-                iconBg: 'bg-purple-500'
+                features: ['Data Pipelines', 'Database Design', 'Data Warehousing', 'Analytics']
               },
               {
-                icon: '☁️',
+                icon: <CloudIcon className="w-8 h-8" />,
                 title: 'Cloud Solutions',
                 description: 'Cloud-native architectures and DevOps excellence',
-                features: ['Cloud Migration', 'DevOps Setup', 'CI/CD Pipelines', 'Infrastructure'],
-                gradient: 'from-orange-500 to-amber-500',
-                iconBg: 'bg-orange-500'
+                features: ['Cloud Migration', 'DevOps Setup', 'CI/CD Pipelines', 'Infrastructure']
               },
               {
-                icon: '🎯',
+                icon: <ShieldCheckIcon className="w-8 h-8" />,
                 title: 'IT Consulting',
                 description: 'Strategic technology advisory and system integration',
-                features: ['Tech Strategy', 'System Integration', 'Digital Transformation', 'Architecture'],
-                gradient: 'from-red-500 to-rose-500',
-                iconBg: 'bg-red-500'
+                features: ['Tech Strategy', 'System Integration', 'Digital Transformation', 'Architecture']
               },
               {
-                icon: '🎓',
+                icon: <BookOpenIcon className="w-8 h-8" />,
                 title: 'Training & Workshops',
                 description: 'Hands-on technical training and capacity building programs',
-                features: ['Bootcamps', 'Corporate Training', 'Tech Workshops', 'Mentorship'],
-                gradient: 'from-indigo-500 to-blue-500',
-                iconBg: 'bg-indigo-500'
+                features: ['Bootcamps', 'Corporate Training', 'Tech Workshops', 'Mentorship']
               }
             ].map((service, index) => (
               <motion.div
@@ -664,11 +572,11 @@ export default function Home() {
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6, delay: index * 0.1 }}
                 viewport={{ once: true }}
-                className="group relative bg-gradient-to-br from-gray-50 to-white dark:from-gray-800 dark:to-gray-900 rounded-2xl p-8 shadow-lg hover:shadow-2xl transition-all duration-300 border border-gray-200 dark:border-gray-700"
+                className="group bg-white dark:bg-gray-900 border-2 border-gray-200 dark:border-gray-800 rounded-2xl p-8 hover:border-red-400 dark:hover:border-red-400 transition-all duration-300 hover:shadow-xl"
               >
                 {/* Icon */}
-                <div className={`${service.iconBg} w-16 h-16 rounded-xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300`}>
-                  <span className="text-3xl">{service.icon}</span>
+                <div className="w-16 h-16 bg-red-50 dark:bg-red-900/20 rounded-xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300 text-red-600 dark:text-red-400">
+                  {service.icon}
                 </div>
 
                 {/* Title */}
@@ -685,9 +593,7 @@ export default function Home() {
                 <ul className="space-y-2 mb-6">
                   {service.features.map((feature) => (
                     <li key={feature} className="flex items-center text-sm text-gray-700 dark:text-gray-300">
-                      <svg className="w-4 h-4 mr-2 text-green-500" fill="currentColor" viewBox="0 0 20 20">
-                        <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
-                      </svg>
+                      <CheckCircleIcon className="w-4 h-4 mr-2 text-green-500" />
                       {feature}
                     </li>
                   ))}
@@ -697,16 +603,10 @@ export default function Home() {
                 <motion.button
                   whileHover={{ x: 5 }}
                   onClick={() => scrollToSection('contact')}
-                  className="text-red-600 dark:text-red-400 font-semibold text-sm flex items-center group-hover:text-red-700 dark:group-hover:text-red-300 transition-colors"
+                  className="inline-block bg-red-50 dark:bg-red-900/20 text-red-600 dark:text-red-400 px-4 py-2 rounded-lg text-sm font-medium hover:bg-red-100 dark:hover:bg-red-900/30 transition-colors"
                 >
-                  Get Started
-                  <svg className="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                  </svg>
+                  Get Started →
                 </motion.button>
-
-                {/* Gradient Border on Hover */}
-                <div className={`absolute inset-0 rounded-2xl bg-gradient-to-r ${service.gradient} opacity-0 group-hover:opacity-10 transition-opacity duration-300`}></div>
               </motion.div>
             ))}
           </div>
@@ -717,14 +617,14 @@ export default function Home() {
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8 }}
             viewport={{ once: true }}
-            className="bg-gradient-to-r from-red-600 to-red-700 rounded-2xl p-10 shadow-xl text-white relative overflow-hidden"
+            className="bg-white dark:bg-gray-900 border-2 border-gray-200 dark:border-gray-800 rounded-2xl p-10 shadow-xl relative overflow-hidden"
           >
             {/* Background Pattern */}
-            <div className="absolute inset-0 opacity-10">
+            <div className="absolute inset-0 opacity-5">
               <svg className="w-full h-full" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
                 <defs>
                   <pattern id="rd-grid" width="10" height="10" patternUnits="userSpaceOnUse">
-                    <circle cx="5" cy="5" r="1" fill="white"/>
+                    <circle cx="5" cy="5" r="1" fill="currentColor" className="text-red-500"/>
                   </pattern>
                 </defs>
                 <rect width="100%" height="100%" fill="url(#rd-grid)" />
@@ -732,24 +632,39 @@ export default function Home() {
             </div>
 
             <div className="relative z-10 text-center">
-              <div className="inline-block bg-white/20 rounded-full p-4 mb-4">
-                <span className="text-4xl">🔬</span>
+              <div className="inline-block bg-red-50 dark:bg-red-900/20 rounded-full p-4 mb-4">
+                <BeakerIcon className="w-10 h-10 text-red-600 dark:text-red-400" />
               </div>
-              <h3 className="text-3xl font-bold mb-4">Research & Development</h3>
-              <p className="text-red-100 text-lg mb-8 max-w-3xl mx-auto">
+              <h3 className="text-3xl font-bold text-gray-900 dark:text-gray-100 mb-4">Research & Development</h3>
+              <p className="text-gray-600 dark:text-gray-400 text-lg mb-8 max-w-3xl mx-auto">
                 Pioneering innovative solutions in AI for Agriculture, FinTech Innovation, and EdTech Platforms
               </p>
               
               <div className="grid md:grid-cols-3 gap-6 max-w-4xl mx-auto">
                 {[
-                  { icon: '🌾', title: 'AI for Agriculture', desc: 'Smart farming solutions' },
-                  { icon: '💰', title: 'FinTech Innovation', desc: 'Digital payment systems' },
-                  { icon: '📚', title: 'EdTech Platforms', desc: 'Learning management systems' }
+                  { 
+                    icon: <GlobeAltIcon className="w-8 h-8" />,
+                    color: 'text-green-600 dark:text-green-400',
+                    title: 'AI for Agriculture', 
+                    desc: 'Smart farming solutions' 
+                  },
+                  { 
+                    icon: <CurrencyDollarIcon className="w-8 h-8" />,
+                    color: 'text-blue-600 dark:text-blue-400',
+                    title: 'FinTech Innovation', 
+                    desc: 'Digital payment systems' 
+                  },
+                  { 
+                    icon: <BookOpenIcon className="w-8 h-8" />,
+                    color: 'text-purple-600 dark:text-purple-400',
+                    title: 'EdTech Platforms', 
+                    desc: 'Learning management systems' 
+                  }
                 ].map((project) => (
-                  <div key={project.title} className="bg-white/10 backdrop-blur-sm rounded-xl p-6">
-                    <div className="text-3xl mb-3">{project.icon}</div>
-                    <h4 className="font-bold mb-2">{project.title}</h4>
-                    <p className="text-sm text-red-100">{project.desc}</p>
+                  <div key={project.title} className="bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-xl p-6 hover:border-red-400 dark:hover:border-red-400 transition-all">
+                    <div className={`flex justify-center mb-3 ${project.color}`}>{project.icon}</div>
+                    <h4 className="font-bold text-gray-900 dark:text-gray-100 mb-2">{project.title}</h4>
+                    <p className="text-sm text-gray-600 dark:text-gray-400">{project.desc}</p>
                   </div>
                 ))}
               </div>
@@ -799,10 +714,10 @@ export default function Home() {
               className="space-y-8"
             >
               {/* Company Details Card */}
-              <div className="bg-white dark:bg-gray-800 rounded-2xl p-8 shadow-lg border border-gray-200 dark:border-gray-700">
+              <div className="bg-white dark:bg-gray-900 border-2 border-gray-200 dark:border-gray-800 rounded-2xl p-8 hover:border-red-400 dark:hover:border-red-400 transition-all">
                 <div className="flex items-center mb-6">
-                  <div className="bg-red-500 rounded-xl p-3 mr-4">
-                    <span className="text-2xl">🏢</span>
+                  <div className="bg-red-50 dark:bg-red-900/20 rounded-xl p-3 mr-4">
+                    <BuildingOfficeIcon className="w-6 h-6 text-red-600 dark:text-red-400" />
                   </div>
                   <div>
                     <h3 className="text-2xl font-bold text-gray-900 dark:text-gray-100">Company Details</h3>
@@ -820,12 +735,12 @@ export default function Home() {
               </div>
 
               {/* Why Choose AETech Card */}
-              <div className="bg-gradient-to-br from-red-500 to-red-600 rounded-2xl p-8 shadow-lg text-white">
+              <div className="bg-white dark:bg-gray-900 border-2 border-gray-200 dark:border-gray-800 rounded-2xl p-8 hover:border-red-400 dark:hover:border-red-400 transition-all">
                 <div className="flex items-center mb-6">
-                  <div className="bg-white/20 rounded-xl p-3 mr-4">
-                    <span className="text-2xl">✨</span>
+                  <div className="bg-red-50 dark:bg-red-900/20 rounded-xl p-3 mr-4">
+                    <SparklesIcon className="w-6 h-6 text-red-600 dark:text-red-400" />
                   </div>
-                  <h3 className="text-2xl font-bold">Why Choose AETech?</h3>
+                  <h3 className="text-2xl font-bold text-gray-900 dark:text-gray-100">Why Choose AETech?</h3>
                 </div>
                 <ul className="space-y-3">
                   {[
@@ -835,10 +750,8 @@ export default function Home() {
                     'End-to-end project support',
                     'Sustainable and scalable solutions'
                   ].map((item) => (
-                    <li key={item} className="flex items-start">
-                      <svg className="w-5 h-5 mr-3 mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
-                        <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
-                      </svg>
+                    <li key={item} className="flex items-start text-gray-700 dark:text-gray-300">
+                      <CheckCircleIcon className="w-5 h-5 mr-3 mt-0.5 flex-shrink-0 text-red-600 dark:text-red-400" />
                       <span>{item}</span>
                     </li>
                   ))}
@@ -846,7 +759,7 @@ export default function Home() {
               </div>
 
               {/* Quick Contact Info */}
-              <div className="bg-white dark:bg-gray-800 rounded-2xl p-8 shadow-lg border border-gray-200 dark:border-gray-700">
+              <div className="bg-white dark:bg-gray-900 border-2 border-gray-200 dark:border-gray-800 rounded-2xl p-8 hover:border-red-400 dark:hover:border-red-400 transition-all">
                 <h4 className="text-xl font-bold text-gray-900 dark:text-gray-100 mb-6">Quick Contact</h4>
                 <div className="space-y-4">
                   <div className="flex items-center">
@@ -890,9 +803,6 @@ export default function Home() {
       </section>
       {/* Sponsors Section */}
       <SponsorsSection />
-
-      {/* Footer */}
-      <Footer />
     </div>
   );
 }

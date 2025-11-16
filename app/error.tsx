@@ -4,7 +4,6 @@ import { useEffect } from 'react'
 import Link from 'next/link'
 import { motion } from 'framer-motion'
 import { ExclamationTriangleIcon, ArrowPathIcon, HomeIcon } from '@heroicons/react/24/outline'
-import Navigation from './components/Navigation'
 import FloatingParticles from '@/components/FloatingParticles'
 
 export default function Error({
@@ -21,10 +20,8 @@ export default function Error({
 
   return (
     <div className="min-h-screen bg-white dark:bg-black text-black dark:text-white">
-      <Navigation />
-      
       {/* Error Page Content */}
-      <div className="relative min-h-screen flex items-center justify-center overflow-hidden">
+      <div className="relative min-h-screen flex items-center justify-center overflow-hidden pt-20">
         {/* Background Effects */}
         <div className="absolute inset-0">
           <FloatingParticles count={15} className="text-orange-500/20" />

@@ -3,15 +3,17 @@
 import { useState, useEffect } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
-import { usePathname } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
 import { motion, AnimatePresence } from 'framer-motion';
 import ThemeToggle from '../../components/ThemeToggle';
+import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline';
 
 export default function Navigation() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [activeSection, setActiveSection] = useState('home');
   const pathname = usePathname();
+  const router = useRouter();
 
   useEffect(() => {
     // Set active section based on current pathname
@@ -51,9 +53,15 @@ export default function Navigation() {
   }, [pathname]);
 
   const scrollToSection = (sectionId: string) => {
-    // If we're not on the home page and trying to scroll to a section, redirect to home first
+    // If we're not on the home page and trying to scroll to a section, navigate to home first
     if (pathname !== '/' && (sectionId === 'home' || sectionId === 'services')) {
-      window.location.href = `/#${sectionId}`;
+      router.push(`/#${sectionId}`);
+      setTimeout(() => {
+        const element = document.getElementById(sectionId);
+        if (element) {
+          element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+      }, 100);
       return;
     }
     
@@ -83,44 +91,51 @@ export default function Navigation() {
     <motion.nav 
       initial={{ y: -100 }}
       animate={{ y: 0 }}
-      className={`fixed top-0 w-full z-50 transition-all duration-500 ${
+      className={`fixed top-0 w-full z-50 transition-all duration-300 ${
         isScrolled 
-          ? 'bg-white/95 dark:bg-black/95 backdrop-blur-md shadow-lg border-b border-gray-200/20 dark:border-gray-700/20' 
-          : 'bg-transparent'
+          ? 'bg-white/95 dark:bg-gray-900/95 backdrop-blur-xl shadow-lg border-b border-gray-200/50 dark:border-gray-700/50' 
+          : 'bg-white/90 dark:bg-gray-900/90 backdrop-blur-md border-b border-gray-200/30 dark:border-gray-700/30'
       }`}
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex justify-between items-center h-16">
+        <div className="flex justify-between items-center h-20">
           <div className="flex items-center">
-            <Image
-              src="/assets/Dark transparent logo.png"
-              alt="AETech Logo"
-              width={120}
-              height={40}
-              className="h-8 w-auto dark:hidden"
-            />
-            <Image
-              src="/website-assets/logo-dark-500.png"
-              alt="AETech Logo"
-              width={120}
-              height={40}
-              className="h-8 w-auto hidden dark:block"
-            />
+            <Link href="/">
+              <Image
+                src="/assets/Dark transparent logo.png"
+                alt="AETech Logo"
+                width={140}
+                height={45}
+                className="h-10 w-auto dark:hidden cursor-pointer transition-transform hover:scale-105"
+              />
+              <Image
+                src="/website-assets/logo-dark-500.png"
+                alt="AETech Logo"
+                width={140}
+                height={45}
+                className="h-10 w-auto hidden dark:block cursor-pointer transition-transform hover:scale-105"
+              />
+            </Link>
           </div>
           
           {/* Desktop Navigation */}
-          <div className="hidden md:flex items-center space-x-6">
-            <div className="flex space-x-8">
+          <div className="hidden md:flex items-center space-x-2">
+            <div className="flex items-center space-x-1 bg-gray-100/50 dark:bg-gray-800/50 rounded-full p-1">
               {navItems.map((item) => {
                 if (item.type === 'link' && item.href) {
                   return (
                     <Link key={item.id} href={item.href}>
-                      <motion.span
-                        whileHover={{ y: -2 }}
-                        className="font-medium transition-colors duration-300 hover:text-red-600 dark:hover:text-red-400 cursor-pointer"
+                      <motion.div
+                        whileHover={{ scale: 1.05 }}
+                        whileTap={{ scale: 0.95 }}
+                        className={`px-4 py-2 rounded-full font-medium transition-all cursor-pointer ${
+                          pathname === item.href
+                            ? 'bg-red-500 text-white shadow-lg'
+                            : 'text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700'
+                        }`}
                       >
                         {item.label}
-                      </motion.span>
+                      </motion.div>
                     </Link>
                   );
                 }
@@ -128,31 +143,25 @@ export default function Navigation() {
                 return (
                   <motion.button
                     key={item.id}
-                    whileHover={{ y: -2 }}
+                    whileHover={{ scale: 1.05 }}
                     whileTap={{ scale: 0.95 }}
                     onClick={() => scrollToSection(item.id)}
-                    className={`relative font-medium transition-colors duration-300 ${
+                    className={`px-4 py-2 rounded-full font-medium transition-all ${
                       activeSection === item.id
-                        ? 'text-red-600 dark:text-red-400'
-                        : 'hover:text-red-600 dark:hover:text-red-400'
+                        ? 'bg-red-500 text-white shadow-lg'
+                        : 'text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700'
                     }`}
                   >
                     {item.label}
-                    {activeSection === item.id && (
-                      <motion.div
-                        layoutId="activeIndicator"
-                        className="absolute -bottom-1 left-0 right-0 h-0.5 bg-red-600 dark:bg-red-400"
-                        initial={false}
-                        transition={{ type: "spring", stiffness: 400, damping: 30 }}
-                      />
-                    )}
                   </motion.button>
                 );
               })}
             </div>
             
             {/* Theme Toggle */}
-            <ThemeToggle />
+            <div className="ml-4">
+              <ThemeToggle />
+            </div>
           </div>
 
           {/* Mobile menu button and theme toggle */}
@@ -161,22 +170,14 @@ export default function Navigation() {
             <motion.button
               whileTap={{ scale: 0.95 }}
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-              className="text-gray-600 dark:text-gray-300 hover:text-red-600 dark:hover:text-red-400 transition-colors"
+              className="p-2 rounded-lg text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
+              aria-label="Toggle menu"
             >
-              <motion.svg 
-                className="h-6 w-6" 
-                fill="none" 
-                viewBox="0 0 24 24" 
-                stroke="currentColor"
-                animate={{ rotate: isMobileMenuOpen ? 90 : 0 }}
-                transition={{ duration: 0.2 }}
-              >
-                {isMobileMenuOpen ? (
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-                ) : (
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
-                )}
-              </motion.svg>
+              {isMobileMenuOpen ? (
+                <XMarkIcon className="h-6 w-6" />
+              ) : (
+                <Bars3Icon className="h-6 w-6" />
+              )}
             </motion.button>
           </div>
         </div>
@@ -188,23 +189,27 @@ export default function Navigation() {
               initial={{ opacity: 0, height: 0 }}
               animate={{ opacity: 1, height: 'auto' }}
               exit={{ opacity: 0, height: 0 }}
-              transition={{ duration: 0.3 }}
-              className="md:hidden overflow-hidden"
+              transition={{ duration: 0.2 }}
+              className="md:hidden overflow-hidden border-t border-gray-200 dark:border-gray-700"
             >
-              <div className="px-2 pt-2 pb-3 space-y-1 bg-white dark:bg-black border-t border-gray-200 dark:border-gray-700">
+              <div className="px-4 py-6 space-y-3 bg-white/95 dark:bg-gray-900/95 backdrop-blur-xl">
                 {navItems.map((item, index) => {
                   if (item.type === 'link' && item.href) {
                     return (
                       <Link key={item.id} href={item.href}>
-                        <motion.span
+                        <motion.div
                           initial={{ opacity: 0, x: -20 }}
                           animate={{ opacity: 1, x: 0 }}
                           transition={{ delay: index * 0.1 }}
-                          className="block w-full text-left px-3 py-2 text-base font-medium transition-colors hover:text-red-600 dark:hover:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/20 cursor-pointer"
+                          className={`block w-full text-left px-5 py-4 rounded-xl text-base font-medium transition-all cursor-pointer ${
+                            pathname === item.href
+                              ? 'bg-red-500 text-white shadow-lg'
+                              : 'text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 active:scale-98'
+                          }`}
                           onClick={() => setIsMobileMenuOpen(false)}
                         >
                           {item.label}
-                        </motion.span>
+                        </motion.div>
                       </Link>
                     );
                   }
@@ -215,13 +220,12 @@ export default function Navigation() {
                       initial={{ opacity: 0, x: -20 }}
                       animate={{ opacity: 1, x: 0 }}
                       transition={{ delay: index * 0.1 }}
-                      whileHover={{ x: 5 }}
-                      whileTap={{ scale: 0.95 }}
+                      whileTap={{ scale: 0.98 }}
                       onClick={() => handleNavClick(item)}
-                      className={`block w-full text-left px-3 py-2 text-base font-medium transition-colors ${
+                      className={`block w-full text-left px-5 py-4 rounded-xl text-base font-medium transition-all ${
                         activeSection === item.id
-                          ? 'text-red-600 dark:text-red-400 bg-red-50 dark:bg-red-900/20'
-                          : 'hover:text-red-600 dark:hover:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/20'
+                          ? 'bg-red-500 text-white shadow-lg'
+                          : 'text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800'
                       }`}
                     >
                       {item.label}

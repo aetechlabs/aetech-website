@@ -3,14 +3,11 @@
 import Link from 'next/link'
 import { motion } from 'framer-motion'
 import { HomeIcon, ArrowLeftIcon } from '@heroicons/react/24/outline'
-import Navigation from './components/Navigation'
 import FloatingParticles from '@/components/FloatingParticles'
 
 export default function NotFound() {
   return (
-    <div className="min-h-screen bg-white dark:bg-black text-black dark:text-white">
-      <Navigation />
-      
+    <div className="min-h-screen bg-white dark:bg-black text-black dark:text-white pt-20">
       {/* 404 Page Content */}
       <div className="relative min-h-screen flex items-center justify-center overflow-hidden">
         {/* Background Effects */}

@@ -3,14 +3,11 @@
 import Link from 'next/link'
 import { motion } from 'framer-motion'
 import { ArrowPathIcon, HomeIcon, ClockIcon } from '@heroicons/react/24/outline'
-import Navigation from './components/Navigation'
 import FloatingParticles from '@/components/FloatingParticles'
 
 export default function Loading() {
   return (
-    <div className="min-h-screen bg-white dark:bg-black text-black dark:text-white">
-      <Navigation />
-      
+    <div className="min-h-screen bg-white dark:bg-black text-black dark:text-white pt-20">
       {/* Loading Page Content */}
       <div className="relative min-h-screen flex items-center justify-center overflow-hidden">
         {/* Background Effects */}
@@ -105,7 +102,7 @@ export default function Loading() {
               </div>
               
               <div className="bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm p-6 rounded-lg">
-                <div className="text-2xl mb-3">🚀</div>
+                <HomeIcon className="w-8 h-8 text-blue-500 mx-auto mb-3" />
                 <h3 className="font-semibold mb-2">Modern Tech</h3>
                 <p className="text-sm text-gray-600 dark:text-gray-400">
                   Built with cutting-edge technology
@@ -113,7 +110,7 @@ export default function Loading() {
               </div>
               
               <div className="bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm p-6 rounded-lg">
-                <div className="text-2xl mb-3">✨</div>
+                <ArrowPathIcon className="w-8 h-8 text-blue-500 mx-auto mb-3" />
                 <h3 className="font-semibold mb-2">Great UX</h3>
                 <p className="text-sm text-gray-600 dark:text-gray-400">
                   Designed for the best user experience

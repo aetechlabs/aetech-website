@@ -4,8 +4,6 @@ import { useState } from 'react';
 import { motion } from 'framer-motion';
 import Image from 'next/image';
 import Link from 'next/link';
-import BlogHeader from '../components/BlogHeader';
-import Footer from '@/components/Footer';
 import { 
   MapPinIcon,
   PhoneIcon,
@@ -137,11 +135,8 @@ export default function ContactPage() {
 
   return (
     <div className="min-h-screen bg-white dark:bg-gray-900">
-      {/* Header Navigation */}
-      <BlogHeader currentPage="contact" />
-
       {/* Hero Section */}
-      <section className="relative py-20 lg:py-32 overflow-hidden">
+      <section className="relative pt-20 lg:pt-32 pb-20 overflow-hidden">
         {/* Background Image */}
         <div className="absolute inset-0 z-0">
           <Image
@@ -203,10 +198,12 @@ export default function ContactPage() {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6, delay: 0.8 + index * 0.1 }}
-                className="bg-white dark:bg-gray-800 rounded-2xl p-6 shadow-xl border border-gray-100 dark:border-gray-700 text-center group hover:shadow-2xl transition-all duration-300"
+                className="bg-white dark:bg-gray-800 rounded-2xl p-6 shadow-lg border-2 border-gray-200 dark:border-gray-700 hover:border-red-400 dark:hover:border-red-400 text-center group transition-all duration-300"
               >
-                <div className="text-red-400 dark:text-red-300 mb-4 flex justify-center group-hover:scale-110 transition-transform duration-300">
-                  {info.icon}
+                <div className="bg-red-50 dark:bg-red-900/20 rounded-xl p-3 mb-4 mx-auto w-fit group-hover:scale-110 transition-transform duration-300">
+                  <div className="text-red-600 dark:text-red-400">
+                    {info.icon}
+                  </div>
                 </div>
                 <h3 className="text-lg font-bold text-gray-900 dark:text-white mb-3">
                   {info.title}
@@ -230,9 +227,9 @@ export default function ContactPage() {
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.6, delay: 1.2 }}
           >
-            <div className="bg-white dark:bg-gray-800 rounded-2xl p-8 shadow-xl border border-gray-100 dark:border-gray-700">
+            <div className="bg-white dark:bg-gray-800 rounded-2xl p-8 shadow-lg border-2 border-gray-200 dark:border-gray-700 hover:border-red-400 dark:hover:border-red-400 transition-all">
               <h2 className="text-3xl font-bold text-gray-900 dark:text-white mb-8">
-                Start Your Project
+                Start Your <span className="bg-gradient-to-r from-red-500 to-red-600 bg-clip-text text-transparent">Project</span>
               </h2>
               
               {submitStatus === 'success' && (
@@ -444,7 +441,7 @@ export default function ContactPage() {
                 <button
                   type="submit"
                   disabled={isSubmitting}
-                  className="w-full bg-red-400 hover:bg-red-400 disabled:bg-gray-400 text-white px-8 py-4 rounded-xl font-medium transition-all duration-200 transform hover:scale-[1.02] disabled:hover:scale-100 shadow-lg"
+                  className="w-full bg-gradient-to-r from-red-500 to-red-600 hover:from-red-600 hover:to-red-700 disabled:from-gray-400 disabled:to-gray-500 text-white px-8 py-4 rounded-xl font-semibold transition-all duration-200 transform hover:scale-[1.02] disabled:hover:scale-100 shadow-lg hover:shadow-xl"
                 >
                   {isSubmitting ? 'Sending Message...' : 'Send Message'}
                 </button>
@@ -460,15 +457,19 @@ export default function ContactPage() {
           >
             <div className="space-y-8">
               {/* Services */}
-              <div className="bg-white dark:bg-gray-800 rounded-2xl p-8 shadow-xl border border-gray-100 dark:border-gray-700">
-                <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-6 flex items-center">
-                  <BuildingOfficeIcon className="w-6 h-6 text-red-400 dark:text-red-400 mr-3" />
-                  Our Services
-                </h3>
+              <div className="bg-white dark:bg-gray-800 rounded-2xl p-8 shadow-lg border-2 border-gray-200 dark:border-gray-700 hover:border-red-400 dark:hover:border-red-400 transition-all">
+                <div className="flex items-center mb-6">
+                  <div className="bg-red-50 dark:bg-red-900/20 rounded-xl p-3 mr-4">
+                    <BuildingOfficeIcon className="w-6 h-6 text-red-600 dark:text-red-400" />
+                  </div>
+                  <h3 className="text-2xl font-bold text-gray-900 dark:text-white">
+                    Our Services
+                  </h3>
+                </div>
                 <div className="grid grid-cols-2 gap-3">
                   {services.map((service, index) => (
                     <div key={index} className="flex items-center space-x-2">
-                      <div className="w-2 h-2 bg-red-400 dark:bg-red-400 rounded-full"></div>
+                      <div className="w-2 h-2 bg-red-500 rounded-full"></div>
                       <span className="text-sm text-gray-600 dark:text-gray-300">{service}</span>
                     </div>
                   ))}
@@ -476,11 +477,15 @@ export default function ContactPage() {
               </div>
 
               {/* Why Choose Us */}
-              <div className="bg-white dark:bg-gray-800 rounded-2xl p-8 shadow-xl border border-gray-100 dark:border-gray-700">
-                <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-6 flex items-center">
-                  <GlobeAltIcon className="w-6 h-6 text-red-400 dark:text-red-400 mr-3" />
-                  Why Choose AETech Labs?
-                </h3>
+              <div className="bg-white dark:bg-gray-800 rounded-2xl p-8 shadow-lg border-2 border-gray-200 dark:border-gray-700 hover:border-red-400 dark:hover:border-red-400 transition-all">
+                <div className="flex items-center mb-6">
+                  <div className="bg-red-50 dark:bg-red-900/20 rounded-xl p-3 mr-4">
+                    <GlobeAltIcon className="w-6 h-6 text-red-600 dark:text-red-400" />
+                  </div>
+                  <h3 className="text-2xl font-bold text-gray-900 dark:text-white">
+                    Why Choose AETech Labs?
+                  </h3>
+                </div>
                 <ul className="space-y-4">
                   <li className="flex items-start space-x-3">
                     <CheckCircleIcon className="w-5 h-5 text-green-500 mt-0.5 flex-shrink-0" />
@@ -506,22 +511,22 @@ export default function ContactPage() {
               </div>
 
               {/* Quick Links */}
-              <div className="bg-red-400 rounded-2xl p-8 text-white">
+              <div className="bg-gradient-to-br from-red-500 to-red-600 rounded-2xl p-8 text-white shadow-lg">
                 <h3 className="text-2xl font-bold mb-6">Ready to Get Started?</h3>
                 <p className="mb-6 opacity-90">
                   Explore our work and learn more about how we can help your business grow.
                 </p>
                 <div className="space-y-3">
                   <Link 
-                    href="/blog"
-                    className="flex items-center space-x-2 text-white hover:text-red-100 transition-colors"
+                    href="/#services"
+                    className="flex items-center space-x-2 text-white hover:text-gray-100 transition-colors"
                   >
                     <TagIcon className="w-4 h-4" />
-                    <span>Read Our Blog</span>
+                    <span>View Our Services</span>
                   </Link>
                   <Link 
                     href="/about"
-                    className="flex items-center space-x-2 text-white hover:text-red-100 transition-colors"
+                    className="flex items-center space-x-2 text-white hover:text-gray-100 transition-colors"
                   >
                     <UsersIcon className="w-4 h-4" />
                     <span>About Our Team</span>
@@ -532,8 +537,6 @@ export default function ContactPage() {
           </motion.section>
         </div>
       </div>
-
-      <Footer />
     </div>
   );
 }

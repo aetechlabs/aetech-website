@@ -3,45 +3,10 @@
 import { motion } from 'framer-motion';
 import Link from 'next/link';
 import Image from 'next/image';
-import Footer from '@/components/Footer';
 
 export default function PrivacyPolicy() {
   return (
-    <div className="min-h-screen bg-white dark:bg-gray-900">
-      {/* Simple Header */}
-      <header className="bg-white/80 dark:bg-black/80 backdrop-blur-md border-b border-gray-200 dark:border-gray-800 sticky top-0 z-50">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex items-center justify-between h-16">
-            <Link href="/" className="flex items-center space-x-3 group">
-              <Image
-                src="/assets/Dark transparent logo.png"
-                alt="AETech Research Labs Limited"
-                width={120}
-                height={40}
-                className="h-8 w-auto dark:hidden group-hover:scale-110 transition-transform duration-200"
-              />
-              <Image
-                src="/assets/Light transparent logo.png"
-                alt="AETech Research Labs Limited"
-                width={120}
-                height={40}
-                className="h-8 w-auto hidden dark:block group-hover:scale-110 transition-transform duration-200"
-              />
-              <span className="text-xl font-bold text-gray-900 dark:text-white group-hover:text-red-300 dark:group-hover:text-red-300 transition-colors">
-                AETech Labs
-              </span>
-            </Link>
-            <nav className="flex items-center space-x-6">
-              <Link href="/" className="text-gray-600 dark:text-gray-300 hover:text-red-300 dark:hover:text-red-300 transition-colors">
-                Home
-              </Link>
-              <Link href="/contact" className="text-gray-600 dark:text-gray-300 hover:text-red-300 dark:hover:text-red-300 transition-colors">
-                Contact
-              </Link>
-            </nav>
-          </div>
-        </div>
-      </header>
+    <div className="min-h-screen bg-white dark:bg-gray-900 pt-20">
       
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
         <motion.div
@@ -257,8 +222,6 @@ export default function PrivacyPolicy() {
           </div>
         </motion.div>
       </div>
-
-      <Footer />
     </div>
   );
 }
