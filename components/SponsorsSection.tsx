@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react'
 import { motion } from 'framer-motion'
+import api from '@/lib/api'
 
 interface Sponsor {
   id: string
@@ -21,8 +22,8 @@ export default function SponsorsSection() {
   useEffect(() => {
     const fetchSponsors = async () => {
       try {
-        const response = await fetch('/api/sponsors?public=true')
-        const data = await response.json()
+        const response = await api.get('/sponsors?public=true')
+        const data = response.data
         setSponsors(data.sponsors || [])
       } catch (error) {
         console.error('Error fetching sponsors:', error)

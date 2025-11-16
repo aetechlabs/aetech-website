@@ -1,9 +1,9 @@
 /**
  * Unified API Client for Main Website
- * Points to the central API at /api or production URL
+ * Points to the central unified API on port 3000
  */
 
-import axios from 'axios';
+import axios, { InternalAxiosRequestConfig, AxiosError } from 'axios';
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3000/v1/api';
 
@@ -17,12 +17,17 @@ const api = axios.create({
 
 // Request interceptor to add auth token if available
 api.interceptors.request.use(
-  (config) => {
-    // Token will be sent via cookies (httpOnly)
-    // No need to manually add Authorization header
+  (config: InternalAxiosRequestConfig) => {
+    // Try to get token from localStorage (for client-side)
+    if (typeof window !== 'undefined') {
+      const token = localStorage.getItem('token');
+      if (token) {
+        config.headers.Authorization = `Bearer ${token}`;
+      }
+    }
     return config;
   },
-  (error) => {
+  (error: AxiosError) => {
     return Promise.reject(error);
   }
 );
@@ -30,7 +35,7 @@ api.interceptors.request.use(
 // Response interceptor for error handling
 api.interceptors.response.use(
   (response) => response,
-  (error) => {
+  (error: AxiosError) => {
     if (error.response?.status === 401) {
       // Redirect to login if unauthorized
       if (typeof window !== 'undefined') {
