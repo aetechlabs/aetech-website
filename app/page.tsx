@@ -770,7 +770,7 @@ export default function Home() {
                     </div>
                     <div>
                       <p className="text-sm text-gray-600 dark:text-gray-400">Email Us</p>
-                      <p className="font-semibold text-gray-900 dark:text-gray-100">info@aetech.com</p>
+                      <p className="font-semibold text-gray-900 dark:text-gray-100">info@aetechlabs.com</p>
                     </div>
                   </div>
                   <div className="flex items-center">
