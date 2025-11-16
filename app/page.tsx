@@ -23,7 +23,7 @@ export default function Home() {
 
       {/* Hero Section */}
       <section id="home" className="relative pt-16 min-h-screen flex items-center overflow-hidden">
-        {/* Video Background */}
+        {/* Video Background with Enhanced Overlay */}
         <div className="absolute inset-0 z-0">
           <video
             autoPlay
@@ -34,13 +34,13 @@ export default function Home() {
           >
             <source src="/videos/person-typing-keyboard.mp4" type="video/mp4" />
           </video>
-          {/* Dark overlay for better text readability */}
-          <div className="absolute inset-0 bg-black/60 dark:bg-black/70"></div>
+          {/* Gradient overlay for modern look */}
+          <div className="absolute inset-0 bg-gradient-to-br from-black/70 via-black/60 to-red-900/50 dark:from-black/80 dark:via-black/70 dark:to-red-900/60"></div>
           {/* Floating Particles */}
           <FloatingParticles count={30} className="text-white/30" />
         </div>
         
-        {/* Content */}
+        {/* Content with Modern Design */}
         <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
           <motion.div 
             initial={{ opacity: 0, y: 50 }}
@@ -48,66 +48,102 @@ export default function Home() {
             transition={{ duration: 0.8 }}
             className="text-center"
           >
+            {/* Logo with Glow Effect */}
             <motion.div 
               initial={{ opacity: 0, scale: 0.8 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{ duration: 0.6, delay: 0.2 }}
               className="mb-8"
             >
-              <Image
-                src="/assets/Light transparent logo.png"
-                alt="AETech Research Labs Limited"
-                width={400}
-                height={120}
-                className="mx-auto h-20 w-auto"
-              />
+              <div className="relative inline-block">
+                <div className="absolute inset-0 blur-2xl bg-red-400/30 rounded-full"></div>
+                <Image
+                  src="/assets/Light transparent logo.png"
+                  alt="AETech Research Labs Limited"
+                  width={400}
+                  height={120}
+                  className="relative mx-auto h-24 w-auto"
+                />
+              </div>
             </motion.div>
+
+            {/* Modern Hero Title */}
             <motion.h1 
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.4 }}
-              className="text-4xl md:text-6xl font-bold mb-6 text-white"
+              className="text-5xl md:text-7xl font-extrabold mb-6 text-white leading-tight"
             >
-              <span className="text-red-400">AETech</span> Research Labs Limited
+              Engineering Tomorrow&apos;s
+              <br />
+              <span className="bg-gradient-to-r from-red-400 via-red-500 to-red-600 bg-clip-text text-transparent">
+                Solutions Today
+              </span>
             </motion.h1>
+
+            {/* Subtitle with Better Typography */}
             <motion.p 
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.6 }}
-              className="text-xl md:text-2xl mb-8 text-gray-200 max-w-4xl mx-auto"
+              className="text-xl md:text-2xl mb-12 text-gray-100 max-w-4xl mx-auto leading-relaxed font-light"
             >
-                Engineering Tomorrow's Solutions
+              Innovation-driven technology company delivering advanced solutions in 
+              <span className="text-red-300 font-medium"> AI</span>,
+              <span className="text-red-300 font-medium"> Software Engineering</span>, and
+              <span className="text-red-300 font-medium"> Data Systems</span>
             </motion.p>
-            <motion.p 
-              initial={{ opacity: 0, y: 30 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.8 }}
-              className="text-lg mb-12 text-gray-300 max-w-4xl mx-auto"
-            >
-              Innovation-driven technology company committed to researching, developing, and deploying advanced solutions across software engineering, artificial intelligence, data systems, and integrated technologies.
-            </motion.p>
+
+            {/* Modern CTA Buttons */}
             <motion.div 
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 1.0 }}
-              className="flex gap-4 justify-center"
+              transition={{ duration: 0.6, delay: 0.8 }}
+              className="flex flex-col sm:flex-row gap-4 justify-center items-center"
             >
               <motion.button
                 whileHover={{ scale: 1.05, y: -2 }}
                 whileTap={{ scale: 0.95 }}
                 onClick={() => scrollToSection('services')}
-                className="bg-red-400 hover:bg-red-500 text-white px-8 py-3 rounded-lg font-medium transition-all duration-300 shadow-lg hover:shadow-xl"
+                className="group relative bg-gradient-to-r from-red-500 to-red-600 hover:from-red-600 hover:to-red-700 text-white px-10 py-4 rounded-xl font-semibold transition-all duration-300 shadow-xl hover:shadow-2xl w-full sm:w-auto"
               >
-                Our Services
+                <span className="relative z-10">Explore Our Services</span>
+                <div className="absolute inset-0 rounded-xl bg-white/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
               </motion.button>
               <motion.button
                 whileHover={{ scale: 1.05, y: -2 }}
                 whileTap={{ scale: 0.95 }}
                 onClick={() => scrollToSection('contact')}
-                className="border border-red-400 text-red-400 hover:bg-red-400/20 px-8 py-3 rounded-lg font-medium transition-all duration-300 backdrop-blur-sm"
+                className="border-2 border-white/30 hover:border-white/60 text-white hover:bg-white/10 px-10 py-4 rounded-xl font-semibold transition-all duration-300 backdrop-blur-sm w-full sm:w-auto"
               >
                 Get in Touch
               </motion.button>
+            </motion.div>
+
+            {/* Stats/Highlights */}
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 1.0 }}
+              className="mt-16 grid grid-cols-2 md:grid-cols-4 gap-6 max-w-4xl mx-auto"
+            >
+              {[
+                { label: 'Solutions Delivered', value: '50+' },
+                { label: 'Enterprise Clients', value: '20+' },
+                { label: 'Research Projects', value: '15+' },
+                { label: 'Innovation Awards', value: '5+' }
+              ].map((stat, index) => (
+                <motion.div
+                  key={stat.label}
+                  initial={{ opacity: 0, scale: 0.8 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  transition={{ duration: 0.4, delay: 1.2 + index * 0.1 }}
+                  className="bg-white/10 backdrop-blur-md rounded-lg p-4 border border-white/20"
+                >
+                  <div className="text-3xl font-bold text-red-400 mb-1">{stat.value}</div>
+                  <div className="text-sm text-gray-300">{stat.label}</div>
+                </motion.div>
+              ))}
             </motion.div>
           </motion.div>
         </div>
@@ -552,20 +588,192 @@ export default function Home() {
       </section>
 
       {/* Services Section */}
-      <section id="services" className="relative py-20 bg-white dark:bg-gray-900">
-        {/* Subtle Background Pattern */}
+      <section id="services" className="relative py-24 bg-white dark:bg-gray-900">
+        <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          {/* Section Header */}
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8 }}
+            viewport={{ once: true }}
+            className="text-center mb-20"
+          >
+            <h2 className="text-5xl font-bold text-gray-900 dark:text-gray-100 mb-6">
+              Our <span className="bg-gradient-to-r from-red-500 to-red-600 bg-clip-text text-transparent">Services</span>
+            </h2>
+            <p className="text-xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto">
+              Comprehensive technology solutions designed to drive innovation and accelerate business growth
+            </p>
+          </motion.div>
+
+          {/* Service Cards Grid */}
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 mb-16">
+            {[
+              {
+                icon: '💻',
+                title: 'Software Development',
+                description: 'Custom web and mobile applications built with cutting-edge technologies',
+                features: ['Web Applications', 'Mobile Apps', 'Enterprise Software', 'API Development'],
+                gradient: 'from-blue-500 to-cyan-500',
+                iconBg: 'bg-blue-500'
+              },
+              {
+                icon: '🤖',
+                title: 'AI & Machine Learning',
+                description: 'Intelligent systems that automate processes and deliver insights',
+                features: ['Predictive Analytics', 'Computer Vision', 'NLP Solutions', 'ML Models'],
+                gradient: 'from-green-500 to-emerald-500',
+                iconBg: 'bg-green-500'
+              },
+              {
+                icon: '📊',
+                title: 'Data Engineering',
+                description: 'Scalable data infrastructure and analytics solutions',
+                features: ['Data Pipelines', 'Database Design', 'Data Warehousing', 'Analytics'],
+                gradient: 'from-purple-500 to-pink-500',
+                iconBg: 'bg-purple-500'
+              },
+              {
+                icon: '☁️',
+                title: 'Cloud Solutions',
+                description: 'Cloud-native architectures and DevOps excellence',
+                features: ['Cloud Migration', 'DevOps Setup', 'CI/CD Pipelines', 'Infrastructure'],
+                gradient: 'from-orange-500 to-amber-500',
+                iconBg: 'bg-orange-500'
+              },
+              {
+                icon: '🎯',
+                title: 'IT Consulting',
+                description: 'Strategic technology advisory and system integration',
+                features: ['Tech Strategy', 'System Integration', 'Digital Transformation', 'Architecture'],
+                gradient: 'from-red-500 to-rose-500',
+                iconBg: 'bg-red-500'
+              },
+              {
+                icon: '🎓',
+                title: 'Training & Workshops',
+                description: 'Hands-on technical training and capacity building programs',
+                features: ['Bootcamps', 'Corporate Training', 'Tech Workshops', 'Mentorship'],
+                gradient: 'from-indigo-500 to-blue-500',
+                iconBg: 'bg-indigo-500'
+              }
+            ].map((service, index) => (
+              <motion.div
+                key={service.title}
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6, delay: index * 0.1 }}
+                viewport={{ once: true }}
+                className="group relative bg-gradient-to-br from-gray-50 to-white dark:from-gray-800 dark:to-gray-900 rounded-2xl p-8 shadow-lg hover:shadow-2xl transition-all duration-300 border border-gray-200 dark:border-gray-700"
+              >
+                {/* Icon */}
+                <div className={`${service.iconBg} w-16 h-16 rounded-xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300`}>
+                  <span className="text-3xl">{service.icon}</span>
+                </div>
+
+                {/* Title */}
+                <h3 className="text-2xl font-bold text-gray-900 dark:text-gray-100 mb-3">
+                  {service.title}
+                </h3>
+
+                {/* Description */}
+                <p className="text-gray-600 dark:text-gray-400 mb-6 leading-relaxed">
+                  {service.description}
+                </p>
+
+                {/* Features List */}
+                <ul className="space-y-2 mb-6">
+                  {service.features.map((feature) => (
+                    <li key={feature} className="flex items-center text-sm text-gray-700 dark:text-gray-300">
+                      <svg className="w-4 h-4 mr-2 text-green-500" fill="currentColor" viewBox="0 0 20 20">
+                        <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+                      </svg>
+                      {feature}
+                    </li>
+                  ))}
+                </ul>
+
+                {/* Learn More Link */}
+                <motion.button
+                  whileHover={{ x: 5 }}
+                  onClick={() => scrollToSection('contact')}
+                  className="text-red-600 dark:text-red-400 font-semibold text-sm flex items-center group-hover:text-red-700 dark:group-hover:text-red-300 transition-colors"
+                >
+                  Get Started
+                  <svg className="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                  </svg>
+                </motion.button>
+
+                {/* Gradient Border on Hover */}
+                <div className={`absolute inset-0 rounded-2xl bg-gradient-to-r ${service.gradient} opacity-0 group-hover:opacity-10 transition-opacity duration-300`}></div>
+              </motion.div>
+            ))}
+          </div>
+
+          {/* R&D Highlight Banner */}
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8 }}
+            viewport={{ once: true }}
+            className="bg-gradient-to-r from-red-600 to-red-700 rounded-2xl p-10 shadow-xl text-white relative overflow-hidden"
+          >
+            {/* Background Pattern */}
+            <div className="absolute inset-0 opacity-10">
+              <svg className="w-full h-full" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+                <defs>
+                  <pattern id="rd-grid" width="10" height="10" patternUnits="userSpaceOnUse">
+                    <circle cx="5" cy="5" r="1" fill="white"/>
+                  </pattern>
+                </defs>
+                <rect width="100%" height="100%" fill="url(#rd-grid)" />
+              </svg>
+            </div>
+
+            <div className="relative z-10 text-center">
+              <div className="inline-block bg-white/20 rounded-full p-4 mb-4">
+                <span className="text-4xl">🔬</span>
+              </div>
+              <h3 className="text-3xl font-bold mb-4">Research & Development</h3>
+              <p className="text-red-100 text-lg mb-8 max-w-3xl mx-auto">
+                Pioneering innovative solutions in AI for Agriculture, FinTech Innovation, and EdTech Platforms
+              </p>
+              
+              <div className="grid md:grid-cols-3 gap-6 max-w-4xl mx-auto">
+                {[
+                  { icon: '🌾', title: 'AI for Agriculture', desc: 'Smart farming solutions' },
+                  { icon: '💰', title: 'FinTech Innovation', desc: 'Digital payment systems' },
+                  { icon: '📚', title: 'EdTech Platforms', desc: 'Learning management systems' }
+                ].map((project) => (
+                  <div key={project.title} className="bg-white/10 backdrop-blur-sm rounded-xl p-6">
+                    <div className="text-3xl mb-3">{project.icon}</div>
+                    <h4 className="font-bold mb-2">{project.title}</h4>
+                    <p className="text-sm text-red-100">{project.desc}</p>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </motion.div>
+        </div>
+      </section>
+
+      {/* Contact Section */}
+      <section id="contact" className="relative py-24 bg-gradient-to-br from-gray-50 to-white dark:from-gray-900 dark:to-black">
+        {/* Background Pattern */}
         <div className="absolute inset-0 opacity-5">
           <svg className="w-full h-full" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
             <defs>
-              <pattern id="services-grid" width="10" height="10" patternUnits="userSpaceOnUse">
-                <path d="M 10 0 L 0 0 0 10" fill="none" stroke="currentColor" strokeWidth="1"/>
+              <pattern id="contact-grid" width="20" height="20" patternUnits="userSpaceOnUse">
+                <circle cx="10" cy="10" r="1.5" fill="currentColor" className="text-red-500"/>
               </pattern>
             </defs>
-            <rect width="100%" height="100%" fill="url(#services-grid)" className="text-gray-900 dark:text-gray-100" />
+            <rect width="100%" height="100%" fill="url(#contact-grid)" />
           </svg>
         </div>
-        
+
         <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          {/* Section Header */}
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -573,231 +781,113 @@ export default function Home() {
             viewport={{ once: true }}
             className="text-center mb-16"
           >
-            <h2 className="text-4xl font-bold text-gray-900 dark:text-gray-100 mb-4">
-              Service Offerings
+            <h2 className="text-5xl font-bold mb-6">
+              Let&apos;s <span className="bg-gradient-to-r from-red-500 to-red-600 bg-clip-text text-transparent">Connect</span>
             </h2>
-            <p className="text-xl text-gray-600 dark:text-gray-300">
-              Comprehensive technology solutions designed to drive innovation and growth
+            <p className="text-xl text-gray-600 dark:text-gray-400 max-w-3xl mx-auto">
+              Ready to transform your business with cutting-edge technology solutions? Get in touch with our team today.
             </p>
           </motion.div>
 
-          <div className="grid lg:grid-cols-2 gap-8 mb-12">
-            {/* Core Development Services */}
+          <div className="grid lg:grid-cols-2 gap-12">
+            {/* Contact Information */}
             <motion.div
               initial={{ opacity: 0, x: -30 }}
               whileInView={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.8 }}
               viewport={{ once: true }}
-              className="bg-gray-50 dark:bg-gray-800 rounded-xl p-6 shadow-lg"
+              className="space-y-8"
             >
-              <div className="flex items-center mb-6">
-                <div className="h-8 w-8 bg-[#c1272d] rounded-lg flex items-center justify-center mr-3">
-                  <span className="text-white text-lg">💻</span>
+              {/* Company Details Card */}
+              <div className="bg-white dark:bg-gray-800 rounded-2xl p-8 shadow-lg border border-gray-200 dark:border-gray-700">
+                <div className="flex items-center mb-6">
+                  <div className="bg-red-500 rounded-xl p-3 mr-4">
+                    <span className="text-2xl">🏢</span>
+                  </div>
+                  <div>
+                    <h3 className="text-2xl font-bold text-gray-900 dark:text-gray-100">Company Details</h3>
+                    <p className="text-red-500 font-semibold">Registered & Certified</p>
+                  </div>
                 </div>
-                <div>
-                  <h3 className="text-2xl font-bold text-gray-900 dark:text-gray-100">Development Services</h3>
-                  <p className="text-[#c1272d] font-semibold">Building Digital Solutions</p>
+                <div className="space-y-3 text-gray-700 dark:text-gray-300">
+                  <p className="font-semibold text-lg text-gray-900 dark:text-gray-100">AETech Research Labs Limited</p>
+                  <p>Advanced Engineering Technology Research Labs Limited</p>
+                  <div className="bg-gray-50 dark:bg-gray-900 rounded-lg p-3 mt-4">
+                    <p className="text-sm text-gray-600 dark:text-gray-400">Company Registration Number</p>
+                    <p className="font-mono font-bold text-red-500">RC 8627078</p>
+                  </div>
                 </div>
               </div>
-              
-              <div className="space-y-4">
-                <div className="bg-white dark:bg-gray-900 rounded-lg p-4 border-l-4 border-blue-500">
-                  <h4 className="font-semibold text-gray-900 dark:text-gray-100 mb-2">Software Development</h4>
-                  <p className="text-sm text-gray-600 dark:text-gray-400">
-                    Custom web applications, mobile apps, and enterprise software solutions tailored to your specific business needs.
-                  </p>
-                  <div className="flex gap-2 mt-2">
-                    <span className="text-xs bg-blue-100 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300 px-2 py-1 rounded">React</span>
-                    <span className="text-xs bg-blue-100 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300 px-2 py-1 rounded">Next.js</span>
-                    <span className="text-xs bg-blue-100 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300 px-2 py-1 rounded">Node.js</span>
-                  </div>
-                </div>
-                
-                <div className="bg-white dark:bg-gray-900 rounded-lg p-4 border-l-4 border-green-500">
-                  <h4 className="font-semibold text-gray-900 dark:text-gray-100 mb-2">AI & Machine Learning</h4>
-                  <p className="text-sm text-gray-600 dark:text-gray-400">
-                    Intelligent automation systems, predictive analytics, and machine learning models to optimize operations.
-                  </p>
-                  <div className="flex gap-2 mt-2">
-                    <span className="text-xs bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-300 px-2 py-1 rounded">Python</span>
-                    <span className="text-xs bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-300 px-2 py-1 rounded">TensorFlow</span>
-                    <span className="text-xs bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-300 px-2 py-1 rounded">PyTorch</span>
-                  </div>
-                </div>
 
-                <div className="bg-white dark:bg-gray-900 rounded-lg p-4 border-l-4 border-purple-500">
-                  <h4 className="font-semibold text-gray-900 dark:text-gray-100 mb-2">Data Systems & Engineering</h4>
-                  <p className="text-sm text-gray-600 dark:text-gray-400">
-                    Scalable data infrastructures, database design, data pipelines, and analytics integrations.
-                  </p>
-                  <div className="flex gap-2 mt-2">
-                    <span className="text-xs bg-purple-100 dark:bg-purple-900/30 text-purple-700 dark:text-purple-300 px-2 py-1 rounded">SQL</span>
-                    <span className="text-xs bg-purple-100 dark:bg-purple-900/30 text-purple-700 dark:text-purple-300 px-2 py-1 rounded">MongoDB</span>
-                    <span className="text-xs bg-purple-100 dark:bg-purple-900/30 text-purple-700 dark:text-purple-300 px-2 py-1 rounded">AWS</span>
+              {/* Why Choose AETech Card */}
+              <div className="bg-gradient-to-br from-red-500 to-red-600 rounded-2xl p-8 shadow-lg text-white">
+                <div className="flex items-center mb-6">
+                  <div className="bg-white/20 rounded-xl p-3 mr-4">
+                    <span className="text-2xl">✨</span>
+                  </div>
+                  <h3 className="text-2xl font-bold">Why Choose AETech?</h3>
+                </div>
+                <ul className="space-y-3">
+                  {[
+                    'Expert team with proven track record',
+                    'Cutting-edge technology solutions',
+                    'Focus on African and global markets',
+                    'End-to-end project support',
+                    'Sustainable and scalable solutions'
+                  ].map((item) => (
+                    <li key={item} className="flex items-start">
+                      <svg className="w-5 h-5 mr-3 mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                        <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+                      </svg>
+                      <span>{item}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+
+              {/* Quick Contact Info */}
+              <div className="bg-white dark:bg-gray-800 rounded-2xl p-8 shadow-lg border border-gray-200 dark:border-gray-700">
+                <h4 className="text-xl font-bold text-gray-900 dark:text-gray-100 mb-6">Quick Contact</h4>
+                <div className="space-y-4">
+                  <div className="flex items-center">
+                    <div className="bg-blue-100 dark:bg-blue-900/30 rounded-lg p-3 mr-4">
+                      <svg className="w-5 h-5 text-blue-600 dark:text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                      </svg>
+                    </div>
+                    <div>
+                      <p className="text-sm text-gray-600 dark:text-gray-400">Email Us</p>
+                      <p className="font-semibold text-gray-900 dark:text-gray-100">info@aetech.com</p>
+                    </div>
+                  </div>
+                  <div className="flex items-center">
+                    <div className="bg-green-100 dark:bg-green-900/30 rounded-lg p-3 mr-4">
+                      <svg className="w-5 h-5 text-green-600 dark:text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+                      </svg>
+                    </div>
+                    <div>
+                      <p className="text-sm text-gray-600 dark:text-gray-400">Location</p>
+                      <p className="font-semibold text-gray-900 dark:text-gray-100">Nigeria</p>
+                    </div>
                   </div>
                 </div>
               </div>
             </motion.div>
 
-            {/* Consulting & Strategic Services */}
+            {/* Contact Form */}
             <motion.div
               initial={{ opacity: 0, x: 30 }}
               whileInView={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.8 }}
               viewport={{ once: true }}
-              className="bg-gray-50 dark:bg-gray-800 rounded-xl p-6 shadow-lg"
             >
-              <div className="flex items-center mb-6">
-                <div className="h-8 w-8 bg-[#c1272d] rounded-lg flex items-center justify-center mr-3">
-                  <span className="text-white text-lg">🎯</span>
-                </div>
-                <div>
-                  <h3 className="text-2xl font-bold text-gray-900 dark:text-gray-100">Consulting Services</h3>
-                  <p className="text-[#c1272d] font-semibold">Strategic Technology Advisory</p>
-                </div>
-              </div>
-              
-              <div className="space-y-4">
-                <div className="bg-white dark:bg-gray-900 rounded-lg p-4 border-l-4 border-orange-500">
-                  <h4 className="font-semibold text-gray-900 dark:text-gray-100 mb-2">IT Consulting & Systems Integration</h4>
-                  <p className="text-sm text-gray-600 dark:text-gray-400">
-                    Strategic technology advisory, architecture design, and seamless system integrations.
-                  </p>
-                  <div className="flex gap-2 mt-2">
-                    <span className="text-xs bg-orange-100 dark:bg-orange-900/30 text-orange-700 dark:text-orange-300 px-2 py-1 rounded">Strategy</span>
-                    <span className="text-xs bg-orange-100 dark:bg-orange-900/30 text-orange-700 dark:text-orange-300 px-2 py-1 rounded">Integration</span>
-                  </div>
-                </div>
-                
-                <div className="bg-white dark:bg-gray-900 rounded-lg p-4 border-l-4 border-red-500">
-                  <h4 className="font-semibold text-gray-900 dark:text-gray-100 mb-2">Technology Advisory for Startups</h4>
-                  <p className="text-sm text-gray-600 dark:text-gray-400">
-                    Technical strategy, product design, MVP development, and scaling plans for startup growth.
-                  </p>
-                  <div className="flex gap-2 mt-2">
-                    <span className="text-xs bg-red-100 dark:bg-red-900/30 text-red-700 dark:text-red-300 px-2 py-1 rounded">MVP</span>
-                    <span className="text-xs bg-red-100 dark:bg-red-900/30 text-red-700 dark:text-red-300 px-2 py-1 rounded">Scaling</span>
-                    <span className="text-xs bg-red-100 dark:bg-red-900/30 text-red-700 dark:text-red-300 px-2 py-1 rounded">Strategy</span>
-                  </div>
-                </div>
-
-                <div className="bg-white dark:bg-gray-900 rounded-lg p-4 border-l-4 border-indigo-500">
-                  <h4 className="font-semibold text-gray-900 dark:text-gray-100 mb-2">Training & Capacity Building</h4>
-                  <p className="text-sm text-gray-600 dark:text-gray-400">
-                    Hands-on workshops, bootcamps, and custom training programs for future-ready tech skills.
-                  </p>
-                  <div className="flex gap-2 mt-2">
-                    <span className="text-xs bg-indigo-100 dark:bg-indigo-900/30 text-indigo-700 dark:text-indigo-300 px-2 py-1 rounded">Workshops</span>
-                    <span className="text-xs bg-indigo-100 dark:bg-indigo-900/30 text-indigo-700 dark:text-indigo-300 px-2 py-1 rounded">Bootcamps</span>
-                  </div>
-                </div>
-              </div>
+              <ContactForm />
             </motion.div>
           </div>
-
-          {/* Research & Development Showcase */}
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.2 }}
-            viewport={{ once: true }}
-            className="bg-[#c1272d] rounded-xl p-8 shadow-lg text-white"
-          >
-            <div className="text-center mb-8">
-              <div className="h-12 w-12 bg-white rounded-lg flex items-center justify-center mx-auto mb-4">
-                <span className="text-[#c1272d] text-2xl">🔬</span>
-              </div>
-              <h3 className="text-3xl font-bold mb-2">Research & Development</h3>
-              <p className="text-red-100">Innovative solutions for tomorrow's challenges</p>
-            </div>
-            
-            <div className="grid md:grid-cols-3 gap-6">
-              <div className="bg-white/10 backdrop-blur-sm rounded-lg p-4 border border-white/20">
-                <div className="flex items-center mb-3">
-                  <div className="w-3 h-3 bg-yellow-400 rounded-full mr-3"></div>
-                  <span className="font-semibold">Sustainable Tech Solutions</span>
-                </div>
-                <p className="text-sm text-red-100">
-                  Green technology innovations focused on environmental sustainability and energy efficiency.
-                </p>
-              </div>
-              
-              <div className="bg-white/10 backdrop-blur-sm rounded-lg p-4 border border-white/20">
-                <div className="flex items-center mb-3">
-                  <div className="w-3 h-3 bg-blue-400 rounded-full mr-3"></div>
-                  <span className="font-semibold">African Market Solutions</span>
-                </div>
-                <p className="text-sm text-red-100">
-                  Technology solutions designed specifically for African markets and unique regional challenges.
-                </p>
-              </div>
-
-              <div className="bg-white/10 backdrop-blur-sm rounded-lg p-4 border border-white/20">
-                <div className="flex items-center mb-3">
-                  <div className="w-3 h-3 bg-green-400 rounded-full mr-3"></div>
-                  <span className="font-semibold">Emerging Technologies</span>
-                </div>
-                <p className="text-sm text-red-100">
-                  Research into blockchain, IoT, AR/VR, and other cutting-edge technologies for future applications.
-                </p>
-              </div>
-            </div>
-
-            <div className="text-center mt-8">
-              <motion.button
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-                onClick={() => scrollToSection('contact')}
-                className="bg-white text-[#c1272d] font-bold py-3 px-8 rounded-lg hover:bg-gray-100 transition-colors duration-300"
-              >
-                Start Your Project
-              </motion.button>
-            </div>
-          </motion.div>
         </div>
       </section>
-
-      {/* Contact Section */}
-      <section id="contact" className="py-20 bg-white dark:bg-black">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-4xl font-bold mb-6">Get in Touch</h2>
-            <p className="text-lg text-gray-600 dark:text-gray-400 max-w-3xl mx-auto">
-              Ready to transform your business with cutting-edge technology solutions?
-            </p>
-          </div>
-
-          <div className="grid md:grid-cols-2 gap-12">
-            <div>
-              <h3 className="text-2xl font-bold mb-6">Contact Information</h3>
-              <div className="space-y-6">
-                <div className="bg-gray-50 dark:bg-gray-900 p-6 rounded-lg">
-                  <h4 className="font-semibold mb-3 text-red-400 dark:text-red-400">Company Details</h4>
-                  <div className="space-y-2 text-gray-600 dark:text-gray-400">
-                    <p><strong>AETech Research Labs Limited</strong></p>
-                    <p>Advanced Engineering Technology Research Labs Limited</p>
-                    <p>Company Registration Number: <span className="font-mono">RC 8627078</span></p>
-                  </div>
-                </div>
-                
-                <div className="bg-red-50 dark:bg-red-900/20 p-6 rounded-lg">
-                  <h4 className="font-semibold mb-3 text-red-400 dark:text-red-400">Why Choose AETech?</h4>
-                  <ul className="space-y-2 text-gray-600 dark:text-gray-400">
-                    <li>• Expert team with proven track record</li>
-                    <li>• Cutting-edge technology solutions</li>
-                    <li>• Focus on African and global markets</li>
-                    <li>• End-to-end project support</li>
-                    <li>• Sustainable and scalable solutions</li>
-                  </ul>
-                </div>
-              </div>
-            </div>
-
-            <ContactForm />
-          </div>
-        </div>
-      </section>
-
       {/* Sponsors Section */}
       <SponsorsSection />
 
