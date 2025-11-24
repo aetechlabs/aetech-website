@@ -29,20 +29,20 @@ export default function WhyPage() {
     {
       icon: <CurrencyDollarIcon className="w-8 h-8" />,
       title: 'Transparent, Fair Pricing',
-      description: 'No hidden costs, no surprises. Our $40/hour rate is competitive, and our efficiency means you pay for results, not wasted time. Fixed-price options available for well-defined projects.',
-      stats: 'Save 50-70% on total cost'
+      description: 'No hidden costs, no surprises. Our pricing is competitive and transparent, with our efficiency meaning you pay for results, not wasted time. Fixed-price options available for well-defined projects.',
+      stats: 'Value-driven pricing'
     },
     {
       icon: <SparklesIcon className="w-8 h-8" />,
-      title: 'Modern Tech Stack',
-      description: 'We use cutting-edge technologies like Next.js, React, TypeScript, and AI integration. Your project is built for today and ready for tomorrow, not using outdated tools that will need replacing.',
-      stats: '100% modern, scalable tech'
+      title: 'Cross-Stack Expertise',
+      description: 'We work across multiple technology stacks, choosing the best tools for your specific needs. Your project is built with modern, scalable technologies that are maintainable and future-proof.',
+      stats: 'Tech-agnostic approach'
     },
     {
       icon: <UserGroupIcon className="w-8 h-8" />,
       title: 'Direct Access to Experts',
-      description: 'No account managers or middlemen - you work directly with experienced developers who understand your vision. We're a lean, senior team focused on quality over quantity.',
-      stats: '10+ years avg. experience'
+      description: 'No account managers or middlemen - you work directly with experienced developers who understand your vision. We are a lean, senior team focused on quality over quantity.',
+      stats: 'Senior-level expertise'
     },
     {
       icon: <ShieldCheckIcon className="w-8 h-8" />,
@@ -53,13 +53,13 @@ export default function WhyPage() {
     {
       icon: <LightBulbIcon className="w-8 h-8" />,
       title: 'Strategic Thinking',
-      description: 'We don't just code what you ask - we provide strategic input based on experience. We'll suggest improvements, identify potential issues, and help you make informed decisions.',
+      description: 'We do not just code what you ask - we provide strategic input based on experience. We will suggest improvements, identify potential issues, and help you make informed decisions.',
       stats: 'Proactive problem solving'
     },
     {
       icon: <CodeBracketIcon className="w-8 h-8" />,
       title: 'Clean, Maintainable Code',
-      description: 'Our code is documented, structured, and follows best practices. If you want to hire others later or build an internal team, they'll thank you. No technical debt or shortcuts.',
+      description: 'Our code is documented, structured, and follows best practices. If you want to hire others later or build an internal team, they will thank you. No technical debt or shortcuts.',
       stats: 'A+ code quality standards'
     },
     {
@@ -71,13 +71,13 @@ export default function WhyPage() {
     {
       icon: <RocketLaunchIcon className="w-8 h-8" />,
       title: 'Launch Support Included',
-      description: 'We don't disappear after deployment. Training, documentation, and launch support ensure your team can manage the system confidently. We're invested in your success.',
+      description: 'We do not disappear after deployment. Training, documentation, and launch support ensure your team can manage the system confidently. We are invested in your success.',
       stats: 'End-to-end partnership'
     },
     {
       icon: <AcademicCapIcon className="w-8 h-8" />,
       title: 'Educational Focus',
-      description: 'As educators and trainers, we excel at explaining complex concepts simply. You'll understand what we're building and why, empowering you to make informed decisions.',
+      description: 'As educators and trainers, we excel at explaining complex concepts simply. You will understand what we are building and why, empowering you to make informed decisions.',
       stats: 'Knowledge transfer included'
     },
     {
@@ -89,7 +89,7 @@ export default function WhyPage() {
     {
       icon: <HeartIcon className="w-8 h-8" />,
       title: 'We Actually Care',
-      description: 'This isn't just business - we're passionate about technology and helping businesses succeed. Your project's success is our success, and we treat it as our own.',
+      description: 'This is not just business - we are passionate about technology and helping businesses succeed. Your project success is our success, and we treat it as our own.',
       stats: '100% client satisfaction'
     }
   ];
@@ -103,9 +103,9 @@ export default function WhyPage() {
     },
     {
       category: 'Cost',
-      us: '$40/hour with 90% time savings',
-      others: '$75-150/hour with longer timelines',
-      advantage: '50-70% savings'
+      us: 'Efficient delivery with time savings',
+      others: 'Higher rates with longer timelines',
+      advantage: 'Better value'
     },
     {
       category: 'Communication',
@@ -115,9 +115,9 @@ export default function WhyPage() {
     },
     {
       category: 'Technology',
-      us: 'Latest: Next.js, React, AI',
-      others: 'Often outdated stacks',
-      advantage: 'Future-proof'
+      us: 'Cross-stack, best tool for the job',
+      others: 'Often limited to one stack',
+      advantage: 'Flexible & optimal'
     },
     {
       category: 'Quality',
@@ -135,7 +135,7 @@ export default function WhyPage() {
 
   const testimonialHighlights = [
     {
-      quote: 'Speed and quality I didn't think were possible',
+      quote: 'Speed and quality I did not think were possible',
       author: 'Sarah M.',
       role: 'Startup Founder'
     },
@@ -282,7 +282,7 @@ export default function WhyPage() {
       </section>
 
       {/* Testimonial Highlights */}
-      <section className="py-16 px-4 sm:px-6 lg:px-8 bg-white dark:bg-black">
+      {/* <section className="py-16 px-4 sm:px-6 lg:px-8 bg-white dark:bg-black">
         <div className="max-w-7xl mx-auto">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -321,7 +321,7 @@ export default function WhyPage() {
             ))}
           </div>
         </div>
-      </section>
+      </section> */}
 
       {/* CTA Section */}
       <section className="py-16 px-4 sm:px-6 lg:px-8 bg-gray-50 dark:bg-gray-900">

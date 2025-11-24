@@ -35,7 +35,7 @@ export default function FAQPage() {
     {
       category: 'pricing',
       question: 'How much does a typical project cost?',
-      answer: 'Our projects are priced hourly at $40/hour. The total cost depends on your project scope and complexity. A simple website might take 40-80 hours ($1,600-$3,200), while a full web application could take 200-500 hours ($8,000-$20,000). We provide detailed estimates after understanding your requirements and use our pre-built component library to save you up to 90% of development time.'
+      answer: 'Project costs vary based on scope and complexity, typically ranging from ₦200,000 for simple projects to ₦10,000,000+ for complex enterprise applications. A simple website might cost ₦200,000-₦800,000, while a full web application with custom features could be ₦2,000,000-₦10,000,000+. We provide detailed estimates after understanding your requirements and use our pre-built component library to save significant development time and reduce costs.'
     },
     {
       category: 'pricing',
@@ -75,7 +75,7 @@ export default function FAQPage() {
     {
       category: 'technical',
       question: 'What technologies do you use?',
-      answer: 'We specialize in modern web technologies: Next.js, React, TypeScript for frontend; Node.js, Python for backend; PostgreSQL, MongoDB for databases; and AWS, Vercel for hosting. We choose the best tech stack for your specific needs, prioritizing performance, scalability, and maintainability.'
+      answer: 'We work across multiple technology stacks and frameworks, choosing the best tools for your specific needs. Whether it is web applications, mobile apps, or backend systems, we select modern, scalable technologies that prioritize performance, maintainability, and your project requirements. We are tech-agnostic and solution-focused.'
     },
     {
       category: 'technical',
@@ -85,7 +85,7 @@ export default function FAQPage() {
     {
       category: 'technical',
       question: 'Do you provide hosting and domain services?',
-      answer: 'We guide you through selecting and setting up hosting and domains, recommending providers based on your needs. While we don\'t resell hosting, we handle all technical setup and can manage hosting on your behalf. We typically recommend Vercel, AWS, or DigitalOcean depending on your project requirements.'
+      answer: 'We guide you through selecting and setting up hosting and domains, recommending providers based on your needs and budget. While we do not resell hosting, we handle all technical setup and can manage hosting on your behalf. We work with various hosting providers to find the best fit for your project.'
     },
     {
       category: 'technical',
@@ -105,7 +105,7 @@ export default function FAQPage() {
     {
       category: 'support',
       question: 'Do you provide support after launch?',
-      answer: 'Yes! We offer three options: 1) Warranty Period - 30 days free bug fixes after launch, 2) Maintenance Packages - monthly retainer for updates and support, 3) Pay-as-you-go - hourly support when needed. Most clients choose a maintenance package for peace of mind.'
+      answer: 'Yes! We offer three options: 1) Warranty Period - 30 days free bug fixes after launch, 2) Maintenance Packages - monthly retainer for updates and support, 3) Pay-as-you-go - support when needed. Most clients choose a maintenance package for peace of mind.'
     },
     {
       category: 'support',

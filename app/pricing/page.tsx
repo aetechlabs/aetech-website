@@ -42,12 +42,12 @@ export default function PricingPage() {
   const afterProjectOptions = [
     {
       title: 'Continue Development',
-      description: 'Extend our initial contract and continue cooperation, billed by the hour, flexibly and simply.',
+      description: 'Extend our initial contract and continue cooperation with new features, improvements, and enhancements.',
       icon: <ClockIcon className="w-8 h-8" />
     },
     {
       title: 'Retainer Contract',
-      description: 'Stabilize costs and velocity with a dedicated team. Longer contracts offer better hourly rates.',
+      description: 'Stabilize costs and ensure ongoing support with a dedicated team. Monthly retainers provide priority access and consistent maintenance.',
       icon: <CurrencyDollarIcon className="w-8 h-8" />
     },
     {
@@ -86,12 +86,12 @@ export default function PricingPage() {
             transition={{ delay: 0.1 }}
             className="text-xl md:text-2xl text-gray-200 max-w-3xl mx-auto"
           >
-            Let's talk about the price.
+            Transparent, value-driven pricing for your project.
           </motion.p>
         </div>
       </section>
 
-      {/* Hourly Approach Section */}
+      {/* Our Approach Section */}
       <section className="py-16 px-4 sm:px-6 lg:px-8 bg-white dark:bg-black">
         <div className="max-w-4xl mx-auto">
           <motion.div
@@ -101,19 +101,19 @@ export default function PricingPage() {
             className="bg-gray-50 dark:bg-gray-800 rounded-2xl p-8 md:p-12 border border-gray-200 dark:border-gray-700"
           >
             <h2 className="text-3xl md:text-4xl font-bold mb-6 text-gray-900 dark:text-white">
-              Hourly Approach Explained
+              Our Pricing Approach
             </h2>
             <div className="space-y-6 text-gray-700 dark:text-gray-300 leading-relaxed">
               <p>
                 At AETech, we understand that every project is unique, with its own set of requirements, complexities, and challenges. We are committed to providing a pricing structure that is both fair and transparent.
               </p>
               <p>
-                Our pricing is based on the number of hours we dedicate to your project. We calculate the total cost of your project by multiplying the number of hours we estimate we will work by our hourly rate. This method ensures that you only pay for the actual work done.
+                Our pricing is based on the scope and complexity of your project. We provide detailed estimates after understanding your requirements, and work efficiently to deliver maximum value. Our pre-built component library allows us to deliver faster without compromising quality.
               </p>
               
               <div className="bg-red-50 dark:bg-red-900/10 rounded-xl p-6 mt-8 border border-red-100 dark:border-red-900/30">
                 <h3 className="text-xl font-semibold mb-4 text-gray-900 dark:text-white">
-                  Why We Don't Display Public Rates
+                  Why Custom Quotes?
                 </h3>
                 <ul className="space-y-4">
                   <li className="flex items-start">
@@ -126,8 +126,8 @@ export default function PricingPage() {
                   <li className="flex items-start">
                     <CheckIcon className="w-6 h-6 text-red-500 mr-3 flex-shrink-0 mt-1" />
                     <div>
-                      <strong className="text-gray-900 dark:text-white">Dynamic Pricing:</strong>
-                      <span className="text-gray-700 dark:text-gray-300"> Our hourly rates can fluctuate based on several factors, including the required skill set, project complexity, technology involved, and market conditions.</span>
+                      <strong className="text-gray-900 dark:text-white">Project-Specific:</strong>
+                      <span className="text-gray-700 dark:text-gray-300"> Our pricing varies based on project complexity, required features, timeline, and technology requirements. We provide accurate estimates after understanding your specific needs.</span>
                     </div>
                   </li>
                   <li className="flex items-start">
@@ -160,13 +160,13 @@ export default function PricingPage() {
                 We don't charge any fees before the contract is signed. All the consultations, calls, estimations and sometimes research is <strong className="text-red-500">free for you</strong>.
               </p>
               <p>
-                Before creating the contract, we estimate a range of costs you should be ready for. This can change based on the changes to the scope, feedback provided or technological challenges, but you will be informed upfront.
+                Before creating the contract, we estimate the total project cost based on scope and requirements. This can change based on changes to the scope, feedback provided or technological challenges, but you will be informed upfront.
               </p>
               <p>
-                On the contract, we put the hourly rates (there might be different services like design and development), start date and scope of the project.
+                On the contract, we clearly outline the project scope, timeline, deliverables, and payment terms.
               </p>
               <p className="text-lg font-semibold text-gray-900 dark:text-white">
-                In most cases, we incorporate <span className="text-red-500">weekly invoicing</span> instead of taking upfront payment, but this is flexible.
+                Payment terms are flexible - we can work with <span className="text-red-500">milestone-based payments</span>, monthly retainers, or custom arrangements that suit your project.
               </p>
             </div>
           </motion.div>
@@ -186,7 +186,7 @@ export default function PricingPage() {
               Common Components, Ready to Use
             </h2>
             <p className="text-xl text-gray-700 dark:text-gray-300 max-w-3xl mx-auto">
-              We built an internal components library that saves you time and money. It's not included in our hourly rate, but saves us up to 90% of the time compared to building from scratch.
+              We have built an internal components library that saves significant time and reduces costs. These battle-tested components speed up delivery while maintaining high quality and customization.
             </p>
           </motion.div>
 
