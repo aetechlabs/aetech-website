@@ -118,7 +118,7 @@ export default function Navigation() {
                 className="h-10 w-auto dark:hidden cursor-pointer transition-transform hover:scale-105"
               />
               <Image
-                src="/logo-dark.png"
+                src="/logo-light.png"
                 alt="AETech Logo"
                 width={140}
                 height={45}
