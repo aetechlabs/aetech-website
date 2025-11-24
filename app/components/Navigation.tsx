@@ -21,6 +21,12 @@ export default function Navigation() {
       setActiveSection('about');
     } else if (pathname === '/contact') {
       setActiveSection('contact');
+    } else if (pathname === '/pricing') {
+      setActiveSection('pricing');
+    } else if (pathname === '/faq') {
+      setActiveSection('faq');
+    } else if (pathname === '/why') {
+      setActiveSection('why');
     } else {
       setActiveSection('home');
     }
@@ -84,7 +90,9 @@ export default function Navigation() {
     { id: 'home', label: 'Home', type: 'scroll' },
     { id: 'about', label: 'About', type: 'link', href: '/about' },
     { id: 'services', label: 'Services', type: 'scroll' },
+    { id: 'why', label: 'Why Us', type: 'link', href: '/why' },
     { id: 'pricing', label: 'Pricing', type: 'link', href: '/pricing' },
+    { id: 'faq', label: 'FAQ', type: 'link', href: '/faq' },
     { id: 'contact', label: 'Contact', type: 'link', href: '/contact' }
   ];
 

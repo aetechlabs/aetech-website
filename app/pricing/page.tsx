@@ -60,7 +60,7 @@ export default function PricingPage() {
   return (
     <div className="min-h-screen bg-white dark:bg-gray-900">
       {/* Hero Section with Background Image */}
-      <section className="relative pt-20 lg:pt-32 pb-16 overflow-hidden">
+      <section className="relative min-h-[60vh] pt-20 lg:pt-32 pb-16 overflow-hidden flex items-center">
         <div className="absolute inset-0 z-0">
           <Image
             src="/images/a-computer-instructor-standing-while-students-code.jpg"
