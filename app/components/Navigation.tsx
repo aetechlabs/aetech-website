@@ -84,6 +84,7 @@ export default function Navigation() {
     { id: 'home', label: 'Home', type: 'scroll' },
     { id: 'about', label: 'About', type: 'link', href: '/about' },
     { id: 'services', label: 'Services', type: 'scroll' },
+    { id: 'pricing', label: 'Pricing', type: 'link', href: '/pricing' },
     { id: 'contact', label: 'Contact', type: 'link', href: '/contact' }
   ];
 
@@ -93,8 +94,8 @@ export default function Navigation() {
       animate={{ y: 0 }}
       className={`fixed top-0 w-full z-50 transition-all duration-300 ${
         isScrolled 
-          ? 'bg-white/95 dark:bg-gray-900/95 backdrop-blur-xl shadow-lg border-b border-gray-200/50 dark:border-gray-700/50' 
-          : 'bg-white/90 dark:bg-gray-900/90 backdrop-blur-md border-b border-gray-200/30 dark:border-gray-700/30'
+          ? 'bg-white dark:bg-gray-900 shadow-lg border-b border-gray-200/50 dark:border-gray-700/50' 
+          : 'bg-white dark:bg-gray-900 border-b border-gray-200/30 dark:border-gray-700/30'
       }`}
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -186,13 +187,13 @@ export default function Navigation() {
         <AnimatePresence>
           {isMobileMenuOpen && (
             <motion.div 
-              initial={{ opacity: 0, height: 0 }}
-              animate={{ opacity: 1, height: 'auto' }}
-              exit={{ opacity: 0, height: 0 }}
-              transition={{ duration: 0.2 }}
-              className="md:hidden overflow-hidden border-t border-gray-200 dark:border-gray-700"
+              initial={{ opacity: 0, x: '100%' }}
+              animate={{ opacity: 1, x: 0 }}
+              exit={{ opacity: 0, x: '100%' }}
+              transition={{ duration: 0.3, ease: 'easeInOut' }}
+              className="md:hidden fixed inset-0 top-20 z-40"
             >
-              <div className="px-4 py-6 space-y-3 bg-white/95 dark:bg-gray-900/95 backdrop-blur-xl">
+              <div className="h-full px-4 py-6 space-y-3 bg-white dark:bg-gray-900 overflow-y-auto">
                 {navItems.map((item, index) => {
                   if (item.type === 'link' && item.href) {
                     return (
