@@ -118,7 +118,7 @@ export default function Navigation() {
                 className="h-10 w-auto dark:hidden cursor-pointer transition-transform hover:scale-105"
               />
               <Image
-                src="/website-assets/logo-dark-500.png"
+                src="/logo-dark.png"
                 alt="AETech Logo"
                 width={140}
                 height={45}
@@ -201,8 +201,9 @@ export default function Navigation() {
               transition={{ duration: 0.3, ease: 'easeInOut' }}
               className="md:hidden fixed inset-0 top-20 z-40"
             >
-              <div className="h-full px-4 py-6 space-y-3 bg-white dark:bg-gray-900 overflow-y-auto">
-                {navItems.map((item, index) => {
+              <div className="h-full px-4 py-6 bg-white dark:bg-gray-900 overflow-y-auto">
+                <div className="bg-gray-100/50 dark:bg-gray-800/50 rounded-2xl p-3 space-y-3">
+                  {navItems.map((item, index) => {
                   if (item.type === 'link' && item.href) {
                     return (
                       <Link key={item.id} href={item.href}>
@@ -241,6 +242,7 @@ export default function Navigation() {
                     </motion.button>
                   );
                 })}
+                </div>
               </div>
             </motion.div>
           )}
