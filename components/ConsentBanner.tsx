@@ -1,127 +1,134 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
+import ConsentPreferencesModal from "./ConsentPreferencesModal";
 
 const STORAGE_KEY = "aetech_consent";
+const PREFS_KEY = "aetech_consent_prefs";
 const MEASUREMENT_ID = "G-B8LHFL56CT";
 
-export default function ConsentBanner(): JSX.Element | null {
+type Prefs = { analytics: boolean; ads: boolean };
+
+export default function ConsentBanner(): React.ReactElement | null {
   const [visible, setVisible] = useState(false);
-  const [accepted, setAccepted] = useState<boolean | null>(null);
+  const [prefs, setPrefs] = useState<Prefs>({ analytics: false, ads: false });
+  const [modalOpen, setModalOpen] = useState(false);
 
   useEffect(() => {
     try {
       const stored = localStorage.getItem(STORAGE_KEY);
+      const storedPrefs = localStorage.getItem(PREFS_KEY);
+
+      if (storedPrefs) {
+        const parsed = JSON.parse(storedPrefs) as Prefs;
+        setPrefs(parsed);
+      }
+
       if (!stored) {
-        // Show banner by default until user makes a choice
         setVisible(true);
       } else {
-        setAccepted(stored === "granted");
         setVisible(false);
       }
     } catch (e) {
-      // If localStorage is unavailable, show banner as fallback
       setVisible(true);
     }
   }, []);
 
-  function updateGtagConsent(state: "granted" | "denied") {
+  function updateGtagConsentGranular(p: Prefs) {
     try {
+      const a = p.analytics ? "granted" : "denied";
+      const ad = p.ads ? "granted" : "denied";
+
       if (typeof window !== "undefined" && (window as any).gtag) {
-        const consentState = state === "granted" ? "granted" : "denied";
         (window as any).gtag("consent", "update", {
-          ad_storage: consentState,
-          analytics_storage: consentState,
+          ad_storage: ad,
+          analytics_storage: a,
         });
 
-        if (state === "granted") {
-          // Ensure GA config runs now that consent is granted
+        if (p.analytics) {
           (window as any).gtag("config", MEASUREMENT_ID, { send_page_view: true });
         }
       } else {
-        // gtag not available yet — push to dataLayer so it applies when gtag loads
-        window.dataLayer = window.dataLayer || [];
-        window.dataLayer.push([
-          "consent",
-          "update",
-          { ad_storage: state === "granted" ? "granted" : "denied", analytics_storage: state === "granted" ? "granted" : "denied" },
-        ] as any);
+        (window as any).dataLayer = (window as any).dataLayer || [];
+        (window as any).dataLayer.push(["consent", "update", { ad_storage: ad, analytics_storage: a }] as any);
       }
     } catch (err) {
-      // ignore errors; consent best-effort
       console.warn("Consent update error", err);
     }
   }
 
   function acceptAll() {
+    const p = { analytics: true, ads: true };
     try {
       localStorage.setItem(STORAGE_KEY, "granted");
+      localStorage.setItem(PREFS_KEY, JSON.stringify(p));
     } catch (e) {}
-    updateGtagConsent("granted");
-    setAccepted(true);
+    setPrefs(p);
+    updateGtagConsentGranular(p);
     setVisible(false);
   }
 
   function rejectAll() {
+    const p = { analytics: false, ads: false };
     try {
       localStorage.setItem(STORAGE_KEY, "denied");
+      localStorage.setItem(PREFS_KEY, JSON.stringify(p));
     } catch (e) {}
-    updateGtagConsent("denied");
-    setAccepted(false);
+    setPrefs(p);
+    updateGtagConsentGranular(p);
+    setVisible(false);
+  }
+
+  function openPreferences() {
+    setModalOpen(true);
+  }
+
+  function savePreferences(p: Prefs) {
+    try {
+      // store a coarse consent flag too so banner stays closed once user saved prefs
+      localStorage.setItem(STORAGE_KEY, p.analytics || p.ads ? "granted" : "denied");
+      localStorage.setItem(PREFS_KEY, JSON.stringify(p));
+    } catch (e) {}
+    setPrefs(p);
+    updateGtagConsentGranular(p);
+    setModalOpen(false);
     setVisible(false);
   }
 
   if (!visible) return null;
 
   return (
-    <div style={bannerStyle} role="region" aria-label="Cookie consent banner">
-      <div style={{ maxWidth: 1024, margin: "0 auto", display: "flex", gap: 16, alignItems: "center", padding: "12px 16px" }}>
-        <div style={{ flex: 1 }}>
-          <strong>We respect your privacy.</strong>
-          <div style={{ marginTop: 6 }}>
-            We use cookies and similar technologies to give you a better experience, analyze traffic, and for advertising. You can accept or reject non-essential cookies.
+    <>
+      <div className="fixed left-3 right-3 bottom-3 sm:left-6 sm:right-6 z-50">
+        <div className="max-w-4xl mx-auto bg-white dark:bg-[#0b0b0b] border border-gray-200 dark:border-neutral-800 rounded-lg shadow-lg">
+          <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 p-4">
+            <div className="flex-1">
+              <div className="font-semibold text-gray-900 dark:text-white">We respect your privacy</div>
+              <div className="text-sm text-gray-600 dark:text-gray-300 mt-1">We use cookies to personalise content, provide social media features, and analyse our traffic. Manage your preferences or accept to help us improve.</div>
+            </div>
+
+            <div className="flex items-center gap-2">
+              <button
+                onClick={openPreferences}
+                className="px-3 py-2 rounded-md border border-gray-200 text-sm text-gray-700 hover:bg-gray-50"
+                aria-label="Manage cookie preferences"
+              >
+                Manage preferences
+              </button>
+
+              <button onClick={rejectAll} className="px-3 py-2 rounded-md border border-[var(--brand-red)] text-[var(--brand-red)] text-sm hover:bg-red-50">
+                Reject all
+              </button>
+
+              <button onClick={acceptAll} className="px-3 py-2 rounded-md bg-[var(--brand-red)] text-white text-sm font-medium">
+                Accept all
+              </button>
+            </div>
           </div>
         </div>
-
-        <div style={{ display: "flex", gap: 8 }}>
-          <button onClick={rejectAll} style={rejectButtonStyle}>
-            Reject All
-          </button>
-          <button onClick={acceptAll} style={acceptButtonStyle}>
-            Accept All
-          </button>
-        </div>
       </div>
-    </div>
+
+      <ConsentPreferencesModal visible={modalOpen} initial={prefs} onClose={() => setModalOpen(false)} onSave={savePreferences} />
+    </>
   );
 }
-
-const bannerStyle: React.CSSProperties = {
-  position: "fixed",
-  left: 12,
-  right: 12,
-  bottom: 12,
-  background: "rgba(255,255,255,0.98)",
-  border: "1px solid rgba(16,24,40,0.06)",
-  boxShadow: "0 6px 24px rgba(2,6,23,0.08)",
-  borderRadius: 10,
-  zIndex: 9999,
-};
-
-const acceptButtonStyle: React.CSSProperties = {
-  background: "#0B74FF",
-  color: "white",
-  border: "none",
-  padding: "8px 14px",
-  borderRadius: 8,
-  cursor: "pointer",
-};
-
-const rejectButtonStyle: React.CSSProperties = {
-  background: "transparent",
-  color: "#0B74FF",
-  border: "1px solid #0B74FF",
-  padding: "8px 14px",
-  borderRadius: 8,
-  cursor: "pointer",
-};

@@ -3,6 +3,9 @@
 :root {
   --background: #ffffff;
   --foreground: #171717;
+  /* Brand colors */
+  --brand-red: #ef4444; /* Tailwind red-500 */
+  --brand-red-dark: #dc2626;
 }
 
 @theme inline {
