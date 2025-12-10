@@ -5,6 +5,7 @@ import "./globals.css";
 import { ThemeProvider } from "../components/ThemeProvider";
 import Navigation from "./components/Navigation";
 import Footer from "@/components/Footer";
+import ConsentBanner from "@/components/ConsentBanner";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -62,6 +63,17 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
+        {/* Consent default: deny analytics and ad storage until user consents */}
+        <Script id="gtag-consent-default" strategy="beforeInteractive">
+          {`window.dataLayer = window.dataLayer || [];
+          function gtag(){dataLayer.push(arguments);} 
+          // Default consent state: denied for analytics and ad storage
+          gtag('consent', 'default', {
+            'ad_storage': 'denied',
+            'analytics_storage': 'denied'
+          });`}
+        </Script>
+
         {/* Google tag (gtag.js) - Global site tag for Google Analytics */}
         <Script
           src="https://www.googletagmanager.com/gtag/js?id=G-B8LHFL56CT"
@@ -72,10 +84,12 @@ export default function RootLayout({
           function gtag(){dataLayer.push(arguments);}
           gtag('js', new Date());
 
+          // Do not assume consent here; config will respect the default consent state above.
           gtag('config', 'G-B8LHFL56CT');`}
         </Script>
 
         <ThemeProvider>
+          <ConsentBanner />
           <Navigation />
           {children}
           <Footer />
