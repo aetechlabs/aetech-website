@@ -22,7 +22,7 @@ export default function BlogHeader({ currentPage = 'blog' }: BlogHeaderProps) {
 
   const navigationItems = [
     { href: '/', label: 'Home', icon: HomeIcon },
-    { href: '/blog', label: 'Blog', icon: TagIcon, key: 'blog' },
+    { href: 'https://insider.aetechlabs.com/blog', label: 'Blog', icon: TagIcon, key: 'blog' },
     { href: '/about', label: 'About', icon: UserGroupIcon, key: 'about' },
     { href: '/contact', label: 'Contact', icon: ChatBubbleLeftIcon, key: 'contact' },
   ];

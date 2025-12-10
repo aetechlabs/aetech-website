@@ -53,8 +53,8 @@ export default function Footer() {
                   </Link>
                 </li>
                 <li>
-                  <Link href="/blog" className="text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white transition-colors">
-                    Blog
+                  <Link href="https://insider.aetechlabs.com/blog" className="text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white transition-colors">
+                    Insider
                   </Link>
                 </li>
                 <li>

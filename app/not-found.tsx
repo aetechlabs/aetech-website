@@ -112,10 +112,10 @@ export default function NotFound() {
                 </Link>
                 <span className="text-gray-300 dark:text-gray-600">•</span>
                 <Link 
-                  href="/blog" 
+                  href="https://insider.aetechlabs.com/blog" 
                   className="text-red-500 hover:text-red-600 dark:hover:text-red-400 transition-colors font-medium"
                 >
-                  Our Blog
+                  Insider
                 </Link>
                 <span className="text-gray-300 dark:text-gray-600">•</span>
                 <Link 

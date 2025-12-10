@@ -42,7 +42,13 @@ export default function sitemap(): MetadataRoute.Sitemap {
       priority: 0.7,
     },
     {
-      url: `${baseUrl}/blog`,
+      url: `https://insider.aetechlabs.com/blog`,
+      lastModified: currentDate,
+      changeFrequency: 'weekly',
+      priority: 0.8,
+    },
+    {
+      url: `https://insider.aetechlabs.com/news`,
       lastModified: currentDate,
       changeFrequency: 'weekly',
       priority: 0.8,
