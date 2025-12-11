@@ -63,6 +63,7 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
+        {/* AdSense loading is gated by user consent via the ConsentBanner component. */}
         {/* Consent default: deny analytics and ad storage until user consents */}
         <Script id="gtag-consent-default" strategy="beforeInteractive">
           {`window.dataLayer = window.dataLayer || [];

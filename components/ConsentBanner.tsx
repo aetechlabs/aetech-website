@@ -13,6 +13,7 @@ export default function ConsentBanner(): React.ReactElement | null {
   const [visible, setVisible] = useState(false);
   const [prefs, setPrefs] = useState<Prefs>({ analytics: false, ads: false });
   const [modalOpen, setModalOpen] = useState(false);
+  const ENABLE_ADS = process.env.NEXT_PUBLIC_ENABLE_ADS === 'true';
 
   useEffect(() => {
     try {
@@ -22,6 +23,10 @@ export default function ConsentBanner(): React.ReactElement | null {
       if (storedPrefs) {
         const parsed = JSON.parse(storedPrefs) as Prefs;
         setPrefs(parsed);
+        // If user already allowed ads, load AdSense (respect env guard)
+        if (parsed.ads && ENABLE_ADS) {
+          loadAdSenseScript();
+        }
       }
 
       if (!stored) {
@@ -65,6 +70,7 @@ export default function ConsentBanner(): React.ReactElement | null {
     } catch (e) {}
     setPrefs(p);
     updateGtagConsentGranular(p);
+    if (ENABLE_ADS) loadAdSenseScript();
     setVisible(false);
   }
 
@@ -91,8 +97,25 @@ export default function ConsentBanner(): React.ReactElement | null {
     } catch (e) {}
     setPrefs(p);
     updateGtagConsentGranular(p);
+    if (p.ads && ENABLE_ADS) loadAdSenseScript();
     setModalOpen(false);
     setVisible(false);
+  }
+
+  function loadAdSenseScript() {
+    try {
+      if (typeof document === 'undefined') return;
+      // avoid injecting twice
+      if (document.querySelector('script[data-adsbygoogle]') || document.querySelector('script[src*="pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"]')) return;
+      const s = document.createElement('script');
+      s.src = 'https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7208632097886901';
+      s.async = true;
+      s.crossOrigin = 'anonymous';
+      s.setAttribute('data-adsbygoogle', 'true');
+      document.head.appendChild(s);
+    } catch (err) {
+      // swallow
+    }
   }
 
   if (!visible) return null;
